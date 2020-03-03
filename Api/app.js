@@ -1,15 +1,12 @@
-function test() {
-    console.log('启动');
-}
+const Koa = require('koa')
+const bodyParser = require('koa-bodyparser')
+const app = new Koa()
 
-function testA() {
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-}
+const { InitManager } = require('./core/init')
 
-function testB() {
-    console.log("BBBBBBBBBBBBBBBBBBB")
-}
+InitManager.initCore(app)
 
-test()
-testA()
-testB()
+app.use(bodyParser())
+
+
+app.listen('3000')
