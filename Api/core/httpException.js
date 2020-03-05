@@ -1,22 +1,51 @@
 /*
  * @Author: kun.xi 
  * @Date: 2020-03-04 18:32:23 
- * @Last Modified by: xikun
- * @Last Modified time: 2020-03-04 20:30:39
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2020-03-05 11:43:59
  */
 
+ /**
+  * HttpException 是本项目所有其他异常的基类
+  */
 class HttpException extends Error {
-    /**
-     * 
-     * @param {*} msg 错误信息
-     * @param {*} errorCode 业务状态码
-     * @param {*} code 响应头状态码
-     */
+    
     constructor(msg = '服务器异常', errorCode = 500, code = 400) {
         super()
+        /**
+         * 错误信息
+         */
         this.msg = msg
-        this.errorCode = errorCode
+        /**
+         * Http 状态码
+         */
         this.code = code
+        /**
+         * 特点业务状态码
+         */
+        this.errorCode = errorCode
+       
+    }
+}
+
+
+class Success extends HttpException {
+    constructor(ex) {
+        super()
+        this.code = 200;
+        this.msg = '成功';
+        this.errorCode = 0;
+        if (ex && ex.code) {
+            assert_1.default(lodash_1.isInteger(ex.code));
+            this.code = ex.code;
+        }
+        if (ex && ex.msg) {
+            this.msg = ex.msg;
+        }
+        if (ex && ex.errorCode) {
+            assert_1.default(lodash_1.isInteger(ex.errorCode));
+            this.errorCode = ex.errorCode;
+        }
     }
 }
 

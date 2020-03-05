@@ -13,6 +13,8 @@ InitManager.initCore(app)
 
 app.use(bodyParser())
 router.get('/', async (ctx) => {
+    console.log(ctx);
+
     ctx.body = "hello node";
 
 })
