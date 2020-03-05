@@ -1,12 +1,13 @@
 /*
  * @Author: mikey.zhaopeng 
  * @Date: 2020-03-05 09:36:26 
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2020-03-05 14:32:43
+ * @Last Modified by: xi.kun
+ * @Last Modified time: 2020-03-05 20:14:51
  */
 const validator = require('validator');
 
 const { isString, isFunction, isArray, get } = require('lodash')
+const { ParameterExceptio } = require('../../core/httpException')
 
 class Validator {
     constructor() {
@@ -21,7 +22,7 @@ class Validator {
         /**
          * 数据校验错误集合
          */
-        this.errors = {}
+        this.errors = []
     }
 
     /**
@@ -36,12 +37,20 @@ class Validator {
             header: ctx.request.header,
             params: ctx.parms
         }
+        const hasErr = await this.checkRules()
+        if (!hasErr) {
+            throw new ParameterExceptio(this.errors)
+        } else {
+            ctx.v = this
+            return this
+        }
     }
 
 
     async checkRules() {
         // 获取类上的所有 属性和方法
         let keys = Reflect.ownKeys(this)
+
         // 对属性进行筛选 
         keys = keys.filter(key => {
             const rules = this[key]
@@ -65,33 +74,56 @@ class Validator {
             return
         }
 
-        // 根据 key 拿到value
-        const [field, dataValue] = this._findValueData(key)
         for (const key of keys) {
+            // 根据 key 拿到value
+            const [field, dataValue] = this._findValueData(key)
+
             const value = this[key]
+
             if (isArray(value)) {
+                let errs = [];
                 for (const it of value) {
-                    let errors = []
-                    valid = it.validate(dataValue)
+                    const valid = await it.validate(dataValue)
                     if (!valid) {
-                        errors.push(it.message)
+                        errs.push(it.message)
                     }
+                }
+                if (errs.length) {
+                    this.errors.push({ key: field, msg: errs })
+                }
+            } else {
+                let errs = [];
+                const valid = await value.validate(dataValue)
+                if (!valid) {
+                    errs.push(value.message)
+                }
+                if (errs.length !== 0) {
+                    this.errors.push({ key: field, msg: errs })
                 }
             }
         }
+
+        // 对 属性函数进行 筛选 
+        //validateFuncKeys
+        return this.errors.length === 0
     }
 
+
+    /**
+     * 找到传参的值
+     * @param {*} field 
+     */
     _findValueData(field) {
         const keys = Object.keys(this.data)
+
         for (const key of keys) {
             const dataValue = get(this.data[key], field)
-            if (!dataValue === void 0) {
+            if (dataValue !== void 0) {
                 return [field, dataValue]
             }
         }
         return []
     }
-
 }
 
 
@@ -147,4 +179,7 @@ class Rule {
     }
 }
 
-module.exports = Rule
+module.exports = {
+    Validator,
+    Rule
+} 
