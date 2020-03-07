@@ -2,7 +2,7 @@
  * @Author: mikey.zhaopeng 
  * @Date: 2020-03-05 09:36:26 
  * @Last Modified by: xi.kun
- * @Last Modified time: 2020-03-07 12:30:15
+ * @Last Modified time: 2020-03-07 16:37:50
  */
 const validator = require('validator');
 
@@ -77,7 +77,6 @@ class Validator {
         for (const key of keys) {
             // 根据 key 拿到value
             const [field, dataValue] = this._findValueData(key)
-
             if (!dataValue) {
                 this.errors.push({ key: field, msg: '参数必填' })
                 return false
@@ -160,7 +159,6 @@ class Validator {
      */
     _findValueData(field) {
         const keys = Object.keys(this.data)
-
         for (const key of keys) {
             const dataValue = get(this.data[key], field)
             if (dataValue !== void 0) {
@@ -210,7 +208,7 @@ class Rule {
                         return validator.isBoolean(String(str), this.options)
                     }
                 case 'isNotEmpty':
-                    return !validator.isEmpty(str, this.options)
+                    return !validator.isEmpty(str + "", this.options)
 
                 case 'isEmail':
                     return validator.isEmail(str, this.options)

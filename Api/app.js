@@ -8,10 +8,8 @@ const { InitManager } = require('./core/init')
 const catchError = require('./middlewares/exception')
 
 app.use(catchError)
-
-InitManager.initCore(app)
-
 app.use(bodyParser())
+InitManager.initCore(app)
 
 app.on('error', (err, ctx) => {
     console.log(err);
