@@ -5,8 +5,22 @@ class Test extends Validator {
         super()
         this.name = [
             new Rule('isEmail', '请输入正确的邮箱地址!'),
-            new Rule('isEmpty', '它必须为空')
+            new Rule('isNotEmpty', '它必须为空')
         ]
+    }
+
+    test(data) {
+        console.log(data);
+
+        return false
+    }
+
+    test1() {
+        console.log(2)
+    }
+
+    test2() {
+        console.log(3)
     }
 }
 

@@ -2,12 +2,12 @@
  * @Author: mikey.zhaopeng 
  * @Date: 2020-03-05 09:36:26 
  * @Last Modified by: xi.kun
- * @Last Modified time: 2020-03-07 11:57:53
+ * @Last Modified time: 2020-03-07 12:30:15
  */
 const validator = require('validator');
 
 const { isString, isFunction, isArray, get } = require('lodash')
-const { ParameterExceptio } = require('../../core/httpException')
+const { ParameterExceptio, HttpException } = require('../../core/httpException')
 
 class Validator {
     constructor() {
@@ -95,6 +95,7 @@ class Validator {
                 }
                 if (errs.length) {
                     this.errors.push({ key: field, msg: errs })
+                    return false
                 }
             } else {
                 let errs = [];
@@ -104,12 +105,51 @@ class Validator {
                 }
                 if (errs.length !== 0) {
                     this.errors.push({ key: field, msg: errs })
+                    return false
                 }
             }
         }
 
         // 对 属性函数进行 筛选 
         //validateFuncKeys
+        let set = new Set()
+        const obj = Reflect.getPrototypeOf(this)
+        const ownKeys = Reflect.ownKeys(obj)
+
+        ownKeys.forEach(key => set.add(key))
+        let funKeys = Array.from(set.values())
+        funKeys = funKeys.filter(fun => typeof this[fun] === "function" && fun !== "constructor")
+        if (funKeys.length) {
+
+            for (const fun of funKeys) {
+                const customerValidateFunc = get(this, fun)
+
+                // 自定义校验函数，第一个参数是校验是否成功，第二个参数为错误信息
+                let validRes;
+                try {
+                    validRes = customerValidateFunc.call(this, this.data)
+                    // 返回 [false,'xxx']
+                    if (isArray(validRes) && !validRes[0]) {
+                        this.errors.push({ key: fun, message: validRes[1] })
+                        // 优化让遇到错误就直接返回不继续往下走
+                        return false
+                    }
+                    // 直接返回 false 的情况
+                    else if (!validRes) {
+                        this.errors.push({ key: fun, message: '参数错误' })
+                        return false
+                    }
+                } catch (error) {
+                    if (error instanceof HttpException) {
+                        this.errors.push({ key: fun, message: error.msg });
+                    }
+                    else {
+                        this.errors.push({ key: fun, message: error.message });
+                    }
+                }
+            }
+        }
+
         return this.errors.length === 0
     }
 
@@ -169,8 +209,8 @@ class Rule {
                     } else {
                         return validator.isBoolean(String(str), this.options)
                     }
-                case 'isEmpty':
-                    return validator.isEmpty(str, this.options)
+                case 'isNotEmpty':
+                    return !validator.isEmpty(str, this.options)
 
                 case 'isEmail':
                     return validator.isEmail(str, this.options)
