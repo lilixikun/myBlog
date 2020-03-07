@@ -2,7 +2,7 @@
  * @Author: kun.xi 
  * @Date: 2020-03-04 18:32:23 
  * @Last Modified by: xi.kun
- * @Last Modified time: 2020-03-05 17:17:04
+ * @Last Modified time: 2020-03-07 11:27:08
  */
 /**
  * HttpException 是本项目所有其他异常的基类
@@ -20,7 +20,7 @@ class HttpException extends Error {
          */
         this.code = code
         /**
-         * 特点业务状态码
+         * 自定义的异常状态码
          */
         this.errorCode = errorCode
 

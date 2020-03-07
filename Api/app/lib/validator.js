@@ -2,7 +2,7 @@
  * @Author: mikey.zhaopeng 
  * @Date: 2020-03-05 09:36:26 
  * @Last Modified by: xi.kun
- * @Last Modified time: 2020-03-05 20:14:51
+ * @Last Modified time: 2020-03-07 11:57:53
  */
 const validator = require('validator');
 
@@ -78,6 +78,11 @@ class Validator {
             // 根据 key 拿到value
             const [field, dataValue] = this._findValueData(key)
 
+            if (!dataValue) {
+                this.errors.push({ key: field, msg: '参数必填' })
+                return false
+            }
+
             const value = this[key]
 
             if (isArray(value)) {
@@ -122,7 +127,7 @@ class Validator {
                 return [field, dataValue]
             }
         }
-        return []
+        return [field]
     }
 }
 
