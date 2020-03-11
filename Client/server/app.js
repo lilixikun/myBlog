@@ -4,11 +4,13 @@ import getElemHTML from './index'
 const app = express()
 app.use(express.static('public'))
 
-app.get('/', (req, res, next) => {
-    const html = getElemHTML(req,res)
+app.get('*', (req, res) => {
+    console.log(1111111111);
+
+    const html = getElemHTML(req, res)
     console.log(html);
 
-    res.send(`1111111111`)
+    res.send(html)
 })
 
 app.listen('8082')

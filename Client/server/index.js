@@ -6,7 +6,6 @@ import { renderToString } from 'react-dom/server'
 import routers from '../routes'
 
 export default (req, res) => {
-    console.log(req.url);
 
     const context = {}
     const ele = renderToString(
@@ -18,19 +17,17 @@ export default (req, res) => {
 
     console.log(ele);
 
-    return `
-        <!DOCTYPE html>
+    return `<!DOCTYPE html>
         <html lang="en">
-
         <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Document111</title>
         </head>
 
         <body>
-            <div id="root"></div>
-            ${111}
+            <div id="root">${ele}</div>
+            <script src="/index.js"></script>
         </body>
         </html>
     `

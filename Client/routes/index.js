@@ -1,4 +1,4 @@
-import App from '../src/index'
+import App from '../src/App'
 import Me from '../src/Me'
 import Hello from '../src/Hello'
 
