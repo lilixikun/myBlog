@@ -2,6 +2,7 @@
 
 # dependencies
 /Api/node_modules
+/Client/node_modules
 /.pnp
 .pnp.js
 
