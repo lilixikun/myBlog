@@ -1,20 +1,19 @@
 import React, { PureComponent, Fragment, } from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
-import Header from './component/Header'
-import Footer from './component/Footer'
+
 import routers from '../routes'
+import { getClienStore } from '../store'
 
 const App = () => {
     return (
-        <BrowserRouter>
-            <div>
-                <Header />
+        <Provider store={getClienStore()}>
+            <BrowserRouter>
                 <Fragment>{renderRoutes(routers)}</Fragment>
-                <Footer />
-            </div>
-        </BrowserRouter>
+            </BrowserRouter>
+        </Provider>
     )
 }
 

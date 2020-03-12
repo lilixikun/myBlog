@@ -1,21 +1,22 @@
 import React, { Fragment } from 'react'
 import { StaticRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
 import { renderRoutes } from 'react-router-config'
 import { renderToString } from 'react-dom/server'
 
 import routers from '../routes'
+import { getServerStore } from '../store'
 
 export default (req, res) => {
 
     const context = {}
     const ele = renderToString(
-        <StaticRouter location={req.url} context={context}>
-            <Fragment>{renderRoutes(routers)}</Fragment>
-        </StaticRouter>
+        <Provider store={getServerStore()}>
+            <StaticRouter location={req.url} context={context}>
+                <Fragment>{renderRoutes(routers)}</Fragment>
+            </StaticRouter>
+        </Provider>
     )
-    console.log(11);
-
-    console.log(ele);
 
     return `<!DOCTYPE html>
         <html lang="en">

@@ -1,11 +1,20 @@
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 
 class Me extends PureComponent {
+
     render() {
+        console.log(this.props);
+
         return (
             <div>Me</div>
         )
     }
 }
 
-export default Me
+
+const mapStateToProps = (state) => ({
+    isLogin: state.user.isLogin
+})
+
+export default connect(mapStateToProps, null)(Me)
