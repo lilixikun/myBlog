@@ -12,10 +12,8 @@ app.use(express.static('public'))
 // }))
 
 app.get('*', (req, res) => {
-    console.log(1111111111);
 
     const html = getElemHTML(req, res)
-    console.log(html);
 
     res.send(html)
 })

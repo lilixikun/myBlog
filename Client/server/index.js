@@ -9,7 +9,9 @@ import { getServerStore } from '../store'
 
 export default (req, res) => {
 
-    const context = {}
+    const context = {
+        css: []
+    }
     const ele = renderToString(
         <Provider store={getServerStore()}>
             <StaticRouter location={req.url} context={context}>
@@ -18,12 +20,16 @@ export default (req, res) => {
         </Provider>
     )
 
+
+    const cssStr = context.css.length ? context.css.join("\n") : ''
+    console.log(cssStr);
     return `<!DOCTYPE html>
         <html lang="en">
         <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document111</title>
+        <style>${cssStr}</style>
         </head>
 
         <body>

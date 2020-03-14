@@ -1,12 +1,13 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from "react-redux";
+import './index.less'
 
 class Home extends PureComponent {
 
     render() {
         return (
             <Fragment>
-                Home
+                <h3 className="home">Home</h3>
             </Fragment>
         )
     }

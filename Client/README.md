@@ -36,3 +36,27 @@ npm install --save-dev http-proxy-middleware
 ```js
 npm i react-redux redux redux-saga --save
 ```
+
+处理 CSS 样式问题
+
+```js
+npm install --save-dev css-loader style-loader
+```
+
+服务端加载css
+```js
+npm install --save-dev isomorphic-style-loader
+```
+
+解决服务端渲染 Css抖动问题 StaticRouter context
+
+获取样式
+style._getCss()
+
+区分是客户端还是服务端
+this.props.staticContext 在客户端是 undefined 服务端是 {}
+
+添加css 到 style里面
+
+
+

@@ -1,6 +1,7 @@
 import App from '../src/App'
 import Me from '../src/Me'
 import Hello from '../src/Hello'
+import Home from '../src/Home'
 
 export default [
     {
@@ -10,6 +11,10 @@ export default [
             {
                 path: '/me',
                 component: Me
+            },
+            {
+                path: '/home',
+                component: Home
             },
             {
                 path: '/hello',
