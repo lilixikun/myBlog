@@ -24,7 +24,7 @@ const sequelize = new Sequelize(dbName, user, password, {
 
 // 注意: `force: true` 选项会在表存在时首先删除表
 sequelize.sync({
-    force: false
+    force: true
 })
 
 // 测试连接是否正常

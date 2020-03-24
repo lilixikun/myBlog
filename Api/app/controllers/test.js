@@ -1,4 +1,5 @@
 const Test = require('../models/test')
+const Blog = require('../models/bolg')
 const { Faild } = require('../../core/httpException')
 
 class testController {
