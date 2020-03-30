@@ -9,15 +9,13 @@ import store from './store'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <HashRouter>
-        <Switch>
-          {renderRoutes(routers)}
-        </Switch>
-      </HashRouter>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <HashRouter>
+      <Switch>
+        {renderRoutes(routers)}
+      </Switch>
+    </HashRouter>
+  </Provider>,
   document.getElementById('root')
 );
 
