@@ -1,4 +1,4 @@
-const { override, fixBabelImports, addLessLoader, addWebpackPlugin } = require('customize-cra');
+const { override, fixBabelImports, addLessLoader, addWebpackPlugin,addDecoratorsLegacy } = require('customize-cra');
 const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin');
 const darkThemeVars = require('antd/dist/dark-theme');
 
@@ -16,5 +16,6 @@ module.exports = override(
             '@primary-color': '#1DA57A'
         },
     }),
-    addWebpackPlugin(new AntdDayjsWebpackPlugin())
+    addWebpackPlugin(new AntdDayjsWebpackPlugin()),
+    addDecoratorsLegacy()
 );
