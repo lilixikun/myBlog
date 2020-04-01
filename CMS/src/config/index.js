@@ -1,13 +1,13 @@
 export const menus = [
     {
         menuName: '分类管理',
-        path: '/menu',
+        path: '/blog/list',
         key: '0',
         icon: 'SyncOutlined',
         subMenu: [
             {
                 menuName: '类别管理',
-                path: '/menu/blog',
+                path: '/blog/list',
                 key: '0-0',
                 icon: 'SyncOutlined'
             },

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import { HashRouter, Switch } from 'react-router-dom'
+import { HashRouter, Switch, Redirect } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
 import routers from './router';
 import store from './store'
@@ -13,7 +13,9 @@ ReactDOM.render(
     <HashRouter>
       <Switch>
         {renderRoutes(routers)}
+        <Redirect to="/404" push />
       </Switch>
+     
     </HashRouter>
   </Provider>,
   document.getElementById('root')

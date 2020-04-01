@@ -25,28 +25,31 @@ const LoadableComponent = (loader) => {
 
 export default [
     {
+        path: '/404',
+        component: LoadableComponent(() => import('./page/result/NoFound'))
+    },
+    {
         path: '/',
         component: LoadableComponent(() => import('./App')),
         routes: [
             {
                 path: '/me',
-                component: Users
+                component: Users,
+                exact: true
             },
             {
-                path: '/home',
-                component: Home
+                path: '/blog/list',
+                component: LoadableComponent(() => import('./page/home/bolg/List')),
+                exact: true
             },
             {
                 path: '/about',
-                component: About
+                component: About,
+                exact: true
             }
         ]
     }
 ]
-
-function Home() {
-    return <h2>Home</h2>;
-}
 
 function About() {
     return <h2>About</h2>;

@@ -25,7 +25,12 @@ const Index = (props) => {
         return (
             menuData.map(menu => {
                 if (menu.subMenu && menu.subMenu.length) {
-                    return <Menu.SubMenu key={menu.key} title={menu.menuName}>
+                    return <Menu.SubMenu key={menu.key} title={
+                        <span>
+                            <ShopOutlined />
+                            <span>{menu.menuName}</span>
+                        </span>
+                    }>
                         {renderMenu(menu.subMenu)}
                     </Menu.SubMenu>
                 } else {
