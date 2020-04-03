@@ -1,16 +1,30 @@
-import { BLOG_VISIBLE, BLOG_ADD, BLOG_DEL } from './constants'
+import { BLOG_VISIBLE, BLOG_CHANGBLOGSORTS, BLOG_CREATE, BLOG_DEL, BLOG_SETRECORD } from './constants'
 
-const initState = {
+let initState = {
     visible: false,
-    dataList: [1, 2]
+    // 表格数据
+    dataSource: [],
+    // 单列信息
+    record: {
+        status: 1,
+        clickCount: 100,
+        sort: 1
+    }
 }
 export default (state = initState, action) => {
     switch (action.type) {
         case BLOG_VISIBLE:
+            console.log(action.data);
+            
             return { ...state, ...action.data }
-        case BLOG_ADD:
+        case BLOG_CHANGBLOGSORTS:
+            return { ...state, ...action.data }
+        case BLOG_CREATE:
+            return { ...state, ...action.data }
+        case BLOG_SETRECORD:
+            console.log(action.data);
 
-            break;
+            return { ...state, ...action.data }
         case BLOG_DEL:
             break;
         default:

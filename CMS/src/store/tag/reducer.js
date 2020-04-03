@@ -1,5 +1,5 @@
 import { TAG_ADD, TAG_VISIBLE, TAG_DEL } from './constants'
-
+import { getTags, addTag, delTag } from '../../request/api'
 const initState = {
     visible: false,
     dataList: [1, 2]

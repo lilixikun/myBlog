@@ -3,31 +3,33 @@ import { connect } from "react-redux"
 import { Modal, Form, Input, Button, Radio, InputNumber, Space } from "antd"
 import { CheckOutlined, SyncOutlined } from '@ant-design/icons';
 import { layout, tailLayout } from "../../utils"
-import { changeVisible } from '../../../store/blog/actions'
+import { changeVisible, addBlog } from '../../../store/blog/actions'
 
 function Add(props) {
     const [form] = Form.useForm();
-    const { visible } = props
-    const { setVisible } = props
+    const { visible, record } = props
+    const { setVisible, createBlog } = props
 
-    const onCancel = () => setVisible({ visible: false })
+    const onCancel = () => setVisible({ visible: false, record: {} })
 
     const onFinish = (values) => {
+        createBlog(values)
         console.log(values)
     }
     const onReset = () => form.resetFields()
+    console.log(record);
+
     return (
-        <Modal visible={visible} onCancel={onCancel} footer={null}>
+        <Modal visible={visible} onCancel={onCancel} footer={null} destroyOnClose>
             <Form form={form} layout="horizontal" onFinish={onFinish} {...layout}
-                initialValues={{
-                    status: 1,
-                    clickCount: 100,
-                    sort: 1
-                }}
+                initialValues={record}
             >
+                <Form.Item name="uid" style={{ display: "none" }}>
+                    <Input type="hidden" />
+                </Form.Item>
                 <Form.Item
                     label="分类名称"
-                    name="blogName"
+                    name="sortName"
                     rules={[{ required: true, message: "请输入博客分类名称" }]}
                 >
                     <Input placeholder="请输入博客分类名称" />
@@ -48,10 +50,8 @@ function Add(props) {
                     <Input.TextArea autoSize maxLength={255} allowClear placeholder="最多可输入250字" />
                 </Form.Item>
                 <Form.Item {...tailLayout}>
-                    <Space>
-                        <Button type="primary" htmlType="submit" icon={<CheckOutlined />}>确定</Button>
-                        <Button type="danger" onClick={onReset} icon={<SyncOutlined />}>重置</Button>
-                    </Space>
+                    <Button type="primary" htmlType="submit" icon={<CheckOutlined />} style={{ marginRight: 8 }}>确定</Button>
+                    <Button type="danger" onClick={onReset} icon={<SyncOutlined />}>重置</Button>
                 </Form.Item>
             </Form>
         </Modal>
@@ -59,12 +59,14 @@ function Add(props) {
 }
 
 const mapStateToProps = ({ blog }) => ({
-    visible: blog.visible
+    visible: blog.visible,
+    record: blog.record
 })
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setVisible: (visible) => dispatch(changeVisible(visible))
+        setVisible: (visible) => dispatch(changeVisible(visible)),
+        createBlog: date => dispatch(addBlog(date))
     }
 
 }

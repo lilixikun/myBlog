@@ -1,43 +1,18 @@
-import React, { useState } from "react"
-import { Form, Input, Button, Table, Card, Popconfirm, Row } from "antd"
+import React, { useEffect } from "react"
+import { Form, Input, Button, Table, Card, Popconfirm, Row, Badge } from "antd"
 import { PlusOutlined, DatabaseOutlined, DownloadOutlined } from '@ant-design/icons';
 import { connect } from "react-redux";
-import numeral from "numeral"
-import { changeVisible } from '../../../store/blog/actions'
+import { changeVisible, removeBlog, getBlogList, changeRecord } from '../../../store/blog/actions'
 import Add from "./Add"
 import { buttonItemLayout } from "../../utils"
 
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-    },
-];
 function List(props) {
 
     const columns = [
         {
             title: '分类名称',
             dataIndex: 'sortName',
-            key: 'sortName',
-            render: text => <a>{text}</a>,
+            key: 'sortName'
         },
         {
             title: '点击数',
@@ -47,7 +22,8 @@ function List(props) {
         {
             title: '状态',
             key: 'status',
-            dataIndex: 'status'
+            dataIndex: 'status',
+            render: (status) => status ? <Badge status="success" text="启动" /> : <Badge status="erros" text="禁用" />
         },
         {
             title: '创建时间',
@@ -59,8 +35,8 @@ function List(props) {
             key: 'action',
             render: (text, record) => (
                 <span>
-                    <a>修改</a>
-                    <Popconfirm title="确定删除吗?" okText="确定" cancelText="取消">
+                    <a onClick={() => updateBlog(record)}>修改</a>
+                    <Popconfirm title="确定删除吗?" okText="确定" cancelText="取消" onConfirm={() => onDelByUid(record.uid)}>
                         <a style={{ color: '#a61d24', marginLeft: 16 }}>删除</a>
                     </Popconfirm>
                 </span>
@@ -68,26 +44,33 @@ function List(props) {
         },
     ];
 
-    console.log(numeral(133342.2243332).format("0,0.000000"));
-   
-
-    var number = numeral(0.1);
-    console.log(number.add(0.2)._value);
-
     const [form] = Form.useForm();
+    const { dataSource } = props
 
-    let { setVisible } = props
-    const onFinish = values => {
-        console.log(values);
-    }
+    let { setVisible, removeBlogByUid, findAll, setRecord } = props
 
-    const reset = () => {
-        form.resetFields()
-    }
+    useEffect(() => {
+        if (dataSource.length === 0) {
+            findAll();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const onFinish = values => { }
+
+    const reset = () => form.resetFields()
 
     const add = () => setVisible({ visible: true })
-    const onCancel = () => setVisible({ visible: false })
 
+    const updateBlog = (record) => {
+        console.log(record);
+        setVisible({ visible: true })
+
+
+        setRecord({ record })
+    }
+    const onCancel = () => setVisible({ visible: false })
+    const onDelByUid = uid => removeBlogByUid(uid)
     return (
         <Card>
             <Form form={form} layout="inline" onFinish={onFinish}>
@@ -110,21 +93,24 @@ function List(props) {
                 <DownloadOutlined style={{ fontSize: 16 }} />
             </Row>
             <div style={{ marginTop: 8 }}>
-                <Table dataSource={data} columns={columns} bordered size="middle" pagination={false} />
+                <Table rowKey="uid" dataSource={dataSource} columns={columns} bordered size="middle" pagination={false} />
             </div>
-            <Add onCancel={onCancel} />
+            <Add />
         </Card>
     )
 }
 
 const mapStateToProps = ({ blog }) => ({
     visible: blog.visible,
-    dataList: blog.dataList
+    dataSource: blog.dataSource
 })
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setVisible: (visible) => dispatch(changeVisible(visible))
+        setVisible: (visible) => dispatch(changeVisible(visible)),
+        removeBlogByUid: uid => dispatch(removeBlog(uid)),
+        findAll: () => dispatch(getBlogList()),
+        setRecord: record => dispatch(changeRecord(record))
     }
 
 }
