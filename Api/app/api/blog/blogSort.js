@@ -1,17 +1,40 @@
 const Router = require("koa-router");
-
 const router = new Router({
-    prefix:'/blogSort'
+    prefix: '/api/blogSort'
 })
 
+const BlogSortVal = require('../../validators/blogSort')
+
 const blogSortController = require('../../controllers/blogSort')
+
+const { Success, ParameterExceptio } = require('../../../core/httpException')
 
 router.get('/findAll', async (ctx, next) => {
 
     const data = await blogSortController.findAll()
 
-    ctx.body = data
+    throw new Success(data)
 })
+
+router.post('/create', async (ctx) => {
+    const validators = await new BlogSortVal().validate(ctx)
+
+    blogSortController.create(ctx.request.body)
+
+    throw new Success()
+})
+
+
+
+router.delete('/del/:uid', async (ctx) => {
+    if (!ctx.params.uid) {
+        throw new ParameterExceptio('uid必填!')
+    }
+    const data = await blogSortController.delete(ctx.params.uid)
+
+    throw new Success()
+})
+
 
 
 module.exports = router

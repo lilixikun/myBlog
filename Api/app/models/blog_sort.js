@@ -2,7 +2,7 @@
  * @Author: kun.xi 
  * @Date: 2020-03-18 12:01:26 
  * @Last Modified by: xikun
- * @Last Modified time: 2020-03-30 15:42:00
+ * @Last Modified time: 2020-04-03 16:04:32
  */
 const { Model, Sequelize } = require('sequelize')
 const { sequelize } = require('../../core/db')
@@ -18,11 +18,11 @@ BlogSort.init(
             allowNull: false,
             primaryKey: true
         },
-        sort_name: Sequelize.STRING,
+        sortName: Sequelize.STRING,
         content: Sequelize.STRING,
         status: Sequelize.BOOLEAN,
         sort: Sequelize.INTEGER,
-        click_count: Sequelize.INTEGER
+        clickCount: Sequelize.INTEGER
     },
     {
         createdAt: 'create_time',
