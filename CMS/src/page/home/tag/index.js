@@ -4,7 +4,7 @@ import { PlusOutlined, DatabaseOutlined, DownloadOutlined } from '@ant-design/ic
 import { connect } from "react-redux";
 import numeral from "numeral"
 import { changeVisible } from '../../../store/blog/actions'
-import Add from "./Add"
+import Edit from './Edit'
 import { buttonItemLayout } from "../../utils"
 
 const data = [
@@ -34,7 +34,7 @@ function List(props) {
 
     const columns = [
         {
-            title: '分类名称',
+            title: '标签名称',
             dataIndex: 'sortName',
             key: 'sortName',
             render: text => <a>{text}</a>,
@@ -69,7 +69,7 @@ function List(props) {
     ];
 
     console.log(numeral(133342.2243332).format("0,0.000000"));
-   
+
 
     var number = numeral(0.1);
     console.log(number.add(0.2)._value);
@@ -91,7 +91,7 @@ function List(props) {
     return (
         <Card>
             <Form form={form} layout="inline" onFinish={onFinish}>
-                <Form.Item label="分类名称" name="blogName">
+                <Form.Item label="标签名称" name="blogName">
                     <Input placeholder="请输入博客名称" />
                 </Form.Item>
                 <Form.Item label="状态" name="status">
@@ -112,14 +112,14 @@ function List(props) {
             <div style={{ marginTop: 8 }}>
                 <Table dataSource={data} columns={columns} bordered size="middle" pagination={false} />
             </div>
-            <Add onCancel={onCancel} />
+            <Edit />
         </Card>
     )
 }
 
-const mapStateToProps = ({ blog }) => ({
-    visible: blog.visible,
-    dataList: blog.dataList
+const mapStateToProps = ({ tag }) => ({
+    visible: tag.visible,
+    dataList: tag.dataList
 })
 
 const mapDispatchToProps = (dispatch) => {

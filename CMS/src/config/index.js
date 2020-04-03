@@ -13,7 +13,7 @@ export const menus = [
             },
             {
                 menuName: '标签管理',
-                path: '/menu/path',
+                path: '/tag/list',
                 key: '0-1',
                 icon: 'SyncOutlined'
             }

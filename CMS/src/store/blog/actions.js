@@ -1,11 +1,16 @@
-import * as constants from './constants'
+import { BLOG_VISIBLE, BLOG_ADD, BLOG_DEL } from './constants'
+
+export const changeVisible = data => ({
+    type: BLOG_VISIBLE,
+    data
+})
 
 export const blogAdd = data => ({
-    type: constants.BOLG_ADD,
+    type: BLOG_ADD,
     data
 })
 
 export const bolgDel = data => ({
-    type: constants.BLOG_DEL,
+    type: BLOG_DEL,
     data
 })

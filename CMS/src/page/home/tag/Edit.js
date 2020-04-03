@@ -26,11 +26,11 @@ function Add(props) {
                 }}
             >
                 <Form.Item
-                    label="分类名称"
-                    name="blogName"
-                    rules={[{ required: true, message: "请输入博客分类名称" }]}
+                    label="标签名称"
+                    name="tagName"
+                    rules={[{ required: true, message: "请输入标签名称" }]}
                 >
-                    <Input placeholder="请输入博客分类名称" />
+                    <Input placeholder="请输入标签名称" />
                 </Form.Item>
                 <Form.Item label="显示顺序" name="sort">
                     <InputNumber min={1} />
@@ -44,7 +44,7 @@ function Add(props) {
                         <Radio value={0}>禁用</Radio>
                     </Radio.Group>
                 </Form.Item>
-                <Form.Item label="分类简介" name="content">
+                <Form.Item label="标签简介" name="content">
                     <Input.TextArea autoSize maxLength={255} allowClear placeholder="最多可输入250字" />
                 </Form.Item>
                 <Form.Item {...tailLayout}>

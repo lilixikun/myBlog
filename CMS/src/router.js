@@ -1,5 +1,6 @@
 import React from 'react'
 import Loadable from 'react-loadable';
+import { Redirect } from "react-router-dom"
 import { Spin } from 'antd';
 
 const style = {
@@ -32,6 +33,13 @@ export default [
         path: '/',
         component: LoadableComponent(() => import('./App')),
         routes: [
+            // {
+            //     path: "/",
+            //     exact: true,
+            //     // render: () => (
+            //     //     <Redirect to={"/404"} />
+            //     // )
+            // },
             {
                 path: '/me',
                 component: Users,
@@ -45,6 +53,11 @@ export default [
             {
                 path: '/about',
                 component: About,
+                exact: true
+            },
+            {
+                page: '/tag/list',
+                component: LoadableComponent(() => import('./page/home/tag/index')),
                 exact: true
             }
         ]

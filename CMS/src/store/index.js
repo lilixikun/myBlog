@@ -1,10 +1,13 @@
 import { createStore, applyMiddleware } from 'redux'
-import saga from 'redux-saga'
-import reducers from './reducers'
+import thunk from 'redux-thunk';
+import reducer from './reducers'
+
+// 定义中间件的数组
+const middleware = [thunk]
 
 const store = createStore(
-    reducers,
-    applyMiddleware(saga)
+    reducer,
+    applyMiddleware(...middleware)
 )
 
 export default store

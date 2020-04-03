@@ -1,8 +1,9 @@
-import {combineReducers} from "redux"
-import { reducer as blogReducer } from "../store/blog"
+import { combineReducers } from "redux"
+import { reducer as blogReducer } from "./blog"
+import { reducer as tagReducer } from "./tag"
 
-const reducers = combineReducers({
-    blog: blogReducer
+
+export default combineReducers({
+    blog: blogReducer,
+    tag: tagReducer
 })
-
-export default reducers
