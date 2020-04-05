@@ -2,7 +2,7 @@
  * @Author: kun.xi 
  * @Date: 2020-03-24 15:29:06 
  * @Last Modified by: xikun
- * @Last Modified time: 2020-04-03 10:29:57
+ * @Last Modified time: 2020-04-05 09:48:36
  */
 const { Model, Sequelize } = require('sequelize')
 const { sequelize } = require('../../core/db')
@@ -18,12 +18,12 @@ Tag.init(
             allowNull: false,
             primaryKey: true
         },
-        tag_name: {
+        tagName: {
             type: Sequelize.STRING(255),
             allowNull: false,
         },
         content: Sequelize.STRING(1000),
-        click_count: Sequelize.INTEGER,
+        clickCount: Sequelize.INTEGER,
         status: {
             type: Sequelize.BOOLEAN,
             defaultValuee: 1
@@ -34,7 +34,7 @@ Tag.init(
         createdAt: 'create_time',
         updatedAt: 'update_time',
         underscored: true,
-        tableName: 't_role',
+        tableName: 't_tag',
         comment: '标签表',
         sequelize,
         freezeTableName: true

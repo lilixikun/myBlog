@@ -1,11 +1,11 @@
-const BlogSort = require('../models/blog_sort')
+const Tag = require('../models/tag')
 const { Faild } = require('../../core/httpException')
 const { getUID } = require('../lib/utils')
 
-class blogSortController {
+class TagController {
 
     static async findAll() {
-        const res = await BlogSort.findAll({
+        const res = await Tag.findAll({
             order: [
                 ['sort', 'DESC'],
                 ['create_time', 'DESC']
@@ -21,9 +21,7 @@ class blogSortController {
         // 修改
         let res
         if (obj.uid) {
-
-            console.log(obj);
-            res = await BlogSort.update(obj, {
+            res = await Tag.update(obj, {
                 where: {
                     uid: obj.uid
                 }
@@ -33,7 +31,7 @@ class blogSortController {
             }
         } else {
             obj.uid = getUID()
-            res = await BlogSort.create(obj)
+            res = await Tag.create(obj)
             if (!res) {
                 throw new Faild('添加失败')
             }
@@ -42,7 +40,7 @@ class blogSortController {
     }
 
     static async delete(uid) {
-        const res = await BlogSort.destroy({
+        const res = await Tag.destroy({
             where: {
                 uid
             }
@@ -54,4 +52,4 @@ class blogSortController {
     }
 }
 
-module.exports = blogSortController
+module.exports = TagController
