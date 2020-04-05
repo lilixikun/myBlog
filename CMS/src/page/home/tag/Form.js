@@ -1,38 +1,38 @@
 import React from "react"
 import { connect } from "react-redux"
-import { Modal, Form, Input, Button, Radio, InputNumber, Space } from "antd"
+import { Modal, Form, Input, Button, Radio, InputNumber } from "antd"
 import { CheckOutlined, SyncOutlined } from '@ant-design/icons';
 import { layout, tailLayout } from "../../utils"
-import { changeVisible, addBlog } from '../../../store/blog/actions'
+import { changeVisible, addTag } from '../../../store/tag/actions'
 
 function Add(props) {
     const [form] = Form.useForm();
     const { visible, record } = props
-    const { setVisible, createBlog } = props
+    const { setVisible, createTag } = props
 
     const onCancel = () => setVisible({ visible: false, record: {} })
 
-    const onFinish = (values) => {
-        createBlog(values)
-        console.log(values)
-    }
+    const onFinish = (values) => createTag(values)
     const onReset = () => form.resetFields()
-    console.log(record);
-
     return (
-        <Modal visible={visible} onCancel={onCancel} footer={null} destroyOnClose>
+        <Modal visible={visible} onCancel={onCancel} footer={null}>
             <Form form={form} layout="horizontal" onFinish={onFinish} {...layout}
-                initialValues={record}
+                initialValues={{
+                    status: true,
+                    clickCount: 100,
+                    sort: 1,
+                    ...record
+                }}
             >
                 <Form.Item name="uid" style={{ display: "none" }}>
                     <Input type="hidden" />
                 </Form.Item>
                 <Form.Item
-                    label="分类名称"
-                    name="sortName"
-                    rules={[{ required: true, message: "请输入博客分类名称" }]}
+                    label="标签名称"
+                    name="tagName"
+                    rules={[{ required: true, message: "请输入标签名称" }]}
                 >
-                    <Input placeholder="请输入博客分类名称" />
+                    <Input placeholder="请输入标签名称" />
                 </Form.Item>
                 <Form.Item label="显示顺序" name="sort">
                     <InputNumber min={1} />
@@ -42,11 +42,11 @@ function Add(props) {
                 </Form.Item>
                 <Form.Item label="状态" name="status">
                     <Radio.Group>
-                        <Radio value={1}>可用</Radio>
-                        <Radio value={0}>禁用</Radio>
+                        <Radio value={true}>可用</Radio>
+                        <Radio value={false}>禁用</Radio>
                     </Radio.Group>
                 </Form.Item>
-                <Form.Item label="分类简介" name="content">
+                <Form.Item label="标签简介" name="content">
                     <Input.TextArea autoSize maxLength={255} allowClear placeholder="最多可输入250字" />
                 </Form.Item>
                 <Form.Item {...tailLayout}>
@@ -58,15 +58,15 @@ function Add(props) {
     )
 }
 
-const mapStateToProps = ({ blog }) => ({
-    visible: blog.visible,
-    record: blog.record
+const mapStateToProps = ({ tag }) => ({
+    visible: tag.visible,
+    record: tag.record
 })
 
 const mapDispatchToProps = (dispatch) => {
     return {
         setVisible: (visible) => dispatch(changeVisible(visible)),
-        createBlog: date => dispatch(addBlog(date))
+        createTag: data => dispatch(addTag(data))
     }
 
 }

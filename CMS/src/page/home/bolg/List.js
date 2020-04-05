@@ -1,9 +1,9 @@
 import React, { useEffect } from "react"
 import { Form, Input, Button, Table, Card, Popconfirm, Row, Badge } from "antd"
-import { PlusOutlined, DatabaseOutlined, DownloadOutlined } from '@ant-design/icons';
 import { connect } from "react-redux";
 import { changeVisible, removeBlog, getBlogList, changeRecord } from '../../../store/blog/actions'
-import Add from "./Add"
+import BaseTable from '../../../components/BsseTable'
+import BlogSortForm from "./SortForm"
 import { buttonItemLayout } from "../../utils"
 
 function List(props) {
@@ -12,7 +12,9 @@ function List(props) {
         {
             title: '分类名称',
             dataIndex: 'sortName',
-            key: 'sortName'
+            key: 'sortName',
+            render: text => <a>{text}</a>
+
         },
         {
             title: '点击数',
@@ -23,7 +25,7 @@ function List(props) {
             title: '状态',
             key: 'status',
             dataIndex: 'status',
-            render: (status) => status ? <Badge status="success" text="启动" /> : <Badge status="erros" text="禁用" />
+            render: (status) => status ? <Badge status="success" text="启动" /> : <Badge status="error" text="禁用" />
         },
         {
             title: '创建时间',
@@ -45,7 +47,7 @@ function List(props) {
     ];
 
     const [form] = Form.useForm();
-    const { dataSource } = props
+    const { dataSource, visible } = props
 
     let { setVisible, removeBlogByUid, findAll, setRecord } = props
 
@@ -56,47 +58,43 @@ function List(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const onFinish = values => { }
+    const onFinish = values => findAll()
 
-    const reset = () => form.resetFields()
+    const onReset = () => form.resetFields()
 
-    const add = () => setVisible({ visible: true })
+    const onAdd = () => setVisible({ visible: true, record: {} })
 
     const updateBlog = (record) => {
-        console.log(record);
         setVisible({ visible: true })
-
-
         setRecord({ record })
     }
-    const onCancel = () => setVisible({ visible: false })
     const onDelByUid = uid => removeBlogByUid(uid)
     return (
-        <Card>
-            <Form form={form} layout="inline" onFinish={onFinish}>
-                <Form.Item label="分类名称" name="blogName">
-                    <Input placeholder="请输入博客名称" />
-                </Form.Item>
-                <Form.Item label="状态" name="status">
-                    <Input placeholder="请选择状态" />
-                </Form.Item>
-                <Form.Item {...buttonItemLayout}>
-                    <Button type="primary" htmlType="submit">确定</Button>
-                </Form.Item>
-                <Form.Item {...buttonItemLayout}>
-                    <Button type="danger" onClick={reset}>重置</Button>
-                </Form.Item>
-            </Form>
-            <Row justify="end">
-                <PlusOutlined style={{ fontSize: 16 }} onClick={add} />
-                <DatabaseOutlined style={{ fontSize: 16 }} />
-                <DownloadOutlined style={{ fontSize: 16 }} />
-            </Row>
-            <div style={{ marginTop: 8 }}>
-                <Table rowKey="uid" dataSource={dataSource} columns={columns} bordered size="middle" pagination={false} />
-            </div>
-            <Add />
-        </Card>
+        <div>
+            <BaseTable
+                columns={columns}
+                dataSource={dataSource}
+                onAdd={onAdd}
+            >
+                <Form form={form} layout="inline" onFinish={onFinish}>
+                    <Form.Item label="分类名称" name="blogName">
+                        <Input placeholder="请输入博客名称" />
+                    </Form.Item>
+                    <Form.Item label="状态" name="status">
+                        <Input placeholder="请选择状态" />
+                    </Form.Item>
+                    <Form.Item {...buttonItemLayout}>
+                        <Button type="primary" htmlType="submit">确定</Button>
+                    </Form.Item>
+                    <Form.Item {...buttonItemLayout}>
+                        <Button type="danger" onClick={onReset}>重置</Button>
+                    </Form.Item>
+                </Form>
+            </BaseTable>
+            {visible ? (
+                <BlogSortForm />
+            ) : null}
+        </div>
     )
 }
 

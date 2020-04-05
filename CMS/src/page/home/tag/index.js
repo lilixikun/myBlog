@@ -1,53 +1,33 @@
-import React, { useState } from "react"
-import { Form, Input, Button, Table, Card, Popconfirm, Row } from "antd"
+import React, { useEffect } from "react"
+import { Form, Input, Button, Table, Card, Popconfirm, Row, Badge } from "antd"
 import { PlusOutlined, DatabaseOutlined, DownloadOutlined } from '@ant-design/icons';
 import { connect } from "react-redux";
-import numeral from "numeral"
-import { changeVisible } from '../../../store/blog/actions'
-import Edit from './Edit'
+import { changeVisible, getTagList, removeTag, changeRecord } from '../../../store/tag/actions'
+import BaseTable from '../../../components/BsseTable'
+import TagForm from './Form'
 import { buttonItemLayout } from "../../utils"
 
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-    },
-];
 function List(props) {
 
     const columns = [
         {
             title: '标签名称',
-            dataIndex: 'sortName',
-            key: 'sortName',
+            dataIndex: 'tagName',
+            key: 'tagName',
             render: text => <a>{text}</a>,
+            sorter: (a, b) => a.tagName.length - b.tagName.length,
         },
         {
             title: '点击数',
             dataIndex: 'clickCount',
             key: 'clickCount',
+            sorter: (a, b) => a.clickCount - b.clickCount
         },
         {
             title: '状态',
             key: 'status',
-            dataIndex: 'status'
+            dataIndex: 'status',
+            render: (status) => status ? <Badge status="success" text="启动" /> : <Badge status="error" text="禁用" />
         },
         {
             title: '创建时间',
@@ -59,8 +39,8 @@ function List(props) {
             key: 'action',
             render: (text, record) => (
                 <span>
-                    <a>修改</a>
-                    <Popconfirm title="确定删除吗?" okText="确定" cancelText="取消">
+                    <a onClick={() => onUpdateTag(record)}>修改</a>
+                    <Popconfirm title="确定删除吗?" okText="确定" cancelText="取消" onConfirm={() => onDelByUid(record.uid)}>
                         <a style={{ color: '#a61d24', marginLeft: 16 }}>删除</a>
                     </Popconfirm>
                 </span>
@@ -68,31 +48,37 @@ function List(props) {
         },
     ];
 
-    console.log(numeral(133342.2243332).format("0,0.000000"));
-
-
-    var number = numeral(0.1);
-    console.log(number.add(0.2)._value);
 
     const [form] = Form.useForm();
+    const { dataSource, visible } = props
+    let { setVisible, setRecord, findAll, removeTagByUid } = props
 
-    let { setVisible } = props
-    const onFinish = values => {
-        console.log(values);
+    useEffect(() => {
+        if (dataSource.length === 0) {
+            findAll()
+        }
+    }, [])
+
+
+    const onUpdateTag = record => {
+        setVisible({ visible: true })
+        setRecord({ record })
     }
 
-    const reset = () => {
-        form.resetFields()
-    }
-
-    const add = () => setVisible({ visible: true })
-    const onCancel = () => setVisible({ visible: false })
+    const onFinish = values => findAll()
+    const onReset = () => form.resetFields()
+    const onAdd = () => setVisible({ visible: true, record: {} })
+    const onDelByUid = uid => removeTagByUid(uid)
 
     return (
-        <Card>
+        <BaseTable
+            columns={columns}
+            dataSource={dataSource}
+            onAdd={onAdd}
+        >
             <Form form={form} layout="inline" onFinish={onFinish}>
                 <Form.Item label="标签名称" name="blogName">
-                    <Input placeholder="请输入博客名称" />
+                    <Input placeholder="请输入标签名称" />
                 </Form.Item>
                 <Form.Item label="状态" name="status">
                     <Input placeholder="请选择状态" />
@@ -101,30 +87,27 @@ function List(props) {
                     <Button type="primary" htmlType="submit">确定</Button>
                 </Form.Item>
                 <Form.Item {...buttonItemLayout}>
-                    <Button type="danger" onClick={reset}>重置</Button>
+                    <Button type="danger" onClick={onReset}>重置</Button>
                 </Form.Item>
             </Form>
-            <Row justify="end">
-                <PlusOutlined style={{ fontSize: 16 }} onClick={add} />
-                <DatabaseOutlined style={{ fontSize: 16 }} />
-                <DownloadOutlined style={{ fontSize: 16 }} />
-            </Row>
-            <div style={{ marginTop: 8 }}>
-                <Table dataSource={data} columns={columns} bordered size="middle" pagination={false} />
-            </div>
-            <Edit />
-        </Card>
+
+            {
+                visible ? <TagForm /> : null
+            }
+        </BaseTable>
     )
 }
 
 const mapStateToProps = ({ tag }) => ({
     visible: tag.visible,
-    dataList: tag.dataList
+    dataSource: tag.dataSource
 })
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setVisible: (visible) => dispatch(changeVisible(visible))
+        setVisible: (visible) => dispatch(changeVisible(visible)),
+        setRecord: record => dispatch(changeRecord(record)),
+        findAll: data => dispatch(getTagList(data))
     }
 
 }

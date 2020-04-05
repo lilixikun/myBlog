@@ -1,17 +1,50 @@
-import { TAG_ADD, TAG_VISIBLE, TAG_DEL } from './constants'
+import { TAG_CHANGETAGS, TAG_VISIBLE, TAG_SETRECORD } from './constants'
+import { getTags, createTag, delTag } from '../../request/api'
 
+export const getTagList = data => {
+    return dispatch => {
+        getTags(data).then(res => {
+            let dataSource = res && res.msg;
+            dispatch(changeTags(dataSource))
+        })
+    }
+}
+
+const changeTags = data => ({
+    type: TAG_CHANGETAGS,
+    data
+})
 
 export const changeVisible = data => ({
     type: TAG_VISIBLE,
     data
 })
 
-export const addTag = data => ({
-    type: TAG_ADD,
+export const changeRecord = data => ({
+    type: TAG_SETRECORD,
     data
 })
 
-export const delTag = data => ({
-    type: TAG_DEL,
-    data
-})
+export const addTag = data => {
+    return dispatch => {
+        createTag(data).then(res => {
+            if (res && res.errorCode === 200) {
+                setTimeout(() => {
+                    dispatch(getTagList())
+                }, 1000);
+            }
+            dispatch(changeVisible({ visible: false }))
+        })
+
+    }
+}
+
+export const removeTag = data => {
+    return dispatch => {
+        delTag(data).then(res => {
+            if (res && res.errorCode === 200) {
+                dispatch(getTagList())
+            }
+        })
+    }
+}

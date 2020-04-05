@@ -3,17 +3,21 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 import { HashRouter, Switch } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
+import { ConfigProvider } from "antd"
+import zhCN from 'antd/es/locale/zh_CN';
 import routers from './router';
 import store from './store'
-
 import * as serviceWorker from './serviceWorker';
+import './index.less'
 
 ReactDOM.render(
   <Provider store={store}>
     <HashRouter>
-      <Switch>
-        {renderRoutes(routers)}
-      </Switch>
+      <ConfigProvider locale={zhCN}>
+        <Switch>
+          {renderRoutes(routers)}
+        </Switch>
+      </ConfigProvider>
     </HashRouter>
   </Provider>,
   document.getElementById('root')

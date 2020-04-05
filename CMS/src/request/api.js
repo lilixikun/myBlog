@@ -8,7 +8,7 @@ export const createBlog = data => post('/blogSort/create', data)
 export const delBlog = uid => del(`/blogSort/del/${uid}`)
 
 // 获取标签分类列表
-export const getTags = parms => get('/tag/list', parms)
+export const getTags = parms => get('/tag/findAll', parms)
 // 添加标签
 export const createTag = data => post('/tag/create', data)
 // 删除标签

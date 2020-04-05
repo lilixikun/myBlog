@@ -14,16 +14,12 @@ let initState = {
 export default (state = initState, action) => {
     switch (action.type) {
         case BLOG_VISIBLE:
-            console.log(action.data);
-            
             return { ...state, ...action.data }
         case BLOG_CHANGBLOGSORTS:
             return { ...state, ...action.data }
         case BLOG_CREATE:
             return { ...state, ...action.data }
         case BLOG_SETRECORD:
-            console.log(action.data);
-
             return { ...state, ...action.data }
         case BLOG_DEL:
             break;
