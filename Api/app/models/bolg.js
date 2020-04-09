@@ -1,8 +1,8 @@
 /*
  * @Author: kun.xi 
  * @Date: 2020-03-17 17:22:18 
- * @Last Modified by: xi.kun
- * @Last Modified time: 2020-03-18 12:02:32
+ * @Last Modified by: xikun
+ * @Last Modified time: 2020-04-09 10:44:50
  */
 const { Model, Sequelize } = require('sequelize')
 const { sequelize } = require('../../core/db')
@@ -28,48 +28,48 @@ Blog.init(
         content: {
             type: Sequelize.TEXT,
         },
-        tag_uid: {
+        tagUid: {
             type: Sequelize.STRING,
         },
-        click_count: {
+        clickCount: {
             type: Sequelize.INTEGER
         },
-        collect_count: {
+        collectCount: {
             type: Sequelize.INTEGER,
             defaultValue: 0
         },
-        file_uid: {
+        fileUid: {
             type: Sequelize.STRING
         },
         status: {
             type: Sequelize.BOOLEAN
         },
-        admin_uid: {
+        adminUid: {
             type: Sequelize.STRING
         },
-        is_original: {
+        isOriginal: {
             type: Sequelize.STRING
         },
         author: {
             type: Sequelize.STRING
         },
-        articles_part: {
+        articlesPart: {
             type: Sequelize.STRING
         },
-        blog_sort_uid: {
+        blogSortUid: {
             type: Sequelize.STRING
         },
         level: {
             type: Sequelize.BOOLEAN
         },
-        is_publish: {
+        isPublish: {
             type: Sequelize.STRING
         },
         sort: Sequelize.INTEGER
     },
     {
-        createdAt: 'create_time',
-        updatedAt: 'update_time',
+        createdAt: 'createTime',
+        updatedAt: 'updateTime',
         underscored: true,
         tableName: 't_blog',
         comment: '博客表',
