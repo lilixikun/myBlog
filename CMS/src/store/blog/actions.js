@@ -1,11 +1,11 @@
-import { BLOG_VISIBLE, BLOG_CHANGBLOGSORTS, BLOG_CREATE, BLOG_DEL, BLOG_SETRECORD } from './constants'
-import { getBlogSorts, createBlog, delBlog } from "../../request/api"
+import { BLOG_VISIBLE, BLOG_CHANGBLOGSORTS, BLOG_SETRECORD } from './constants'
+import { getBlogs, createBlog, delBlog } from "../../request/api"
 
 export const getBlogList = data => {
 
     return dispatch => {
-        getBlogSorts().then(data => {
-            let dataSource = data && data.msg;
+        getBlogs().then(res => {
+            let dataSource = res && res.msg;
             dispatch(changeBlogSorts({ dataSource }))
         })
     }
@@ -40,7 +40,9 @@ export const addBlog = data => {
 export const removeBlog = data => {
     return dispatch => {
         delBlog(data).then(res => {
-
+            if (res.errorCode === 200) {
+                dispatch(getBlogList())
+            }
         }).catch()
     }
 }

@@ -1,9 +1,9 @@
 import React from "react"
 import { connect } from "react-redux"
-import { Modal, Form, Input, Button, Radio, InputNumber, Space } from "antd"
+import { Modal, Form, Input, Button, Radio, InputNumber } from "antd"
 import { CheckOutlined, SyncOutlined } from '@ant-design/icons';
 import { layout, tailLayout } from "../../utils"
-import { changeVisible, addBlog } from '../../../store/blog/actions'
+import { changeVisible, addBlogSort } from '../../../store/blogSort/actions'
 
 function Add(props) {
     const [form] = Form.useForm();
@@ -60,15 +60,15 @@ function Add(props) {
     )
 }
 
-const mapStateToProps = ({ blog }) => ({
-    visible: blog.visible,
-    record: blog.record
+const mapStateToProps = ({ blogSort }) => ({
+    visible: blogSort.visible,
+    record: blogSort.record
 })
 
 const mapDispatchToProps = (dispatch) => {
     return {
         setVisible: (visible) => dispatch(changeVisible(visible)),
-        createBlog: date => dispatch(addBlog(date))
+        createBlog: date => dispatch(addBlogSort(date))
     }
 
 }

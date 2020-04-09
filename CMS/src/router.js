@@ -33,21 +33,14 @@ export default [
         path: '/',
         component: LoadableComponent(() => import('./App')),
         routes: [
-            // {
-            //     path: "/",
-            //     exact: true,
-            //     // render: () => (
-            //     //     <Redirect to={"/404"} />
-            //     // )
-            // },
             {
                 path: '/me',
                 component: Users,
                 exact: true
             },
             {
-                path: '/blog/list',
-                component: LoadableComponent(() => import('./page/home/bolg/List')),
+                path: '/blogSort/list',
+                component: LoadableComponent(() => import('./page/home/bolgSort')),
                 exact: true
             },
             {
@@ -56,8 +49,13 @@ export default [
                 exact: true
             },
             {
+                path: '/blog/list',
+                component: LoadableComponent(() => import('./page/home/blog')),
+                exact: true
+            },
+            {
                 page: '/tag/list',
-                component: LoadableComponent(() => import('./page/home/tag/index')),
+                component: LoadableComponent(() => import('./page/home/tag')),
                 exact: true
             }
         ]

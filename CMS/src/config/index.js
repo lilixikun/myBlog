@@ -7,7 +7,7 @@ export const menus = [
         subMenu: [
             {
                 menuName: '类别管理',
-                path: '/blog/list',
+                path: '/blogSort/list',
                 key: '0-0',
                 icon: 'SyncOutlined'
             },

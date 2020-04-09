@@ -1,9 +1,9 @@
 import React, { useEffect } from "react"
-import { Form, Input, Button, Table, Card, Popconfirm, Row, Badge } from "antd"
+import { Form, Input, Button, Popconfirm, Badge } from "antd"
 import { connect } from "react-redux";
-import { changeVisible, removeBlog, getBlogList, changeRecord } from '../../../store/blog/actions'
+import { changeVisible, removeBlogSort, getBlogSortList, changeRecord } from '../../../store/blogSort/actions'
 import BaseTable from '../../../components/BsseTable'
-import BlogSortForm from "./SortForm"
+import BlogSortForm from "./Form"
 import { buttonItemLayout } from "../../utils"
 
 function List(props) {
@@ -98,16 +98,16 @@ function List(props) {
     )
 }
 
-const mapStateToProps = ({ blog }) => ({
-    visible: blog.visible,
-    dataSource: blog.dataSource
+const mapStateToProps = ({ blogSort }) => ({
+    visible: blogSort.visible,
+    dataSource: blogSort.dataSource
 })
 
 const mapDispatchToProps = (dispatch) => {
     return {
         setVisible: (visible) => dispatch(changeVisible(visible)),
-        removeBlogByUid: uid => dispatch(removeBlog(uid)),
-        findAll: () => dispatch(getBlogList()),
+        removeBlogByUid: uid => dispatch(removeBlogSort(uid)),
+        findAll: () => dispatch(getBlogSortList()),
         setRecord: record => dispatch(changeRecord(record))
     }
 

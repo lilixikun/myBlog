@@ -1,6 +1,5 @@
 import React, { useEffect } from "react"
-import { Form, Input, Button, Table, Card, Popconfirm, Row, Badge } from "antd"
-import { PlusOutlined, DatabaseOutlined, DownloadOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Popconfirm, Badge } from "antd"
 import { connect } from "react-redux";
 import { changeVisible, getTagList, removeTag, changeRecord } from '../../../store/tag/actions'
 import BaseTable from '../../../components/BsseTable'

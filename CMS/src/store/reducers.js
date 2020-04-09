@@ -1,9 +1,10 @@
 import { combineReducers } from "redux"
-import { reducer as blogReducer } from "./blog"
+import { reducer as blogSortReducer } from "./blogSort"
 import { reducer as tagReducer } from "./tag"
-
+import { reducer as blogReducer } from "./blog"
 
 export default combineReducers({
-    blog: blogReducer,
-    tag: tagReducer
+    blogSort: blogSortReducer,
+    tag: tagReducer,
+    blog: blogReducer
 })
