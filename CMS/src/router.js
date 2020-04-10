@@ -1,7 +1,7 @@
 import React from 'react'
 import Loadable from 'react-loadable';
-import { Redirect } from "react-router-dom"
 import { Spin } from 'antd';
+import { Redirect } from 'react-router-dom';
 
 const style = {
     position: "flexd",
@@ -26,39 +26,42 @@ const LoadableComponent = (loader) => {
 
 export default [
     {
-        path: '/404',
-        component: LoadableComponent(() => import('./page/result/NoFound'))
-    },
-    {
         path: '/',
         component: LoadableComponent(() => import('./App')),
         routes: [
             {
                 path: '/me',
-                component: Users,
-                exact: true
+                component: Users
             },
             {
                 path: '/blogSort/list',
-                component: LoadableComponent(() => import('./page/home/bolgSort')),
-                exact: true
+                exact: true,
+                component: LoadableComponent(() => import('./page/home/bolgSort'))
             },
             {
                 path: '/about',
-                component: About,
-                exact: true
+                component: About
             },
             {
                 path: '/blog/list',
-                component: LoadableComponent(() => import('./page/home/blog')),
-                exact: true
+                exact: true,
+                component: LoadableComponent(() => import('./page/home/blog'))
+            },
+            {
+                path: '/blog/form/:uid',
+                exact: true,
+                component: LoadableComponent(() => import('./page/home/blog/Form'))
             },
             {
                 page: '/tag/list',
-                component: LoadableComponent(() => import('./page/home/tag')),
-                exact: true
+                exact: true,
+                component: LoadableComponent(() => import('./page/home/tag'))
             }
         ]
+    },
+    {
+        page: '*',
+        component: LoadableComponent(() => import('./page/result/NoFound'))
     }
 ]
 

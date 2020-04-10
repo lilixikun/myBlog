@@ -1,14 +1,13 @@
 import { BLOG_VISIBLE, BLOG_CHANGBLOGSORTS, BLOG_CREATE, BLOG_DEL, BLOG_SETRECORD } from './constants'
 
 let initState = {
-    visible: false,
+    // 是否查看
+    disabled: false,
     // 表格数据
     dataSource: [],
     // 单列信息
     record: {
-        status: 1,
-        clickCount: 100,
-        sort: 1
+
     }
 }
 export default (state = initState, action) => {

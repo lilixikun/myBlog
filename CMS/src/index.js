@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import { HashRouter, Switch } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
 import { ConfigProvider } from "antd"
 import zhCN from 'antd/es/locale/zh_CN';
@@ -14,9 +14,7 @@ ReactDOM.render(
   <Provider store={store}>
     <HashRouter>
       <ConfigProvider locale={zhCN}>
-        <Switch>
-          {renderRoutes(routers)}
-        </Switch>
+        {renderRoutes(routers)}
       </ConfigProvider>
     </HashRouter>
   </Provider>,

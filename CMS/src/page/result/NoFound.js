@@ -2,8 +2,6 @@ import React from 'react'
 import { Result, Button } from 'antd';
 
 function NoFound(props) {
-    console.log(props);
-    
     const goHome = () => props.history.push('/')
     return (
         <Result

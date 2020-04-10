@@ -1,12 +1,23 @@
-import React from "react"
+import React, { useEffect } from "react"
+import { connect } from "react-redux";
 import { Layout, BackTop } from "antd"
 import Header from "../components/Header"
 import Content from "../components/Content"
 import Footer from "../components/Footer"
 import Sider from "../components/Sider"
+import { getTagList } from "../store/tag/actions"
+import { getBlogSortList } from "../store/blogSort/actions"
 import "./index.less"
 
-export default function App(props) {
+function App(props) {
+
+    const { findTagAll, findBlogSortAll } = props
+
+    useEffect(() => {
+        findTagAll()
+        findBlogSortAll()
+    }, [])
+
     return (
         <div>
             <BackTop visibilityHeight={50}>
@@ -23,3 +34,12 @@ export default function App(props) {
         </div>
     )
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        findTagAll: data => dispatch(getTagList(data)),
+        findBlogSortAll: () => dispatch(getBlogSortList()),
+    }
+}
+
+export default connect(null, mapDispatchToProps)(App)

@@ -29,9 +29,7 @@ export const addTag = data => {
     return dispatch => {
         createTag(data).then(res => {
             if (res && res.errorCode === 200) {
-                setTimeout(() => {
-                    dispatch(getTagList())
-                }, 1000);
+                dispatch(getTagList())
             }
             dispatch(changeVisible({ visible: false }))
         })

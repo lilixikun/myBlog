@@ -101,12 +101,8 @@ export function get(url, params) {
 
     return new Promise((resolve, reject) => {
         instance.get(url, { params: params })
-            .then(res => {
-                resolve(res);
-            })
-            .catch(err => {
-                reject(err.data)
-            })
+            .then(res => resolve(res))
+            .catch(err => reject(err.data))
     });
 }
 /** 
@@ -117,12 +113,8 @@ export function get(url, params) {
 export function post(url, params) {
     return new Promise((resolve, reject) => {
         instance.post(url, QS.stringify(params))
-            .then(res => {
-                resolve(res);
-            })
-            .catch(err => {
-                reject(err.data)
-            })
+            .then(res => resolve(res))
+            .catch(err => reject(err.data))
     });
 }
 
@@ -133,12 +125,8 @@ export function post(url, params) {
  */
 export function del(url, params) {
     return new Promise((resolve, reject) => {
-        axios.delete(url, params)
-            .then(res => {
-                resolve(res);
-            })
-            .catch(err => {
-                reject(err.data)
-            })
+        instance.delete(url, params)
+            .then(res => resolve(res))
+            .catch(err => reject(err.data))
     });
 }

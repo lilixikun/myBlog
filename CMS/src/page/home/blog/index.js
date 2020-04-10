@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Form, Input, Button, Popconfirm, Badge } from "antd"
+import { Form, Input, Button, Popconfirm, Badge, Divider } from "antd"
 import { connect } from "react-redux";
 import { changeVisible, removeBlog, getBlogList, changeRecord } from '../../../store/blog/actions'
 import BaseTable from '../../../components/BsseTable'
@@ -7,7 +7,6 @@ import BlogForm from "./Form"
 import { buttonItemLayout } from "../../utils"
 
 function List(props) {
-    console.log(props);
 
     const columns = [
         {
@@ -53,9 +52,12 @@ function List(props) {
             key: 'action',
             render: (text, record) => (
                 <span>
-                    <a onClick={() => updateBlog(record)}>修改</a>
+                    <a onClick={() => goForm(record, true)}>查看</a>
+                    <Divider type="vertical" />
+                    <a onClick={() => goForm(record)}>修改</a>
+                    <Divider type="vertical" />
                     <Popconfirm title="确定删除吗?" okText="确定" cancelText="取消" onConfirm={() => onDelByUid(record.uid)}>
-                        <a style={{ color: '#a61d24', marginLeft: 16 }}>删除</a>
+                        <a style={{ color: '#ff7875' }}>删除</a>
                     </Popconfirm>
                 </span>
             ),
@@ -63,9 +65,9 @@ function List(props) {
     ];
 
     const [form] = Form.useForm();
-    const { dataSource, visible } = props
+    const { dataSource } = props
 
-    let { setVisible, removeBlogByUid, findAll, setRecord } = props
+    let { removeBlogByUid, findAll, setRecord, setDisabled } = props
 
     useEffect(() => {
         if (dataSource.length === 0) {
@@ -78,21 +80,20 @@ function List(props) {
 
     const onReset = () => form.resetFields()
 
-    const onAdd = () => setVisible({ visible: true, record: {} })
-
-    const updateBlog = (record) => {
-        setVisible({ visible: true })
+    const goForm = (record, disabled = false) => {
         setRecord({ record })
+        setDisabled({ disabled })
+        props.history.push(`/blog/form/${record.uid}`)
     }
+
     const onDelByUid = uid => removeBlogByUid(uid)
-    console.log(columns);
 
     return (
         <div>
             <BaseTable
                 columns={columns}
                 dataSource={dataSource}
-                onAdd={onAdd}
+                onAdd={() => goForm({})}
             >
                 <Form form={form} layout="inline" onFinish={onFinish}>
                     <Form.Item label="博客标题" name="title">
@@ -109,9 +110,6 @@ function List(props) {
                     </Form.Item>
                 </Form>
             </BaseTable>
-            {visible ? (
-                <BlogForm />
-            ) : null}
         </div>
     )
 }
@@ -123,7 +121,7 @@ const mapStateToProps = ({ blog }) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setVisible: (visible) => dispatch(changeVisible(visible)),
+        setDisabled: disabled => dispatch(changeVisible(disabled)),
         removeBlogByUid: uid => dispatch(removeBlog(uid)),
         findAll: () => dispatch(getBlogList()),
         setRecord: record => dispatch(changeRecord(record))

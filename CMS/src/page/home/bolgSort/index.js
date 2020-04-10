@@ -51,13 +51,6 @@ function List(props) {
 
     let { setVisible, removeBlogByUid, findAll, setRecord } = props
 
-    useEffect(() => {
-        if (dataSource.length === 0) {
-            findAll();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     const onFinish = values => findAll()
 
     const onReset = () => form.resetFields()

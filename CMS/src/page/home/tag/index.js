@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { Form, Input, Button, Popconfirm, Badge } from "antd"
 import { connect } from "react-redux";
 import { changeVisible, getTagList, removeTag, changeRecord } from '../../../store/tag/actions'
@@ -52,13 +52,6 @@ function List(props) {
     const { dataSource, visible } = props
     let { setVisible, setRecord, findAll, removeTagByUid } = props
 
-    useEffect(() => {
-        if (dataSource.length === 0) {
-            findAll()
-        }
-    }, [])
-
-
     const onUpdateTag = record => {
         setVisible({ visible: true })
         setRecord({ record })
@@ -106,7 +99,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setVisible: (visible) => dispatch(changeVisible(visible)),
         setRecord: record => dispatch(changeRecord(record)),
-        findAll: data => dispatch(getTagList(data))
+        findAll: data => dispatch(getTagList(data)),
+        removeTagByUid: uid => dispatch(removeTag(uid))
     }
 
 }

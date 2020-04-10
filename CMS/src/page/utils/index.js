@@ -4,6 +4,20 @@ export const layout = {
     },
     wrapperCol: {
         span: 16
+    }
+}
+
+export const largeLayout = {
+    labelCol: { span: 2 },
+    wrapperCol: { span: 20 },
+};
+
+export const formLayout = {
+    labelCol: {
+        span: 6
+    },
+    wrapperCol: {
+        span: 16
     },
 }
 

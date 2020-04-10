@@ -31,9 +31,9 @@ export const addBlog = data => {
         createBlog(data).then(res => {
             if (res.errorCode === 200) {
                 dispatch(getBlogList())
+                window.history.back(-1)
             }
         })
-        dispatch(changeVisible({ visible: false }))
     }
 }
 
@@ -41,7 +41,7 @@ export const removeBlog = data => {
     return dispatch => {
         delBlog(data).then(res => {
             if (res.errorCode === 200) {
-                dispatch(getBlogList())
+                setTimeout(() => dispatch(getBlogList()), 1000);
             }
         }).catch()
     }
