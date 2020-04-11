@@ -8,6 +8,7 @@ import zhCN from 'antd/es/locale/zh_CN';
 import routers from './router';
 import store from './store'
 import * as serviceWorker from './serviceWorker';
+import './reset.css'
 import './index.less'
 
 ReactDOM.render(

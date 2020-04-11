@@ -48,6 +48,11 @@ export default [
                 component: LoadableComponent(() => import('./page/home/blog'))
             },
             {
+                path: '/blog/form/look/:uid',
+                exact: true,
+                component: LoadableComponent(() => import('./page/home/blog//Look'))
+            },
+            {
                 path: '/blog/form/:uid',
                 exact: true,
                 component: LoadableComponent(() => import('./page/home/blog/Form'))

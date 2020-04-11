@@ -1,10 +1,11 @@
 import React, { useEffect } from "react"
-import { Form, Input, Button, Popconfirm, Badge, Divider } from "antd"
+import { Form, Input, Button, Popconfirm, Badge, Divider, Select } from "antd"
 import { connect } from "react-redux";
 import { changeVisible, removeBlog, getBlogList, changeRecord } from '../../../store/blog/actions'
 import BaseTable from '../../../components/BsseTable'
-import BlogForm from "./Form"
 import { buttonItemLayout } from "../../utils"
+
+const { Option } = Select
 
 function List(props) {
 
@@ -19,11 +20,13 @@ function List(props) {
             title: '点击数',
             dataIndex: 'clickCount',
             key: 'clickCount',
+            sorter: (a, b) => a.clickCount - b.clickCount
         },
         {
             title: '收藏数',
             dataIndex: 'collectCount',
-            key: 'collectCount'
+            key: 'collectCount',
+            sorter: (a, b) => a.collectCount - b.collectCount
         },
         {
             title: '博客分类',
@@ -41,7 +44,6 @@ function List(props) {
             dataIndex: 'author',
             key: 'author'
         },
-
         {
             title: '创建时间',
             key: 'createTime',
@@ -52,9 +54,9 @@ function List(props) {
             key: 'action',
             render: (text, record) => (
                 <span>
-                    <a onClick={() => goForm(record, true)}>查看</a>
+                    <a onClick={() => goForm(record, `/blog/form/look/${record.uid}`)}>查看</a>
                     <Divider type="vertical" />
-                    <a onClick={() => goForm(record)}>修改</a>
+                    <a onClick={() => goForm(record, `/blog/form/${record.uid}`)}>修改</a>
                     <Divider type="vertical" />
                     <Popconfirm title="确定删除吗?" okText="确定" cancelText="取消" onConfirm={() => onDelByUid(record.uid)}>
                         <a style={{ color: '#ff7875' }}>删除</a>
@@ -65,7 +67,7 @@ function List(props) {
     ];
 
     const [form] = Form.useForm();
-    const { dataSource } = props
+    const { dataSource, blogSortList } = props
 
     let { removeBlogByUid, findAll, setRecord, setDisabled } = props
 
@@ -80,10 +82,9 @@ function List(props) {
 
     const onReset = () => form.resetFields()
 
-    const goForm = (record, disabled = false) => {
+    const goForm = (record, path) => {
         setRecord({ record })
-        setDisabled({ disabled })
-        props.history.push(`/blog/form/${record.uid}`)
+        props.history.push(path)
     }
 
     const onDelByUid = uid => removeBlogByUid(uid)
@@ -93,14 +94,21 @@ function List(props) {
             <BaseTable
                 columns={columns}
                 dataSource={dataSource}
-                onAdd={() => goForm({})}
+                onAdd={() => goForm({}, `/blog/form/add`)}
             >
                 <Form form={form} layout="inline" onFinish={onFinish}>
                     <Form.Item label="博客标题" name="title">
-                        <Input placeholder="请输入博客标题" />
+                        <Input placeholder="请输入博客标题" allowClear />
                     </Form.Item>
-                    <Form.Item label="状态" name="status">
-                        <Input placeholder="请选择状态" />
+                    <Form.Item label="博客分类" name="blogSortUid">
+                        <Select style={{ width: 170 }} allowClear>
+                            {
+                                blogSortList.map(item => (<Option value={item.uid} key={item.uid}>{item.sortName}</Option>))
+                            }
+                        </Select>
+                    </Form.Item>
+                    <Form.Item label="作者" name="author">
+                        <Input placeholder="请输入作者" allowClear />
                     </Form.Item>
                     <Form.Item {...buttonItemLayout}>
                         <Button type="primary" htmlType="submit">确定</Button>
@@ -114,9 +122,10 @@ function List(props) {
     )
 }
 
-const mapStateToProps = ({ blog }) => ({
+const mapStateToProps = ({ blog, blogSort }) => ({
     visible: blog.visible,
-    dataSource: blog.dataSource
+    dataSource: blog.dataSource,
+    blogSortList: blogSort.dataSource
 })
 
 const mapDispatchToProps = (dispatch) => {

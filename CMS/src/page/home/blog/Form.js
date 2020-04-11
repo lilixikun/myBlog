@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { Form, Input, Button, Radio, InputNumber, Card, Row, Col, Select } from "antd"
 import { CheckOutlined, SyncOutlined, LeftOutlined } from '@ant-design/icons';
+import BraftEditor from "../../../components/Editor/Braft"
 import { layout, largeLayout } from "../../utils"
 import { addBlog } from '../../../store/blog/actions'
 import './index.less'
@@ -13,7 +14,10 @@ function Add(props) {
     const { record, disabled, tagList, blogSortList } = props
     const { createBlog } = props
 
-    const onFinish = (values) => createBlog(values)
+    const onFinish = (values) => {
+        values.content = values.content.toHTML()
+        createBlog(values)
+    }
 
     const onReset = () => form.resetFields()
     const onBack = () => props.history.goBack()
@@ -39,12 +43,12 @@ function Add(props) {
                             name="title"
                             rules={[{ required: true, message: "请输入博客标题" }]}
                         >
-                            <Input placeholder="请输入博客标题" disabled={disabled} />
+                            <Input placeholder="请输入博客标题" allowClear />
                         </Form.Item>
                     </Col>
                     <Col span={8}>
                         <Form.Item label="标签分类" name="tagUid">
-                            <Select disabled={disabled}>
+                            <Select allowClear>
                                 {
                                     tagList.map(item => (<Option value={item.uid} key={item.uid}>{item.tagName}</Option>))
                                 }
@@ -53,7 +57,7 @@ function Add(props) {
                     </Col>
                     <Col span={8}>
                         <Form.Item label="博客分类" name="blogSortUid">
-                            <Select disabled={disabled}>
+                            <Select allowClear>
                                 {
                                     blogSortList.map(item => (<Option value={item.uid} key={item.uid}>{item.sortName}</Option>))
                                 }
@@ -65,33 +69,28 @@ function Add(props) {
                             label="作者"
                             name="author"
                         >
-                            <Input disabled={disabled} />
+                            <Input allowClear />
                         </Form.Item>
                     </Col>
 
                     <Col span={8}>
                         <Form.Item label="显示顺序" name="sort">
-                            <InputNumber min={1} disabled={disabled} />
+                            <InputNumber min={1} allowClear />
                         </Form.Item>
                     </Col>
                     <Col span={8}>
                         <Form.Item label="点击数" name="clickCount">
-                            <InputNumber disabled={disabled} />
+                            <InputNumber allowClear />
                         </Form.Item>
                     </Col>
                     <Col span={8}>
                         <Form.Item label="收藏数" name="collectCount">
-                            <InputNumber disabled={disabled} />
+                            <InputNumber allowClear />
                         </Form.Item>
                     </Col>
                     <Col span={8}>
                         <Form.Item label="推荐等级" name="level">
-                            <InputNumber disabled={disabled} />
-                        </Form.Item>
-                    </Col>
-                    <Col span={8}>
-                        <Form.Item label="显示顺序" name="sort">
-                            <InputNumber disabled={disabled} />
+                            <InputNumber allowClear />
                         </Form.Item>
                     </Col>
                     <Col span={8}>
@@ -122,28 +121,38 @@ function Add(props) {
                 <Row>
                     <Col span={24}>
                         <Form.Item label="图标图片" name="fileUid" {...largeLayout}>
-                            <Input allowClear disabled={disabled} />
+                            <Input allowClear allowClear />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row>
                     <Col span={24}>
                         <Form.Item label="文章出处" name="articlesPart" {...largeLayout}>
-                            <Input allowClear disabled={disabled} />
+                            <Input allowClear allowClear />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row>
                     <Col span={24}>
                         <Form.Item label="博客简介" name="summary" {...largeLayout}>
-                            <Input.TextArea disabled={disabled} maxLength={255} allowClear placeholder="最多可输入250字" />
+                            <Input.TextArea allowClear maxLength={255} allowClear placeholder="最多可输入250字" />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Row>
                     <Col span={24}>
-                        <Form.Item label="内容" name="content" {...largeLayout}>
-                            <Input.TextArea allowClear disabled={disabled} />
+                        <Form.Item
+                            label="内容"
+                            name="content"
+                            {...largeLayout}
+                            rules={[{
+                                required: true,
+                                validateTrigger: "onBlur",
+                                whitespace: true,
+                                validator: (rule, value) => value.isEmpty() ? Promise.reject("请输入正文内容") : Promise.resolve()
+                            }]}
+                        >
+                            <BraftEditor />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -158,6 +167,7 @@ function Add(props) {
                     </Col>
                 </Row>
             </Form>
+
         </Card>
     )
 }

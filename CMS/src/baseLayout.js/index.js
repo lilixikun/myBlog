@@ -6,12 +6,11 @@ import Content from "../components/Content"
 import Footer from "../components/Footer"
 import Sider from "../components/Sider"
 import { getTagList } from "../store/tag/actions"
-import { getBlogSortList } from "../store/blogSort/actions"
+import {getBlogSortList} from "../store/blogSort/actions"
 import "./index.less"
 
 function App(props) {
-
-    const { findTagAll, findBlogSortAll } = props
+    const { findTagAll,findBlogSortAll } = props
 
     useEffect(() => {
         findTagAll()
