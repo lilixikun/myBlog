@@ -26,6 +26,10 @@ const LoadableComponent = (loader) => {
 
 export default [
     {
+        path:'/user/login',
+        component:LoadableComponent(()=>import('../src/page/user/index'))
+    },
+    {
         path: '/',
         component: LoadableComponent(() => import('./App')),
         routes: [

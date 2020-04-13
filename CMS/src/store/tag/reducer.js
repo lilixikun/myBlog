@@ -22,5 +22,4 @@ export default (state = initState, action) => {
         default:
             return state
     }
-    return { ...state, ...action.data }
 }

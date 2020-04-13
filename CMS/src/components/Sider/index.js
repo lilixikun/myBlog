@@ -1,17 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom"
 import { Layout, Menu } from 'antd';
 
-import {
-    AppstoreOutlined,
-    BarChartOutlined,
-    CloudOutlined,
-    ShopOutlined,
-    TeamOutlined,
-    UserOutlined,
-    UploadOutlined,
-    VideoCameraOutlined,
-} from '@ant-design/icons';
+import { ShopOutlined, UserOutlined } from '@ant-design/icons';
 
 import { menus } from '../../config'
 const { Sider } = Layout;

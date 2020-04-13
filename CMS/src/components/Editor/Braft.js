@@ -56,7 +56,7 @@ export default class Braft extends React.Component {
 
     render() {
 
-        const { editorState, outputHTML } = this.state
+        const { editorState } = this.state
 
         const extendControls = [
             {

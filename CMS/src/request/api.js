@@ -1,5 +1,12 @@
 import { get, post, del } from './http'
 
+// 用户登录
+export const userLogin = data => post('/user/login', data)
+//用户退出
+export const userLogout = () => get('/user/logout')
+// 获取用户信息
+export const findUserInfo = () => get('/user/info')
+
 // 获取博客分类列表
 export const getBlogSorts = parms => get('/blogSort/findAll', parms)
 // 添加博客

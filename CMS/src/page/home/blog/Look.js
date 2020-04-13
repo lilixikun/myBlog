@@ -1,16 +1,21 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
-import { PageHeader, Row, Descriptions, Typography } from 'antd';
+import { PageHeader, Row, Descriptions, message } from 'antd';
 import './index.less'
-
-const { Paragraph } = Typography;
 
 function Look(props) {
     const { record } = props
 
     const onClick = (e) => {
         if (e.toElement.tagName === "PRE") {
-            console.log(e.toElement.innerText);
+            var text = e.toElement.innerText;
+            var textarea = document.createElement('textarea');
+            document.body.appendChild(textarea);
+            textarea.value = text;
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            message.success("复制成功!")
         }
     }
 
