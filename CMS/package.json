@@ -13,14 +13,14 @@
     "braft-editor": "^2.3.9",
     "customize-cra": "^0.9.1",
     "good-storage": "^1.1.1",
+    "highlight.js": "^9.18.1",
     "immutability-helper": "^3.0.2",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "lodash": "^4.17.15",
-    "numeral": "^2.0.6",
+    "marked": "^0.8.2",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.5",
-    "react-copy-to-clipboard": "^5.0.2",
     "react-dnd": "^10.0.2",
     "react-dnd-html5-backend": "^10.0.2",
     "react-dom": "^16.13.1",
@@ -30,7 +30,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "simplemde": "^1.11.2"
   },
   "scripts": {
     "start": "react-app-rewired start",

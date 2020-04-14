@@ -8,7 +8,7 @@ import 'braft-editor/dist/index.css'
 //     includeEditors: ['editor-with-code-highlighter'],
 // }))
 
-
+// 富文本编辑器
 export default class Braft extends React.Component {
 
     state = {
@@ -17,7 +17,6 @@ export default class Braft extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
         if (!!this.props.value) {
             this.isLivinig = true
             // 3秒后更改编辑器内容

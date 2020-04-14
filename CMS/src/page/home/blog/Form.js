@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { Form, Input, Button, Radio, InputNumber, Card, Row, Col, Select } from "antd"
 import { CheckOutlined, SyncOutlined, LeftOutlined } from '@ant-design/icons';
 import BraftEditor from "../../../components/Editor/Braft"
+import SimpleMDE from "../../../components/Editor/Simplemde"
 import { layout, largeLayout } from "../../utils"
 import { addBlog } from '../../../store/blog/actions'
 import './index.less'
@@ -15,7 +16,7 @@ function Add(props) {
     const { createBlog } = props
 
     const onFinish = (values) => {
-        values.content = values.content.toHTML()
+        //values.content = values.content.toHTML()
         createBlog(values)
     }
 
@@ -132,13 +133,13 @@ function Add(props) {
                         </Form.Item>
                     </Col>
                 </Row>
-                <Row>
+                {/* <Row>
                     <Col span={24}>
                         <Form.Item label="博客简介" name="summary" {...largeLayout}>
                             <Input.TextArea allowClear maxLength={255} allowClear placeholder="最多可输入250字" />
                         </Form.Item>
                     </Col>
-                </Row>
+                </Row> */}
                 <Row>
                     <Col span={24}>
                         <Form.Item
@@ -149,10 +150,10 @@ function Add(props) {
                                 required: true,
                                 validateTrigger: "onBlur",
                                 whitespace: true,
-                                validator: (rule, value) => value.isEmpty() ? Promise.reject("请输入正文内容") : Promise.resolve()
+                                // validator: (rule, value) => value.isEmpty() ? Promise.reject("请输入正文内容") : Promise.resolve()
                             }]}
                         >
-                            <BraftEditor />
+                            <SimpleMDE />
                         </Form.Item>
                     </Col>
                 </Row>

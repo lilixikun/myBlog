@@ -8,8 +8,10 @@ import zhCN from 'antd/es/locale/zh_CN';
 import routers from './router';
 import store from './store'
 import * as serviceWorker from './serviceWorker';
-import './reset.css'
+//import './reset.css'
 import './index.less'
+// 去style 目录下选择自己喜欢的样式
+import 'highlight.js/styles/monokai-sublime.css';
 
 ReactDOM.render(
   <Provider store={store}>
