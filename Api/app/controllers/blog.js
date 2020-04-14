@@ -21,8 +21,6 @@ class blogController {
         // 修改
         let res
         if (obj.uid) {
-
-            console.log(obj);
             res = await Blog.update(obj, {
                 where: {
                     uid: obj.uid
@@ -37,6 +35,18 @@ class blogController {
             if (!res) {
                 throw new Faild('添加失败')
             }
+        }
+        return res
+    }
+
+    static async findByUid(uid) {
+        const res = await Blog.findOne({
+            where: {
+                uid
+            }
+        })
+        if (!res) {
+            throw new Faild('查询失败')
         }
         return res
     }

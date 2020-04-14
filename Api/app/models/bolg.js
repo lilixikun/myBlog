@@ -2,7 +2,7 @@
  * @Author: kun.xi 
  * @Date: 2020-03-17 17:22:18 
  * @Last Modified by: xikun
- * @Last Modified time: 2020-04-09 10:44:50
+ * @Last Modified time: 2020-04-14 18:07:22
  */
 const { Model, Sequelize } = require('sequelize')
 const { sequelize } = require('../../core/db')
@@ -27,12 +27,14 @@ Blog.init(
         },
         content: {
             type: Sequelize.TEXT,
+            defaultValue: "123"
         },
         tagUid: {
             type: Sequelize.STRING,
         },
         clickCount: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            defaultValue: 0
         },
         collectCount: {
             type: Sequelize.INTEGER,
@@ -42,12 +44,10 @@ Blog.init(
             type: Sequelize.STRING
         },
         status: {
-            type: Sequelize.BOOLEAN
+            type: Sequelize.BOOLEAN,
+            defaultValue: true
         },
         adminUid: {
-            type: Sequelize.STRING
-        },
-        isOriginal: {
             type: Sequelize.STRING
         },
         author: {
@@ -56,14 +56,15 @@ Blog.init(
         articlesPart: {
             type: Sequelize.STRING
         },
-        blogSortUid: {
-            type: Sequelize.STRING
-        },
-        level: {
-            type: Sequelize.BOOLEAN
-        },
+        blogSortUid: Sequelize.STRING(32),
+        level: Sequelize.STRING,
         isPublish: {
-            type: Sequelize.STRING
+            type: Sequelize.BOOLEAN,
+            defaultValue: true
+        },
+        isOriginal: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: 0
         },
         sort: Sequelize.INTEGER
     },

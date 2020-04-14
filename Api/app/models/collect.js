@@ -1,8 +1,8 @@
 /*
  * @Author: kun.xi 
  * @Date: 2020-03-18 12:01:26 
- * @Last Modified by: xi.kun
- * @Last Modified time: 2020-03-24 15:02:37
+ * @Last Modified by: xikun
+ * @Last Modified time: 2020-04-09 14:52:45
  */
 const { Model, Sequelize } = require('sequelize')
 const { sequelize } = require('../../core/db')
