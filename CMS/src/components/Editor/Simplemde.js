@@ -2,7 +2,7 @@
  * @Author: kun.xi 
  * @Date: 2020-04-14 10:40:32 
  * @Last Modified by: xikun
- * @Last Modified time: 2020-04-14 10:41:47
+ * @Last Modified time: 2020-04-14 18:50:02
  */
 import React from 'react'
 import SimpleMDE from 'simplemde';
@@ -31,7 +31,7 @@ class Simplemde extends React.PureComponent {
             autofocus: true,
             //autoDownloadFontAwesome: false,
             autosave: {
-                enabled: true,
+                enabled: false,
                 uniqueId: "SimpleMDE",//必须设置
                 delay: 1000,//时间间隔默认 10s
             },
@@ -63,6 +63,8 @@ class Simplemde extends React.PureComponent {
         simplemde.codemirror.on("change", () => {
             this.props.onChange(simplemde.value())
         });
+        console.log(this.props.value);
+        
     }
 
     componentWillUnmount() {
@@ -70,14 +72,13 @@ class Simplemde extends React.PureComponent {
     }
 
     handleChange = (value) => {
-        console.log(value);
-
         this.setState({
             value: value
         })
         this.props.onChange(value)
     };
     render() {
+        
         return (
             <textarea id={'SimpleMDE'} />
         )

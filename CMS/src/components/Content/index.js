@@ -5,7 +5,7 @@ const { Content } = Layout;
 
 export default function Index(props) {
     return (
-        <Content style={{ margin: '8px 8px', overflow: 'initial' }}>
+        <Content>
             <div className="site-layout-background">
                 {renderRoutes(props.route.routes)}
             </div>

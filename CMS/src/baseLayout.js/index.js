@@ -6,11 +6,11 @@ import Content from "../components/Content"
 import Footer from "../components/Footer"
 import Sider from "../components/Sider"
 import { getTagList } from "../store/tag/actions"
-import {getBlogSortList} from "../store/blogSort/actions"
+import { getBlogSortList } from "../store/blogSort/actions"
 import "./index.less"
 
 function App(props) {
-    const { findTagAll,findBlogSortAll } = props
+    const { findTagAll, findBlogSortAll } = props
 
     useEffect(() => {
         findTagAll()
@@ -24,8 +24,8 @@ function App(props) {
             </BackTop>
             < Layout>
                 <Sider />
-                <Layout className="site-layout" style={{ marginLeft: 200 }}>
-                    <Header />
+                <Layout className="site-layout">
+                    <Header {...props} />
                     <Content {...props} />
                     <Footer />
                 </Layout>

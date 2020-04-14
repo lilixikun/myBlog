@@ -26,8 +26,8 @@ const LoadableComponent = (loader) => {
 
 export default [
     {
-        path:'/user/login',
-        component:LoadableComponent(()=>import('../src/page/user/index'))
+        path: '/user/login',
+        component: LoadableComponent(() => import('../src/page/user/index'))
     },
     {
         path: '/',
@@ -60,6 +60,11 @@ export default [
                 path: '/blog/form/:uid',
                 exact: true,
                 component: LoadableComponent(() => import('./page/home/blog/Form'))
+            },
+            {
+                page: '/account/settings',
+                exact: true,
+                component: LoadableComponent(() => import('./page/user/settings'))
             },
             {
                 page: '/tag/list',

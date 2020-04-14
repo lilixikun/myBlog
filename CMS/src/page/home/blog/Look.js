@@ -1,35 +1,51 @@
-import React, { PureComponent } from "react"
+import React, { PureComponent, useEffect } from "react"
 import { connect } from "react-redux"
 import marked from 'marked';
 import { PageHeader, Row, Descriptions, message } from 'antd';
 import highlight from 'highlight.js';
+import { findByUid } from '../../../request/api'
+
+marked.setOptions({
+    renderer: new marked.Renderer(),
+    pedantic: false,
+    gfm: true,
+    tables: true,
+    breaks: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false,
+    xhtml: false,
+    highlight(code) {
+        return highlight.highlightAuto(code).value;
+    },
+});
 
 class Look extends PureComponent {
 
+    state = {
+        record: {}
+    }
+
     componentDidMount() {
-        marked.setOptions({
-            renderer: new marked.Renderer(),
-            pedantic: false,
-            gfm: true,
-            tables: true,
-            breaks: false,
-            sanitize: false,
-            smartLists: true,
-            smartypants: false,
-            xhtml: false,
-            highlight(code) {
-                return highlight.highlightAuto(code).value;
-            },
-        });
-        document.getElementsByClassName('site-page-header-ghost-wrapper')[0].addEventListener('click', this.onClick, false)
+        if (this.props.match.params.uid) {
+            findByUid(this.props.match.params.uid).then(res => {
+                if (res && res.errorCode === 200) {
+                    this.setState({ record: res.msg })
+                }
+            })
+        }
+        document.getElementsByClassName('site-page-header-ghost-wrapper')[0].addEventListener('click', this.onCopy, false)
     }
 
     componentWillUnmount() {
-        document.getElementsByClassName('site-page-header-ghost-wrapper')[0].removeEventListener('click', this.onClick, false)
+        document.getElementsByClassName('site-page-header-ghost-wrapper')[0].removeEventListener('click', this.onCopy, false)
     }
 
-
-    onClick = (e) => {
+    /**
+     * 自定义实现复制
+     * @param {*} e 
+     */
+    onCopy= (e) => {
         if (e.toElement.tagName === "PRE") {
             var text = e.toElement.innerText;
             var textarea = document.createElement('textarea');
@@ -43,7 +59,7 @@ class Look extends PureComponent {
     }
 
     render() {
-        const { record } = this.props
+        const { record } = this.state
         const content = (
             <>
                 <Descriptions size="small" column={1}>
@@ -99,7 +115,7 @@ class Look extends PureComponent {
 }
 
 const mapStateToProps = ({ blog, tag, blogSort }) => ({
-    record: blog.record,
+    //  record: blog.record,
     tagList: tag.dataSource,
     blogSortList: blogSort.dataSource
 })

@@ -4,9 +4,7 @@ const { Footer } = Layout;
 
 export default function Index(props) {
     return (
-        <Footer
-            style={{ textAlign: 'center' }}
-        >
+        <Footer>
             Ant Design ©2018 Created by Ant UED
         </Footer>
     )

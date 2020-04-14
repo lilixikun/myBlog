@@ -7,6 +7,7 @@ export const userLogout = () => get('/user/logout')
 // 获取用户信息
 export const findUserInfo = () => get('/user/info')
 
+
 // 获取博客分类列表
 export const getBlogSorts = parms => get('/blogSort/findAll', parms)
 // 添加博客
@@ -23,6 +24,8 @@ export const delTag = uid => del(`/tag/del/${uid}`)
 
 // 获取博客列表
 export const getBlogs = parms => get('/blog/findAll', parms)
+// 根据uid查询详情
+export const findByUid = uid => get(`/blog/findByUid/${uid}`)
 // 添加博客
 export const createBlog = data => post('/blog/create', data)
 // 删除博客

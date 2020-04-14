@@ -39,10 +39,10 @@ const Index = (props) => {
         collapsed={collapsed}
         onCollapse={onCollapse}
         style={{
-            overflow: 'auto',
-            height: '100vh',
-            position: 'fixed',
-            left: 0,
+            // overflow: 'auto',
+            // height: '100vh',
+            // position: 'fixed',
+            // left: 0,
         }}
     >
         <div className="logo" />

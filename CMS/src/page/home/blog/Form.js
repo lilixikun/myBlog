@@ -1,22 +1,42 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { Form, Input, Button, Radio, InputNumber, Card, Row, Col, Select } from "antd"
 import { CheckOutlined, SyncOutlined, LeftOutlined } from '@ant-design/icons';
+import store from 'good-storage'
 import BraftEditor from "../../../components/Editor/Braft"
 import SimpleMDE from "../../../components/Editor/Simplemde"
+import { findByUid } from '../../../request/api'
 import { layout, largeLayout } from "../../utils"
 import { addBlog } from '../../../store/blog/actions'
 import './index.less'
+
+const richType = store.get('RichType', 1)
+console.log(richType);
 
 const { Option } = Select
 
 function Add(props) {
     const [form] = Form.useForm();
-    const { record, disabled, tagList, blogSortList } = props
+    const [record, setRecord] = useState({})
+    const { disabled, tagList, blogSortList } = props
     const { createBlog } = props
 
+    useEffect(() => {
+        if (props.match.params.uid) {
+            findByUid(props.match.params.uid).then(res => {
+                if (res && res.errorCode === 200) {
+                    setRecord(res.msg)
+                    onReset()
+                }
+            })
+        }
+    }, [])
+
     const onFinish = (values) => {
-        //values.content = values.content.toHTML()
+        // 富文本渲染转成 HTML
+        if (richType === 0) {
+            values.content = values.content.toHTML()
+        }
         createBlog(values)
     }
 
@@ -150,10 +170,18 @@ function Add(props) {
                                 required: true,
                                 validateTrigger: "onBlur",
                                 whitespace: true,
-                                // validator: (rule, value) => value.isEmpty() ? Promise.reject("请输入正文内容") : Promise.resolve()
+                                // validator: (rule, value) => {
+                                //     // markdown 渲染
+                                //     if (richType === 1) {
+                                //         !!value ? Promise.resolve() : Promise.reject("请输入正文内容")
+                                //     } else {
+                                //         value.isEmpty() ? Promise.reject("请输入正文内容") : Promise.resolve()
+                                //     }
+                                // }
                             }]}
                         >
-                            <SimpleMDE />
+
+                            {richType === 1 ? <SimpleMDE /> : <BraftEditor />}
                         </Form.Item>
                     </Col>
                 </Row>
@@ -175,7 +203,6 @@ function Add(props) {
 
 const mapStateToProps = ({ blog, tag, blogSort }) => ({
     disabled: blog.disabled,
-    record: blog.record,
     tagList: tag.dataSource,
     blogSortList: blogSort.dataSource
 })
@@ -185,4 +212,4 @@ const mapDispatchToProps = (dispatch) => {
         createBlog: date => dispatch(addBlog(date))
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Add)
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Add))
