@@ -1,8 +1,8 @@
 /*
  * @Author: kun.xi 
  * @Date: 2020-03-24 15:17:28 
- * @Last Modified by:   xi.kun 
- * @Last Modified time: 2020-03-24 15:17:28 
+ * @Last Modified by: xikun
+ * @Last Modified time: 2020-04-16 17:54:04
  */
 
 const { Model, Sequelize } = require('sequelize')
@@ -19,9 +19,9 @@ Comment.init(
             allowNull: false,
             primaryKey: true
         },
-        user_uid: Sequelize.STRING(32),
-        to_uid: Sequelize.STRING(32),
-        to_user_uid: Sequelize.STRING(32),
+        userUid: Sequelize.STRING(32),
+        toUid: Sequelize.STRING(32),
+        toUserUid: Sequelize.STRING(32),
         content: Sequelize.STRING,
         status: {
             type: Sequelize.BOOLEAN,
@@ -34,8 +34,8 @@ Comment.init(
         }
     },
     {
-        createdAt: 'create_time',
-        updatedAt: 'update_time',
+        createdAt: 'createTime',
+        updatedAt: 'updateTime',
         underscored: true,
         tableName: 't_comment',
         comment: '留言表',

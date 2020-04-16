@@ -7,7 +7,7 @@ const BlogVal = require('../../validators/blog')
 
 const blogController = require('../../controllers/blog')
 
-const { Success, ParameterExceptio } = require('../../../core/httpException')
+const { Success, ParameterException } = require('../../../core/httpException')
 
 router.get('/findAll', async (ctx, next) => {
 
@@ -17,15 +17,17 @@ router.get('/findAll', async (ctx, next) => {
 })
 
 router.get('/findByUid/:uid', async (ctx, next) => {
-    if (!ctx.params.uid) {
-        throw new ParameterExceptio('uid必填!')
+    const { uid } = ctx.params
+    if (!uid) {
+        throw new ParameterException('uid必填!')
     }
-    const data = await blogController.findByUid(ctx.params.uid)
+    const data = await blogController.findByUid(uid)
 
     throw new Success(data)
 })
 
 router.post('/create', async (ctx) => {
+
     await new BlogVal().validate(ctx)
 
     await blogController.create(ctx.request.body)
@@ -34,10 +36,11 @@ router.post('/create', async (ctx) => {
 })
 
 router.delete('/del/:uid', async (ctx) => {
-    if (!ctx.params.uid) {
-        throw new ParameterExceptio('uid必填!')
+    const { uid } = ctx.params
+    if (!uid) {
+        throw new ParameterException('uid必填!')
     }
-    await blogController.delete(ctx.params.uid)
+    await blogController.delete(uid)
 
     throw new Success()
 })

@@ -7,7 +7,7 @@ const TagVal = require('../../validators/tag')
 
 const TagController = require('../../controllers/tag')
 
-const { Success, ParameterExceptio } = require('../../../core/httpException')
+const { Success, ParameterException } = require('../../../core/httpException')
 
 router.get('/findAll', async (ctx, next) => {
 
@@ -27,10 +27,13 @@ router.post('/create', async (ctx) => {
 
 
 router.delete('/del/:uid', async (ctx) => {
-    if (!ctx.params.uid) {
-        throw new ParameterExceptio('uid必填!')
+
+    const { uid } = ctx.params
+
+    if (!uid) {
+        throw new ParameterException('uid必填!')
     }
-    await TagController.delete(ctx.params.uid)
+    await TagController.delete(uid)
 
     throw new Success()
 })

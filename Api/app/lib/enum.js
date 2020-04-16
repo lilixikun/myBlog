@@ -1,11 +1,13 @@
 /*
  * @Author: kun.xi 
  * @Date: 2020-03-03 15:41:54 
- * @Last Modified by: xi.kun
- * @Last Modified time: 2020-03-24 16:01:31
+ * @Last Modified by: xikun
+ * @Last Modified time: 2020-04-16 14:41:24
  */
 function isThisType(val) {
     for (const key in this) {
+        console.log(key,val);
+        
         if (this[key] == val) {
             return true
         }
@@ -50,9 +52,23 @@ const CommonStatusType = {
     isThisType
 }
 
+const LoginType = {
+    USER_NAME: 100,
+    USER_EMAIL: 101,
+    USER_MOBILE: 102,
+    USER_WX: 103,
+    USER_GITHUB: 104,
+    ADMIN_NAME: 200,
+    ADMIN_EMAIL: 201,
+    ADMIN_MOBILE: 201,
+    ADMIN_WX: 202,
+    isThisType
+}
+
 module.exports = {
     RoleType,
     GenderType,
     CommonStatusType,
-    CommentType
+    CommentType,
+    LoginType
 } 

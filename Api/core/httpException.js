@@ -2,7 +2,7 @@
  * @Author: kun.xi 
  * @Date: 2020-03-04 18:32:23 
  * @Last Modified by: xikun
- * @Last Modified time: 2020-04-03 18:00:12
+ * @Last Modified time: 2020-04-16 17:21:13
  */
 /**
  * HttpException 是本项目所有其他异常的基类
@@ -28,7 +28,7 @@ class HttpException extends Error {
 }
 
 
-class ParameterExceptio extends HttpException {
+class ParameterException extends HttpException {
     constructor(msg, errorCode) {
         super()
         this.code = 400;
@@ -38,11 +38,11 @@ class ParameterExceptio extends HttpException {
 }
 
 class AuthFaild extends HttpException {
-    constructor() {
+    constructor(msg) {
         super()
         this.code = 401;
-        this.msg = '认证失败';
-        this.errorCode = 1004;
+        this.msg = msg || '认证失败';
+        this.errorCode = 401;
     }
 }
 
@@ -55,10 +55,11 @@ class ForBiden extends HttpException {
     }
 }
 class Success extends HttpException {
-    constructor(msg, errorCode) {
+    constructor(data, errorCode) {
         super()
         this.code = 200;
-        this.msg = msg || '成功';
+        this.data = data;
+        this.msg = '成功';
         this.errorCode = errorCode || 200;
     }
 }
@@ -85,7 +86,8 @@ class NotFound extends HttpException {
 
 module.exports = {
     HttpException,
-    ParameterExceptio,
+    ParameterException,
+    ForBiden,
     AuthFaild,
     Success,
     Faild,

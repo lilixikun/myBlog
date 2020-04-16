@@ -2,7 +2,7 @@
  * @Author: kun.xi 
  * @Date: 2020-03-04 20:21:22 
  * @Last Modified by: xikun
- * @Last Modified time: 2020-04-03 18:45:43
+ * @Last Modified time: 2020-04-16 17:25:15
  */
 const { HttpException } = require("../core/httpException")
 
@@ -18,10 +18,17 @@ const catchError = async (ctx, next) => {
         }
         //判断是否是已知错误
         if (isHttpException) {
-            ctx.body = {
-                msg: error.msg,
-                errorCode: error.errorCode,
-                request: `${ctx.method} ${ctx.path}`
+            if (error.code === 200) {
+                ctx.body = {
+                    code: error.code,
+                    data: error.data
+                }
+            } else {
+                ctx.body = {
+                    msg: error.msg,
+                    errorCode: error.errorCode,
+                    request: `${ctx.method} ${ctx.path}`
+                }
             }
             ctx.status = error.code
         } else {

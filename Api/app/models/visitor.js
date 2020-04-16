@@ -1,8 +1,8 @@
 /*
  * @Author: kun.xi 
  * @Date: 2020-03-24 15:36:45 
- * @Last Modified by: xi.kun
- * @Last Modified time: 2020-03-24 15:39:26
+ * @Last Modified by: xikun
+ * @Last Modified time: 2020-04-16 17:55:10
  */
 const { Model, Sequelize } = require('sequelize')
 const { sequelize } = require('../../core/db')
@@ -18,22 +18,22 @@ Visitor.init(
             allowNull: false,
             primaryKey: true
         },
-        user_name: Sequelize.STRING,
+        userName: Sequelize.STRING,
         email: {
             type: Sequelize.STRING,
             allowNull: false
         },
-        login_count: Sequelize.INTEGER,
-        last_login_time: Sequelize.DATE,
-        last_login_ip: Sequelize.STRING,
+        loginCount: Sequelize.INTEGER,
+        lastLoginTime: Sequelize.DATE,
+        lastLoginIp: Sequelize.STRING,
         status: {
             type: Sequelize.BOOLEAN,
             defaultValue: 1
         }
     },
     {
-        createdAt: 'create_time',
-        updatedAt: 'update_time',
+        createdAt: 'createTime',
+        updatedAt: 'updateTime',
         underscored: true,
         tableName: 't_visitor',
         comment: '游客表',

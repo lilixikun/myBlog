@@ -7,7 +7,7 @@
 const validator = require('validator');
 
 const { isString, isFunction, isArray, get } = require('lodash')
-const { ParameterExceptio, HttpException } = require('../../core/httpException')
+const { ParameterException, HttpException } = require('../../core/httpException')
 
 class Validator {
     constructor() {
@@ -39,7 +39,7 @@ class Validator {
         }
         const hasErr = await this.checkRules()
         if (!hasErr) {
-            throw new ParameterExceptio(this.errors)
+            throw new ParameterException(this.errors)
         } else {
             ctx.v = this
             return this
