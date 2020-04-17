@@ -20,15 +20,9 @@ router.post('/verifyToken', async (ctx) => {
     throw new Success(token)
 })
 
-router.post('/refreshToken', async (ctx) => {
-    const { uid } = ctx.request.body;
-    if (!uid) {
-        throw new ParameterException('token 不允许为空!')
-    }
+router.post('/refreshToken', new Auth().m, async (ctx) => {
 
-    await UserController.findByUid(uid)
-
-    token = await generateToken(uid, Auth.USER)
+    token = await generateToken(ctx.auth.uid, Auth.USER)
 
     throw new Success(token)
 })
