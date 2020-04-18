@@ -5,7 +5,7 @@ import { HashRouter, Switch } from 'react-router-dom'
 import renderRoutes from './router'
 import { ConfigProvider } from "antd"
 import zhCN from 'antd/es/locale/zh_CN';
-import { routes } from './config';
+import routes from './config/routes';
 import store from './store'
 import * as serviceWorker from './serviceWorker';
 //import './reset.css'

@@ -1,4 +1,5 @@
-import { USER_GET_INFO,USER_CHANGE_STATE } from './constants'
+import store from 'good-storage'
+import { USER_GET_INFO, USER_CHANGE_STATE } from './constants'
 import { userLogout, findUserInfo } from '../../request/api'
 
 export const changeUserInfo = data => ({
@@ -11,6 +12,12 @@ export const changeLoginState = data => ({
     type: USER_CHANGE_STATE,
     data
 })
+
+
+export const logOut = () => {
+    store.remove('token')
+    return dispatch => dispatch(changeLoginState(false))
+}
 
 export const getUserInfo = () => {
     return dispatch => {

@@ -1,74 +1,92 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Link } from "react-router-dom"
+import memoize from 'memoize-one';
 import { Layout, Menu } from 'antd';
 import { ShopOutlined, UserOutlined } from '@ant-design/icons';
 import { menuData } from '../../config'
-import { urlToList } from '../../page/utils'
+import { urlToList, getFlatMenuKeys, getMeunMatchKeys } from '../../page/utils'
 
 const { Sider } = Layout;
 
-const Index = (props) => {
-    let [collapsed, setCollapsed] = useState(false)
-    let [selectedKeys, setSelectedKeys] = useState([])
-    let [openKeys, setOpenKeys] = useState([])
+class Index extends React.PureComponent {
+    constructor(props) {
+        super(props)
+        this.flatMenuKeys = getFlatMenuKeys(menuData)
+        this.state = {
+            collapsed: false,
+            openKeys: this.getSelectedMenuKeys(this.flatMenuKeys, props.location.pathname)
+        }
+    }
 
-    useEffect(() => {
-        const selectedKeys = urlToList(props.location.pathname).reverse()
-        setOpenKeys([selectedKeys.pop()])
-        setSelectedKeys(selectedKeys[0])
-    }, [])
-
-    let onCollapse = collapsed => setCollapsed(collapsed)
-
-    const renderMenu = (menuData) => {
+    renderMenu = (menuData) => {
+        // 深度优先遍历
         return (
             menuData.map(menu => {
-                if (menu.subMenu && menu.subMenu.length) {
-                    return <Menu.SubMenu key={menu.key} title={
-                        <span>
-                            <ShopOutlined />
-                            <span>{menu.menuName}</span>
-                        </span>
-                    }>
-                        {renderMenu(menu.subMenu)}
-                    </Menu.SubMenu>
-                } else {
-                    return (<Menu.Item key={menu.key}>
-                        <UserOutlined />
-                        <Link to={menu.path}><span className="nav-text">{menu.menuName}</span></Link>
-                    </Menu.Item>)
+                if (menu.children && menu.children.length) {
+                    return (
+                        <Menu.SubMenu key={menu.key} title={
+                            <span>
+                                <ShopOutlined />
+                                <span>{menu.menuName}</span>
+                            </span>
+                        }>
+                            {this.renderMenu(menu.children)}
+                        </Menu.SubMenu>
+                    )
                 }
+                return (<Menu.Item key={menu.key}>
+                    <UserOutlined />
+                    <Link to={menu.path}><span className="nav-text">{menu.menuName}</span></Link>
+                </Menu.Item>)
             })
         )
     }
 
-    const onOpenChange = (openKeys) => setOpenKeys(openKeys)
+    // 可以赋予普通函数记忆输出结果的功能，它会在每次调用函数之前检查传入的参数是否与之前执行过的参数完全相同，
+    // 如果完全相同则直接返回上次计算过的结果，就像常用的缓存一样
+    getSelectedMenuKeys = memoize((flatMenuKeys, pathname) => {
+        const selectedKeys = getMeunMatchKeys(flatMenuKeys, urlToList(pathname))
+        return selectedKeys
+    })
 
-    const onClick = ({ key }) => setSelectedKeys([key])
+    onOpenChange = openKeys => {
+        this.setState({ openKeys })
+    }
 
-    return (<Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={onCollapse}
-        style={{
-            // overflow: 'auto',
-            // height: '100vh',
-            // position: 'fixed',
-            // left: 0,
-        }}
-    >
-        <div className="logo" />
-        <Menu
-            theme="dark"
-            mode="inline"
-            selectedKeys={selectedKeys}
-            openKeys={openKeys}
-            onClick={onClick}
-            onOpenChange={onOpenChange}
+    onCollapse = () => this.setState({
+        collapsed: !this.state.collapsed
+    })
+
+    render() {
+
+        const { collapsed, openKeys } = this.state
+        const { pathname } = this.props.location
+        const selectedKeys = this.getSelectedMenuKeys(this.flatMenuKeys, pathname)
+
+        return (<Sider
+            collapsible
+            collapsed={collapsed}
+            onCollapse={this.onCollapse}
+            style={{
+                // overflow: 'auto',
+                // height: '100vh',
+                // position: 'fixed',
+                // left: 0,
+            }}
         >
-            {renderMenu(menuData)}
-        </Menu>
-    </Sider>)
+            <div className="logo" />
+            <Menu
+                theme="dark"
+                mode="inline"
+                selectedKeys={selectedKeys}
+                openKeys={openKeys}
+                // onClick={onClick}
+                onOpenChange={this.onOpenChange}
+            >
+                {this.renderMenu(menuData)}
+            </Menu>
+        </Sider>)
+    }
 }
 
 export default Index

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Layout, Dropdown, Menu, Row } from "antd"
 import { UserOutlined } from '@ant-design/icons';
 const { Header } = Layout;
@@ -6,11 +7,11 @@ const { Header } = Layout;
 export default function Index(props) {
 
     const menu = (
-        <Menu onClick={() => props.history.push('/account/settings')}>
+        <Menu>
             <Menu.Item>
-                <a  href="/account/settings">
+                <Link to="/account/settings">
                     个人中心
-                </a>
+                </Link>
             </Menu.Item>
         </Menu>
     );

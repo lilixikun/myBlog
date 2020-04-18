@@ -2,7 +2,7 @@ import React from 'react'
 import { Result, Button } from 'antd';
 
 function NoFound(props) {
-    const goHome = () => props.history.push('/')
+    const goHome = () => props.history.push('/sort/list')
     return (
         <Result
             status="404"

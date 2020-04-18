@@ -4,7 +4,7 @@ import store from 'good-storage'
 import { connect } from "react-redux";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { userLogin } from '../../request/api'
-import { changeLoginState } from '../../store/user/actions'
+import { changeLoginState, logOut } from '../../store/user/actions'
 import './index.less'
 
 
@@ -13,15 +13,16 @@ function Login(props) {
     const onFinish = async values => {
         if (values.remember) {
             store.set('userName', values.userName)
-            const res = await userLogin(values)
-            if (res.code === 200) {
-                store.set('token', res.data)
-                props.setLoginState(true)
-                console.log(props);
-                const { from } = props.location.state || { from: { pathname: '/' } }
-                console.log(from);
-
-                props.history.push(from.pathname)
+            try {
+                const res = await userLogin(values)
+                if (res.code === 200) {
+                    store.set('token', res.data)
+                    props.setLoginState(true)
+                    const { from } = props.location.state || { from: { pathname: '/sort/list' } }
+                    props.history.push(from.pathname)
+                }
+            } catch (error) {
+                props.useLogOut()
             }
         }
     }
@@ -69,7 +70,8 @@ function Login(props) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setLoginState: state => dispatch(changeLoginState(state))
+        setLoginState: state => dispatch(changeLoginState(state)),
+        useLogOut: () => dispatch(logOut())
     }
 }
 

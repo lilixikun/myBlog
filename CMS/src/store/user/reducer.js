@@ -11,7 +11,7 @@ export default (state = initState, action) => {
     switch (action.type) {
         case USER_CHANGE_STATE:
             state.isLogin = action.data;
-            return state
+            return { ...state }
         case USER_SAVE_INFO:
             state.userInfo = action.data
             return { ...state }

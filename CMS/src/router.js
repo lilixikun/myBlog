@@ -9,7 +9,7 @@ import { Route, Redirect, Switch } from 'react-router-dom'
  * @param {*} extraProps 
  * @param {*} switchProps 
  */
-const renderRoutes = (routes, authed, authPath = '/user/login', extraProps = {}, switchProps = {}) => routes ? (
+const renderRoutes = (routes, authed, authPath = '/login', extraProps = {}, switchProps = {}) => routes ? (
     <Switch {...switchProps}>
         {routes.map((route, i) => (
             <Route
@@ -20,7 +20,7 @@ const renderRoutes = (routes, authed, authPath = '/user/login', extraProps = {},
                 render={(props) => {
                     if (!route.requiresAuth || authed || route.path === authPath) {
                         return <route.component {...props} {...extraProps} route={route} />
-                    }  
+                    }
                     return <Redirect to={{ pathname: authPath, state: { from: props.location } }} />
                 }}
             />
