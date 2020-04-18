@@ -1,2 +1,3 @@
 export const USER_GET_INFO = "USER_GET_INFO"
 export const USER_SAVE_INFO = "USER_SAVE_INFO"
+export const USER_CHANGE_STATE = "USER_CHANGE_STATE"

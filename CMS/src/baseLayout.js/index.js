@@ -23,7 +23,7 @@ function App(props) {
                 <div className="ant-back-top-inner">UP</div>
             </BackTop>
             < Layout>
-                <Sider />
+                <Sider {...props} />
                 <Layout className="site-layout">
                     <Header {...props} />
                     <Content {...props} />

@@ -5,7 +5,7 @@ export const getBlogSortList = data => {
 
     return dispatch => {
         getBlogSorts().then(res => {
-            let dataSource = res && res.msg;
+            let dataSource = res && res.data;
             dispatch(changeBlogSorts({ dataSource }))
         })
     }
@@ -29,7 +29,7 @@ export const changeRecord = data => ({
 export const addBlogSort = data => {
     return dispatch => {
         createBlogSort(data).then(res => {
-            if (res.errorCode === 200) {
+            if (res.code === 200) {
                 setTimeout(() => {
                     dispatch(getBlogSortList())
                 }, 1000);
@@ -42,7 +42,7 @@ export const addBlogSort = data => {
 export const removeBlogSort = data => {
     return dispatch => {
         delBlogSort(data).then(res => {
-            if (res.errorCode === 200) {
+            if (res.code === 200) {
                 console.log(11111111111);
 
                 setTimeout(() => {

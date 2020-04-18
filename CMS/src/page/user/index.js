@@ -1,55 +1,78 @@
 import React from "react"
-import { Form, Input, Button, Checkbox, Row } from 'antd';
+import { Form, Input, Button, Checkbox } from 'antd';
+import store from 'good-storage'
+import { connect } from "react-redux";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { userLogin } from '../../request/api'
+import { changeLoginState } from '../../store/user/actions'
 import './index.less'
 
-export default function Logon(props) {
- 
-    const onFinish = values => {
-        props.history.push('/')
-    };
+
+function Login(props) {
+
+    const onFinish = async values => {
+        if (values.remember) {
+            store.set('userName', values.userName)
+            const res = await userLogin(values)
+            if (res.code === 200) {
+                store.set('token', res.data)
+                props.setLoginState(true)
+                console.log(props);
+                const { from } = props.location.state || { from: { pathname: '/' } }
+                console.log(from);
+
+                props.history.push(from.pathname)
+            }
+        }
+    }
 
     return (
-        <div>
-            <Row justify="center">
-                <Form
-                    name="normal_login"
-                    className="login-form"
-                    initialValues={{ remember: true }}
-                    onFinish={onFinish}
+        <div className="login_page">
+            <Form
+                name="normal_login"
+                className="login-form"
+                initialValues={{ remember: true, type: 200 }}
+                onFinish={onFinish}
+            >
+                <Form.Item name="type" style={{ display: 'none' }}></Form.Item>
+                <Form.Item
+                    name="userName"
+                    rules={[{ required: true, message: '请输入账号!' }]}
                 >
-                    <Form.Item
-                        name="username"
-                        rules={[{ required: true, message: '请输入账号!' }]}
-                    >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                    <Input prefix={<UserOutlined className="site-form-item-icon" />} allowClear />
+                </Form.Item>
+                <Form.Item
+                    name="password"
+                    rules={[{ required: true, message: '请输入密码!' }]}
+                >
+                    <Input
+                        prefix={<LockOutlined className="site-form-item-icon" />}
+                        type="password"
+                        allowClear
+                    />
+                </Form.Item>
+                <Form.Item>
+                    <Form.Item name="remember" valuePropName="checked" noStyle>
+                        <Checkbox className='remember'>记住账号</Checkbox>
                     </Form.Item>
-                    <Form.Item
-                        name="password"
-                        rules={[{ required: true, message: '请输入密码!' }]}
-                    >
-                        <Input
-                            prefix={<LockOutlined className="site-form-item-icon" />}
-                            type="password"
-                            placeholder="Password"
-                        />
-                    </Form.Item>
-                    <Form.Item>
-                        <Form.Item name="remember" valuePropName="checked" noStyle>
-                            <Checkbox>记住账号</Checkbox>
-                        </Form.Item>
-                        <a className="login-form-forgot" href="">
-                            Forgot password
-                        </a>
-                    </Form.Item>
+                </Form.Item>
 
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit" className="login-form-button">
-                            登录
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </Row>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit" className="login-form-button">
+                        登录
+                    </Button>
+                </Form.Item>
+            </Form>
         </div>
     )
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setLoginState: state => dispatch(changeLoginState(state))
+    }
+}
+
+
+
+export default connect(null, mapDispatchToProps)(React.memo(Login))

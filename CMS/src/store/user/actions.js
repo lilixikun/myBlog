@@ -1,18 +1,14 @@
-import { USER_GET_INFO } from './constants'
-import { userLogin, userLogout, findUserInfo } from '../../request/api'
-
-export const login = data => {
-    return dispatch => {
-        userLogin(data).then(res => {
-            if (res && res.errorCode === 200) {
-                // 跳转到首页
-            }
-        })
-    }
-}
+import { USER_GET_INFO,USER_CHANGE_STATE } from './constants'
+import { userLogout, findUserInfo } from '../../request/api'
 
 export const changeUserInfo = data => ({
     type: USER_GET_INFO,
+    data
+})
+
+
+export const changeLoginState = data => ({
+    type: USER_CHANGE_STATE,
     data
 })
 

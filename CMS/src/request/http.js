@@ -2,7 +2,8 @@ import axios from 'axios';
 import QS from 'qs';
 import { message } from 'antd';
 import store from 'good-storage'
-
+import redux from '../store'
+import { changeLoginState } from '../store/user/actions'
 // 环境的切换
 if (process.env.NODE_ENV === 'development') {
     axios.defaults.baseURL = 'http://localhost:7001/api';
@@ -38,7 +39,7 @@ instance.interceptors.response.use(
     res => {
         if (res.status === 200) {
             const { data } = res
-            if (data.errorCode === 200 && data.msg !== undefined) {
+            if (data.code === 200) {
                 return Promise.resolve(data)
             }
         } else {
@@ -55,7 +56,9 @@ instance.interceptors.response.use(
                 // 未登录则跳转登录页面，并携带当前页面的路径                
                 // 在登录成功后返回当前页面，这一步需要在登录页操作。                
                 case 401:
+                    console.log(window);
 
+                    redux.dispatch(changeLoginState(false))
                     break;
                 // 403 token过期                
                 // 登录过期对用户进行提示                
@@ -85,7 +88,7 @@ instance.interceptors.response.use(
                     break;
                 // 其他错误，直接抛出错误提示                
                 default:
-                    message.error(error.response.data.message)
+                    message.error(error.response.data.msg)
             }
             return Promise.reject(error.response);
         }

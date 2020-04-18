@@ -5,7 +5,7 @@ export const getBlogList = data => {
 
     return dispatch => {
         getBlogs().then(res => {
-            let dataSource = res && res.msg;
+            let dataSource = res && res.data;
             dispatch(changeBlogSorts({ dataSource }))
         })
     }
@@ -29,7 +29,7 @@ export const changeRecord = data => ({
 export const addBlog = data => {
     return dispatch => {
         createBlog(data).then(res => {
-            if (res.errorCode === 200) {
+            if (res.code === 200) {
                 dispatch(getBlogList())
                 window.history.back(-1)
             }

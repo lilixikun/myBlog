@@ -1,14 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom"
 import { Layout, Menu } from 'antd';
-
 import { ShopOutlined, UserOutlined } from '@ant-design/icons';
+import { menuData } from '../../config'
+import { urlToList } from '../../page/utils'
 
-import { menus } from '../../config'
 const { Sider } = Layout;
 
 const Index = (props) => {
     let [collapsed, setCollapsed] = useState(false)
+    let [selectedKeys, setSelectedKeys] = useState([])
+    let [openKeys, setOpenKeys] = useState([])
+
+    useEffect(() => {
+        const selectedKeys = urlToList(props.location.pathname).reverse()
+        setOpenKeys([selectedKeys.pop()])
+        setSelectedKeys(selectedKeys[0])
+    }, [])
 
     let onCollapse = collapsed => setCollapsed(collapsed)
 
@@ -34,6 +42,10 @@ const Index = (props) => {
         )
     }
 
+    const onOpenChange = (openKeys) => setOpenKeys(openKeys)
+
+    const onClick = ({ key }) => setSelectedKeys([key])
+
     return (<Sider
         collapsible
         collapsed={collapsed}
@@ -46,8 +58,15 @@ const Index = (props) => {
         }}
     >
         <div className="logo" />
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-            {renderMenu(menus)}
+        <Menu
+            theme="dark"
+            mode="inline"
+            selectedKeys={selectedKeys}
+            openKeys={openKeys}
+            onClick={onClick}
+            onOpenChange={onOpenChange}
+        >
+            {renderMenu(menuData)}
         </Menu>
     </Sider>)
 }

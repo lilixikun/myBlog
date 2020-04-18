@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import { HashRouter } from 'react-router-dom'
-import { renderRoutes } from 'react-router-config'
+import { HashRouter, Switch } from 'react-router-dom'
+import renderRoutes from './router'
 import { ConfigProvider } from "antd"
 import zhCN from 'antd/es/locale/zh_CN';
-import routers from './router';
+import { routes } from './config';
 import store from './store'
 import * as serviceWorker from './serviceWorker';
 //import './reset.css'
@@ -17,7 +17,9 @@ ReactDOM.render(
   <Provider store={store}>
     <HashRouter>
       <ConfigProvider locale={zhCN}>
-        {renderRoutes(routers)}
+        <Switch>
+          {renderRoutes(routes)}
+        </Switch>
       </ConfigProvider>
     </HashRouter>
   </Provider>,

@@ -2,7 +2,7 @@
  * @Author: kun.xi 
  * @Date: 2020-04-14 10:40:32 
  * @Last Modified by: xikun
- * @Last Modified time: 2020-04-14 18:50:02
+ * @Last Modified time: 2020-04-17 14:58:50
  */
 import React from 'react'
 import SimpleMDE from 'simplemde';
@@ -10,7 +10,7 @@ import marked from 'marked';
 import highlight from 'highlight.js';
 
 import 'simplemde/dist/simplemde.min.css';
-import 'highlight.js/styles/monokai-sublime.css';
+//import 'highlight.js/styles/monokai-sublime.css';
 
 // markdown 编辑器
 var simplemde
@@ -64,7 +64,7 @@ class Simplemde extends React.PureComponent {
             this.props.onChange(simplemde.value())
         });
         console.log(this.props.value);
-        
+
     }
 
     componentWillUnmount() {
@@ -78,7 +78,7 @@ class Simplemde extends React.PureComponent {
         this.props.onChange(value)
     };
     render() {
-        
+
         return (
             <textarea id={'SimpleMDE'} />
         )
