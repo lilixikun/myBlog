@@ -125,7 +125,7 @@ function List(props) {
 const mapStateToProps = ({ blog, blogSort }) => ({
     visible: blog.visible,
     dataSource: blog.dataSource,
-    blogSortList: blogSort.dataSource
+    blogSortList: blogSort.sortList
 })
 
 const mapDispatchToProps = (dispatch) => {

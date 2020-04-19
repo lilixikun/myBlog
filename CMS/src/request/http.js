@@ -1,5 +1,6 @@
 import axios from 'axios';
 import QS from 'qs';
+import NProgress from 'nprogress'
 import { message } from 'antd';
 import store from 'good-storage'
 import redux from '../store'
@@ -26,7 +27,7 @@ instance.interceptors.request.use(
         // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
         // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
         const token = store.get("token");
-        token && (config.headers.Authorization = token);
+        token && (config.headers.Authorization = `Bearer ${token}`);
         return config;
     },
     error => {
@@ -49,7 +50,7 @@ instance.interceptors.response.use(
     // 服务器状态码不是200的情况    
     error => {
         console.log(error);
-
+        message.error(error.response.data.msg)
         if (error.response.status) {
             switch (error.response.status) {
                 // 401: 未登录                
@@ -75,13 +76,17 @@ instance.interceptors.response.use(
  * @param {String} url [请求的url地址] 
  * @param {Object} params [请求时携带的参数] 
  */
-export function get(url, params) {
-    console.log(url);
+export function get(url, params, loading = false) {
+    if (loading) {
+        NProgress.start()
+    }
 
     return new Promise((resolve, reject) => {
         instance.get(url, { params: params })
             .then(res => resolve(res))
             .catch(err => reject(err.data))
+            .finally(() => NProgress.done())
+
     });
 }
 /** 

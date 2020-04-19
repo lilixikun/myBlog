@@ -47,11 +47,16 @@ function List(props) {
     ];
 
     const [form] = Form.useForm();
+
     const { dataSource, visible } = props
 
-    let { setVisible, removeBlogByUid, findAll, setRecord } = props
+    let { setVisible, removeBlogByUid, findDataSource, setRecord } = props
 
-    const onFinish = values => findAll()
+    useEffect(() => {
+        findDataSource()
+    },[])
+
+    const onFinish = values => findDataSource()
 
     const onReset = () => form.resetFields()
 
@@ -62,9 +67,13 @@ function List(props) {
         setRecord({ record })
     }
     const onDelByUid = uid => removeBlogByUid(uid)
+
+    const onSizeChange = (page, pageSize) => findDataSource({ page, pageSize })
+
     return (
         <div>
             <BaseTable
+                onSizeChange={onSizeChange}
                 columns={columns}
                 dataSource={dataSource}
                 onAdd={onAdd}
@@ -100,7 +109,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setVisible: (visible) => dispatch(changeVisible(visible)),
         removeBlogByUid: uid => dispatch(removeBlogSort(uid)),
-        findAll: () => dispatch(getBlogSortList()),
+        findDataSource: data => dispatch(getBlogSortList(data)),
         setRecord: record => dispatch(changeRecord(record))
     }
 

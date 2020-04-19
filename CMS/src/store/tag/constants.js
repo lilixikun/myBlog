@@ -1,5 +1,6 @@
 export const TAG_VISIBLE = "TAG_VISIBLE"
 export const TAG_CHANGETAGS = "TAG_CHANGETAGS"
+export const BLOG_TAG_CHANGLIST = "BLOG_TAG_CHANGLIST"
 export const TAG_SETRECORD = "TAG_SETRECORD"
 export const TAG_LIST = "TAG_LIST"
 export const TAG_ADD = "TAG_ADD"

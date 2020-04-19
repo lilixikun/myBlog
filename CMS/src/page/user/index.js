@@ -12,6 +12,7 @@ function Login(props) {
 
     const onFinish = async values => {
         if (values.remember) {
+            store.set('rememberUser', 'checked')
             store.set('userName', values.userName)
             try {
                 const res = await userLogin(values)
@@ -24,6 +25,9 @@ function Login(props) {
             } catch (error) {
                 props.useLogOut()
             }
+        } else {
+            store.remove('rememberUser')
+            store.remove('userName')
         }
     }
 
@@ -32,7 +36,11 @@ function Login(props) {
             <Form
                 name="normal_login"
                 className="login-form"
-                initialValues={{ remember: true, type: 200 }}
+                initialValues={{
+                    remember: store.get('rememberUser', true),
+                    type: 200,
+                    userName: store.get('rememberUser') ? store.get('userName') : ''
+                }}
                 onFinish={onFinish}
             >
                 <Form.Item name="type" style={{ display: 'none' }}></Form.Item>

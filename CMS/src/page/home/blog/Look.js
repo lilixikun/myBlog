@@ -1,8 +1,8 @@
-import React, { PureComponent, useEffect } from "react"
-import { connect } from "react-redux"
+import React, { PureComponent } from "react"
 import marked from 'marked';
 import { PageHeader, Row, Descriptions, message } from 'antd';
 import highlight from 'highlight.js';
+import PageLoading from '../../../components/ReactLoading'
 import { findByUid } from '../../../request/api'
 
 marked.setOptions({
@@ -28,11 +28,13 @@ class Look extends PureComponent {
 
     componentDidMount() {
         if (this.props.match.params.uid) {
-            findByUid(this.props.match.params.uid).then(res => {
-                if (res && res.errorCode === 200) {
-                    this.setState({ record: res.msg })
-                }
-            })
+            setTimeout(() => {
+                findByUid(this.props.match.params.uid).then(res => {
+                    if (res && res.code === 200) {
+                        this.setState({ record: res.data })
+                    }
+                })
+            }, 2000);
         }
         document.getElementsByClassName('site-page-header-ghost-wrapper')[0].addEventListener('click', this.onCopy, false)
     }
@@ -45,7 +47,7 @@ class Look extends PureComponent {
      * 自定义实现复制
      * @param {*} e 
      */
-    onCopy= (e) => {
+    onCopy = (e) => {
         if (e.toElement.tagName === "PRE") {
             var text = e.toElement.innerText;
             var textarea = document.createElement('textarea');
@@ -60,6 +62,7 @@ class Look extends PureComponent {
 
     render() {
         const { record } = this.state
+
         const content = (
             <>
                 <Descriptions size="small" column={1}>
@@ -114,10 +117,6 @@ class Look extends PureComponent {
     }
 }
 
-const mapStateToProps = ({ blog, tag, blogSort }) => ({
-    //  record: blog.record,
-    tagList: tag.dataSource,
-    blogSortList: blogSort.dataSource
-})
 
-export default connect(mapStateToProps, null)(Look)
+
+export default Look

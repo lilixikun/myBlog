@@ -1,6 +1,7 @@
 import React from 'react'
 import Loadable from 'react-loadable';
-import { Spin } from 'antd';
+// import { Spin } from 'antd';
+import Loading from '../components/NprogressLoading'
 
 const style = {
     position: "flexd",
@@ -15,9 +16,7 @@ const LoadableComponent = (loader) => {
     return Loadable({
         loader,
         loading() {
-            return <div style={{ ...style }}>
-                <Spin size="large" />
-            </div>
+            return (<Loading />)
         }
     })
 }

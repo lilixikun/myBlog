@@ -12,6 +12,7 @@ import * as serviceWorker from './serviceWorker';
 import './index.less'
 // 去style 目录下选择自己喜欢的样式
 import 'highlight.js/styles/monokai-sublime.css';
+import 'nprogress/nprogress.css'
 
 ReactDOM.render(
   <Provider store={store}>

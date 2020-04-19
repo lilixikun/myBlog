@@ -1,5 +1,15 @@
-import { TAG_CHANGETAGS, TAG_VISIBLE, TAG_SETRECORD } from './constants'
-import { getTags, createTag, delTag } from '../../request/api'
+import { TAG_CHANGETAGS, TAG_VISIBLE, TAG_SETRECORD, BLOG_TAG_CHANGLIST } from './constants'
+import { getTags, createTag, delTag, findAllTags } from '../../request/api'
+
+
+export const findTagList = () => {
+    return dispatch => {
+        findAllTags().then(res => {
+            let list = res && res.data;
+            dispatch(changeTagList(list))
+        })
+    }
+}
 
 export const getTagList = data => {
     return dispatch => {
@@ -9,6 +19,11 @@ export const getTagList = data => {
         })
     }
 }
+
+export const changeTagList = data => ({
+    type: BLOG_TAG_CHANGLIST,
+    data
+})
 
 const changeTags = data => ({
     type: TAG_CHANGETAGS,

@@ -24,8 +24,8 @@ function Add(props) {
     useEffect(() => {
         if (props.match.params.uid) {
             findByUid(props.match.params.uid).then(res => {
-                if (res && res.errorCode === 200) {
-                    setRecord(res.msg)
+                if (res && res.code === 200) {
+                    setRecord(res.data)
                     onReset()
                 }
             })
@@ -203,8 +203,8 @@ function Add(props) {
 
 const mapStateToProps = ({ blog, tag, blogSort }) => ({
     disabled: blog.disabled,
-    tagList: tag.dataSource,
-    blogSortList: blogSort.dataSource
+    tagList: tag.tagList,
+    blogSortList: blogSort.sortList
 })
 
 const mapDispatchToProps = (dispatch) => {

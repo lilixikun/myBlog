@@ -5,8 +5,8 @@ import Header from "../components/Header"
 import Content from "../components/Content"
 import Footer from "../components/Footer"
 import Sider from "../components/Sider"
-import { getTagList } from "../store/tag/actions"
-import { getBlogSortList } from "../store/blogSort/actions"
+import { findTagList } from "../store/tag/actions"
+import { findAllSort } from "../store/blogSort/actions"
 import "./index.less"
 
 function App(props) {
@@ -38,8 +38,8 @@ function App(props) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        findTagAll: data => dispatch(getTagList(data)),
-        findBlogSortAll: () => dispatch(getBlogSortList()),
+        findTagAll: () => dispatch(findTagList()),
+        findBlogSortAll: () => dispatch(findAllSort()),
     }
 }
 

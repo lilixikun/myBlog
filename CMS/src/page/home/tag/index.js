@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Form, Input, Button, Popconfirm, Badge } from "antd"
 import { connect } from "react-redux";
 import { changeVisible, getTagList, removeTag, changeRecord } from '../../../store/tag/actions'
@@ -47,25 +47,32 @@ function List(props) {
         },
     ];
 
-
     const [form] = Form.useForm();
     const { dataSource, visible } = props
-    let { setVisible, setRecord, findAll, removeTagByUid } = props
+    let { setVisible, setRecord, findDataSource, removeTagByUid } = props
+
+    useEffect(() => {
+        findDataSource()
+    },[])
 
     const onUpdateTag = record => {
         setVisible({ visible: true })
         setRecord({ record })
     }
 
-    const onFinish = values => findAll()
+    const onFinish = values => findDataSource()
     const onReset = () => form.resetFields()
     const onAdd = () => setVisible({ visible: true, record: {} })
     const onDelByUid = uid => removeTagByUid(uid)
+
+    const onSizeChange = (page, pageSize) => findDataSource({ page, pageSize })
+
 
     return (
         <BaseTable
             columns={columns}
             dataSource={dataSource}
+            onSizeChange={onSizeChange}
             onAdd={onAdd}
         >
             <Form form={form} layout="inline" onFinish={onFinish}>
@@ -99,7 +106,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setVisible: (visible) => dispatch(changeVisible(visible)),
         setRecord: record => dispatch(changeRecord(record)),
-        findAll: data => dispatch(getTagList(data)),
+        findDataSource: data => dispatch(getTagList(data)),
         removeTagByUid: uid => dispatch(removeTag(uid))
     }
 
