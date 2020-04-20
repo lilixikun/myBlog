@@ -4,14 +4,22 @@ const router = new Router({
 })
 
 const BlogSortVal = require('../../validators/blogSort')
-
+const Sort = require('../../models/blog_sort')
 const blogSortController = require('../../controllers/blogSort')
 
 const { Success, ParameterException } = require('../../../core/httpException')
 
+router.get('/findAndCountAll', async (ctx, next) => {
+
+    const { page, pageSize } = ctx.request.query
+    const data = await blogSortController.findAndCountAll(page, pageSize)
+
+    throw new Success(data)
+})
+
 router.get('/findAll', async (ctx, next) => {
 
-    const data = await blogSortController.findAll()
+    const data = await Sort.findAll()
 
     throw new Success(data)
 })

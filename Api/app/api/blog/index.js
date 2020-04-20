@@ -4,17 +4,23 @@ const router = new Router({
 })
 
 const BlogVal = require('../../validators/blog')
-
+const { Auth } = require('../../services/auth')
 const blogController = require('../../controllers/blog')
 
 const { Success, ParameterException } = require('../../../core/httpException')
 
-router.get('/findAll', async (ctx, next) => {
+router.get('/findAndCountAll', new Auth().m, async (ctx, next) => {
 
-    const data = await blogController.findAll()
+    setTimeout(() => {
+
+    }, 5000);
+    const { page, pageSize } = ctx.request.query
+    const data = await blogController.findAndCountAll(page, pageSize)
 
     throw new Success(data)
 })
+
+
 
 router.get('/findByUid/:uid', async (ctx, next) => {
     const { uid } = ctx.params

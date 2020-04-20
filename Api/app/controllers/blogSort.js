@@ -4,12 +4,18 @@ const { getUID } = require('../lib/utils')
 
 class blogSortController {
 
-    static async findAll() {
-        const res = await BlogSort.findAll({
+    static async findAndCountAll(offset = 1, limit = 10) {
+
+        offset = Number(offset)-1
+        limit = Number(limit)
+
+        const res = await BlogSort.findAndCountAll({
             order: [
                 ['sort', 'DESC'],
                 ['create_time', 'DESC']
-            ]
+            ],
+            limit,
+            offset
         });
         if (!res) {
             return []

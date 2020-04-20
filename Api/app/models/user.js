@@ -2,7 +2,7 @@
  * @Author: kun.xi 
  * @Date: 2020-03-24 15:17:36 
  * @Last Modified by: xikun
- * @Last Modified time: 2020-04-16 15:00:38
+ * @Last Modified time: 2020-04-17 16:03:53
  */
 const { Model, Sequelize } = require('sequelize')
 const bcryptjs = require('bcryptjs')

@@ -4,14 +4,23 @@ const router = new Router({
 })
 
 const TagVal = require('../../validators/tag')
-
+const Tag = require('../../models/tag')
 const TagController = require('../../controllers/tag')
 
 const { Success, ParameterException } = require('../../../core/httpException')
 
-router.get('/findAll', async (ctx, next) => {
+router.get('/findAll', async (ctx) => {
 
-    const data = await TagController.findAll()
+    const data = await Tag.findAll()
+
+    throw new Success(data)
+})
+
+
+router.get('/findAndCountAll', async (ctx, next) => {
+
+    const { page, pageSize } = ctx.request.query
+    const data = await TagController.findAndCountAll(page, pageSize)
 
     throw new Success(data)
 })

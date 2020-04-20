@@ -10,7 +10,7 @@ const UserVal = require('../../validators/user')
 const { Auth } = require('../../services/auth')
 const GitHub = require('../../services/github')
 const router = new Router({
-    prefix: '/user'
+    prefix: '/api/user'
 })
 
 router.post('/login', async (ctx) => {
@@ -18,7 +18,7 @@ router.post('/login', async (ctx) => {
     const { type, userName, password, email } = ctx.request.body;
 
     let token, user
-    switch (type) {
+    switch (Number(type)) {
         // 账户密码登录
         case LoginType.ADMIN_NAME:
         case LoginType.USER_NAME:
