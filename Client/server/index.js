@@ -30,6 +30,7 @@ export default (req, res) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document111</title>
         <style>${cssStr}</style>
+        
         </head>
 
         <body>

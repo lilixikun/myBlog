@@ -5,9 +5,10 @@ class Footer extends PureComponent {
 
     render() {
         return (
-            <Fragment>
-                <h2>我是尾部</h2>
-            </Fragment>
+            <footer>
+                <div>Copyright © 2020 席坤-XIKUN</div>
+                <div>备案号:鄂ICP备19024768号</div>
+            </footer>
         )
     }
 }

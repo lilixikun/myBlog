@@ -1,0 +1,70 @@
+.na_link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 50px;
+    color: #fff;
+    padding-top: 10px;
+    transition: all 0.2s;
+}
+
+.na_activel_link {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.na_title {
+    height: 60px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.na_title span {
+    position: relative;
+    text-align: center;
+    color: white;
+    font-size: 22px;
+    animation: letter 1s cubic-bezier(0.1, 0.5, 0.2, 1) infinite alternate;
+    top: 0px;
+}
+
+
+.na_title span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.na_title span:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.na_title span:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.na_title span:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.na_title span:nth-child(5) {
+    animation-delay: 0.4s;
+}
+
+.na_title span:nth-child(6) {
+    animation-delay: 0.5s;
+}
+
+.na_title span:nth-child(7) {
+    animation-delay: 0.6s;
+}
+
+@keyframes letter {
+    from {
+        top: 0px;
+        /* text-shadow: blanchedalmond 0 0 0.05em; */
+    }
+
+    to {
+        top: 20px;
+        /* text-shadow: blanchedalmond 0 1em 0.2em; */
+    }
+}
