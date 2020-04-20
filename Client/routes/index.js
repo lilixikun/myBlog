@@ -18,7 +18,7 @@ const LoadableComponent = (loader) => {
 export default [
     {
         path: '*',
-        component: LoadableComponent(() => import('../src/App')),
+        component: App,
         routes: [
             {
                 path: '/me',
@@ -29,7 +29,7 @@ export default [
                 component: LoadableComponent(() => import('../src/Home')),
             },
             {
-                path: '/hello',
+                path: '/filing',
                 component: LoadableComponent(() => import('../src/Hello')),
             }
         ]

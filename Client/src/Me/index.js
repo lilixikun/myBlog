@@ -6,6 +6,8 @@ class Me extends PureComponent {
 
     componentDidMount() {
         if (this.props.staticContext) {
+            console.log(111111);
+            
             this.props.staticContext.css.push(style._getCss())
         }
     }

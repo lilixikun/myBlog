@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
+import WithStylesHOC from '../WithStylesHOC'
+import { getActivePath } from '../../utils'
 import styles from './index.css'
 
 const tabs = [
@@ -9,7 +11,7 @@ const tabs = [
     },
     {
         title: '归档',
-        link: '/home1'
+        link: '/filing'
     },
     {
         title: '杂谈',
@@ -17,7 +19,7 @@ const tabs = [
     },
     {
         title: '关于我',
-        link: '/home3'
+        link: '/me'
     }
 ]
 class Header extends PureComponent {
@@ -25,14 +27,14 @@ class Header extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
-            activeKey: '/home'
+            activeKey: props.location.pathname || '/home'
         }
     }
 
     tabClick(activeKey) {
         this.setState({ activeKey })
-
     }
+
     render() {
         const { activeKey } = this.state
         return (
@@ -60,4 +62,4 @@ class Header extends PureComponent {
     }
 }
 
-export default Header
+export default WithStylesHOC(Header, styles)  

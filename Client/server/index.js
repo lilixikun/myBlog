@@ -20,9 +20,8 @@ export default (req, res) => {
         </Provider>
     )
 
-
     const cssStr = context.css.length ? context.css.join("\n") : ''
-    console.log(cssStr);
+
     return `<!DOCTYPE html>
         <html lang="en">
         <head>

@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     background: #202020;
 }
@@ -28,9 +34,11 @@ footer {
     font-weight: 400;
 }
 
-main {
+.main {
     color: #bdbdbd;
     flex: auto;
+    padding: 40px 120px;
+    background-color: #fff;
 }
 
 footer {
@@ -39,20 +47,4 @@ footer {
     justify-content: center;
     padding: 20px 0;
     line-height: 22px;
-}
-
-* {
-    margin: 0;
-}
-
-h1,
-p {
-    padding: 15px;
-}
-
-
-
-footer>h1 {
-    color: #82FCFD;
-    text-shadow: 1px 1px 4px #00000080;
 }
