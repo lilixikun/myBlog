@@ -3,7 +3,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.m?js$/,
+                test: /\.js$/,
                 use: {
                     loader: 'babel-loader',
                     options: {
@@ -12,6 +12,17 @@ module.exports = {
                 },
                 exclude: /(node_modules|bower_components)/,
             },
+            {
+                test: /\.(png|jpg|gif|svg)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192
+                        }
+                    }
+                ]
+            }
         ]
     }
 }

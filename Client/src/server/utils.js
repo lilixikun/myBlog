@@ -4,6 +4,8 @@ import { Provider } from 'react-redux'
 import { renderRoutes } from 'react-router-config'
 import { renderToString } from 'react-dom/server'
 import { minify } from 'html-minifier';
+import StyleContext from 'isomorphic-style-loader/StyleContext'
+
 import routers from '../shared/containers/Routers'
 import { getServerStore } from '../shared/store'
 
@@ -12,16 +14,20 @@ export default (req, res) => {
     const context = {
         css: []
     }
-    const ele = renderToString(
-        <Provider store={getServerStore()}>
-            <StaticRouter location={req.url} context={context}>
-                <Fragment>{renderRoutes(routers)}</Fragment>
-            </StaticRouter>
-        </Provider>
-    )
 
-    const cssStr = context.css.length ? context.css.join("\n") : ''
-    console.log(cssStr);
+    const css = new Set() // CSS for all rendered React components
+    const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()))
+
+    const ele = renderToString(
+        <StyleContext.Provider value={{ insertCss }}>
+            <Provider store={getServerStore()}>
+                <StaticRouter location={req.url} context={context}>
+                    <Fragment>{renderRoutes(routers)}</Fragment>
+                </StaticRouter>
+            </Provider>
+        </StyleContext.Provider>
+
+    )
 
     const html = `<!DOCTYPE html>
         <html lang="en">
@@ -29,7 +35,8 @@ export default (req, res) => {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document111</title>
-        <style>${cssStr}</style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+        <style>${[...css].join('')}</style>
         
         </head>
 
@@ -44,7 +51,5 @@ export default (req, res) => {
         minifyJS: true,
         minifyURLs: true,
     });
-    console.log(minifyHtml);
-
     return minifyHtml;
 }

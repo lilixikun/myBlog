@@ -25,13 +25,13 @@ export default [
                 component: Me,
             },
             {
-                path: '/home',
-                component: Home,
-            },
-            {
                 path: '/filing',
                 component: Hello,
-            }
+            },
+            {
+                path: '*',
+                component: Home,
+            },
         ]
     }
 ]

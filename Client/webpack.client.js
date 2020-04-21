@@ -9,11 +9,12 @@ const clienConfig = {
         path: path.resolve(__dirname, 'public'),
         filename: 'index.js'
     },
+
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', {
+                use: ['isomorphic-style-loader', {
                     loader: 'css-loader',
                     options: {
                         importLoaders: 1,
@@ -25,7 +26,7 @@ const clienConfig = {
             {
                 test: /\.less$/,
                 use: [{
-                    loader: "style-loader"
+                    loader: "isomorphic-style-loader"
                 }, {
                     loader: "css-loader"
                 }, {

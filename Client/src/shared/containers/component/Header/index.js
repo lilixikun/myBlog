@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
-import WithStylesHOC from '../WithStylesHOC'
+import withStyles from 'isomorphic-style-loader/withStyles'
 import { getActivePath } from '../../utils'
-import styles from './index.css'
+import styles from './index.less'
 
 const tabs = [
     {
@@ -14,7 +14,7 @@ const tabs = [
         link: '/filing'
     },
     {
-        title: '杂谈',
+        title: '分类',
         link: '/home2'
     },
     {
@@ -39,7 +39,7 @@ class Header extends PureComponent {
         const { activeKey } = this.state
         return (
             <nav>
-                <div className={styles.na_title}>
+                <div className='na_title'>
                     <span>X</span>
                     <span>I</span>
                     <span>K</span>
@@ -52,7 +52,7 @@ class Header extends PureComponent {
                     tabs.map(item => (
                         <div key={item.link} onClick={() => this.tabClick(item.link)}>
                             <Link to={item.link} >
-                                <span className={activeKey === item.link ? styles.na_activel_link + ' ' + styles.na_link : styles.na_link}>{item.title}</span>
+                                <span className={activeKey === item.link ? 'na_activel_link' + ' ' + 'na_link' : 'na_link'}>{item.title}</span>
                             </Link>
                         </div>
                     ))
@@ -62,4 +62,4 @@ class Header extends PureComponent {
     }
 }
 
-export default WithStylesHOC(Header, styles)  
+export default withStyles(styles)(Header)  
