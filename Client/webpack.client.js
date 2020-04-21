@@ -3,7 +3,7 @@ const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base')
 
 const clienConfig = {
-    entry: './src/index.js',
+    entry: './src/client/index.js',
     mode: 'development',
     output: {
         path: path.resolve(__dirname, 'public'),

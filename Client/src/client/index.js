@@ -4,8 +4,8 @@ import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
 
-import routers from '../routes'
-import { getClienStore } from '../store'
+import routers from '../shared/containers/Routers'
+import { getClienStore } from '../shared/store'
 
 const App = () => {
     return (

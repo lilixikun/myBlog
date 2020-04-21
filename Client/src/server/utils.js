@@ -3,9 +3,9 @@ import { StaticRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { renderRoutes } from 'react-router-config'
 import { renderToString } from 'react-dom/server'
-
-import routers from '../routes'
-import { getServerStore } from '../store'
+import { minify } from 'html-minifier';
+import routers from '../shared/containers/Routers'
+import { getServerStore } from '../shared/store'
 
 export default (req, res) => {
 
@@ -21,8 +21,9 @@ export default (req, res) => {
     )
 
     const cssStr = context.css.length ? context.css.join("\n") : ''
+    console.log(cssStr);
 
-    return `<!DOCTYPE html>
+    const html = `<!DOCTYPE html>
         <html lang="en">
         <head>
         <meta charset="UTF-8">
@@ -38,4 +39,12 @@ export default (req, res) => {
         </body>
         </html>
     `
+    const minifyHtml = minify(html, {
+        minifyCSS: true,
+        minifyJS: true,
+        minifyURLs: true,
+    });
+    console.log(minifyHtml);
+
+    return minifyHtml;
 }

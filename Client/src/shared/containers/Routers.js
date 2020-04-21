@@ -1,9 +1,9 @@
 import React from 'react'
 import Loadable from 'react-loadable'
-import App from '../src/App'
-import Me from '../src/Me'
-import Hello from '../src/Hello'
-import Home from '../src/Home'
+import App from './App'
+import Me from './Me'
+import Hello from './Hello'
+import Home from './Home'
 
 
 const LoadableComponent = (loader) => {
@@ -22,15 +22,15 @@ export default [
         routes: [
             {
                 path: '/me',
-                component: LoadableComponent(() => import('../src/Me')),
+                component: Me,
             },
             {
                 path: '/home',
-                component: LoadableComponent(() => import('../src/Home')),
+                component: Home,
             },
             {
                 path: '/filing',
-                component: LoadableComponent(() => import('../src/Hello')),
+                component: Hello,
             }
         ]
     }
