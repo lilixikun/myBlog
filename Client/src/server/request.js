@@ -1,10 +1,7 @@
 import axios from 'axios';
 
 const instance = req => axios.create({
-    baseURL: 'http://localhost:7071/api',
-    headers: {
-        cookie: req.get('cookie') || '',
-    },
+    baseURL: 'http://localhost:7001/api',
 });
 
 export default instance;

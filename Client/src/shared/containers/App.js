@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import { renderRoutes } from 'react-router-config'
 import withStyles from 'isomorphic-style-loader/withStyles'
-//import withStylesHOC from './component/WithStylesHOC'
 import Header from './component/Header'
 import Footer from './component/Footer'
 import styles from './App.less'

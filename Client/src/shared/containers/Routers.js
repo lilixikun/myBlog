@@ -4,6 +4,7 @@ import App from './App'
 import Me from './Me'
 import Hello from './Hello'
 import Home from './Home'
+import Detail from './Home/detail'
 
 
 const LoadableComponent = (loader) => {
@@ -17,11 +18,14 @@ const LoadableComponent = (loader) => {
 
 export default [
     {
-        path: '*',
+        path: '/',
+        key: 'app',
         component: App,
+        loadData: App.loadData,
         routes: [
             {
                 path: '/me',
+                key: 'me',
                 component: Me,
             },
             {
@@ -29,9 +33,18 @@ export default [
                 component: Hello,
             },
             {
-                path: '*',
+                path: '/home',
+                key: 'home',
+                exact: true,
                 component: Home,
+                loadData: Home.loadData
             },
+            {
+                path: '/detail/:uid',
+                key: 'detail',
+                exact: true,
+                component: Detail
+            }
         ]
     }
 ]

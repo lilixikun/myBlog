@@ -7,9 +7,8 @@ import { minify } from 'html-minifier';
 import StyleContext from 'isomorphic-style-loader/StyleContext'
 
 import routers from '../shared/containers/Routers'
-import { getServerStore } from '../shared/store'
 
-export default (req, res) => {
+export default (store, req, res) => {
 
     const context = {
         css: []
@@ -20,7 +19,7 @@ export default (req, res) => {
 
     const ele = renderToString(
         <StyleContext.Provider value={{ insertCss }}>
-            <Provider store={getServerStore()}>
+            <Provider store={store}>
                 <StaticRouter location={req.url} context={context}>
                     <Fragment>{renderRoutes(routers)}</Fragment>
                 </StaticRouter>
@@ -36,12 +35,16 @@ export default (req, res) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document111</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+        <link rel="stylesheet" href="/index.css">
         <style>${[...css].join('')}</style>
-        
+      
         </head>
 
         <body>
             <div id="root">${ele}</div>
+            <script>
+                window.REDUX_STORE = ${JSON.stringify(store.getState())};
+            </script>
             <script src="/index.js"></script>
         </body>
         </html>

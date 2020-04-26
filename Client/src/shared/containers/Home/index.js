@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import withStyles from 'isomorphic-style-loader/withStyles';
 import { getRandomColor } from '../utils'
 import LazyLoad from 'react-lazyload';
+import * as actions from './store/actions'
 import author from '../assets/author.svg'
 import look from '../assets/look.svg'
 import time from '../assets/time.svg'
@@ -19,24 +20,44 @@ const imags = ['https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=394143
 ]
 class Home extends PureComponent {
 
+
+    componentDidMount() {
+        const { tagList, hotList, blogList } = this.props
+        if (tagList.length === 0) {
+            this.props.getTagList()
+        }
+        if (hotList.length === 0) {
+            this.props.getHotBlog()
+        }
+        if (blogList.rows.length === 0) {
+            this.props.getBlogList()
+        }
+    }
+
+    goDetail(uid) {
+        this.props.history.push(`/detail/${uid}`)
+    }
+
     render() {
+        const { count, rows } = this.props.blogList
+
 
         return (
             <Fragment>
                 <div className="content">
                     <aside className='aside-left'>
-                        {tags.map((item, index) => (
-                            <div className='list-item img-wrapper' key={index}>
+                        {rows.map((item, index) => (
+                            <div className='list-item img-wrapper' key={item.uid} onClick={() => this.goDetail(item.uid)}>
                                 <LazyLoad height={140}>
                                     <img src={imags[index]} />
                                 </LazyLoad>
                                 <div className='item-wrapper'>
-                                    <p className='main-title'>热门标签热门标签热门标签</p>
-                                    <p className='sub-title'>热门标签热门标签热门标签热门标签热门标签热门标签热门标签热门标签</p>
+                                    <p className='main-title'>{item.title}</p>
+                                    <p className='sub-title'>{item.summary}</p>
                                     <div className='item-footer'>
-                                        <img src={author} /> <span>凹凸曼</span>
-                                        <img src={time} /> <span>2020-11-20</span>
-                                        <img src={look} /> <span>252</span>
+                                        <img src={author} /> <span>{item.author}</span>
+                                        <img src={time} /> <span>{item.createTime}</span>
+                                        <img src={look} /> <span>{item.clickCount}</span>
                                     </div>
                                 </div>
                             </div>
@@ -46,8 +67,8 @@ class Home extends PureComponent {
                         <div className="xk-tags">
                             <div className='hot-tas'>热门标签</div>
                             <section className='tag-content'>
-                                {tags.map((item, index) => (
-                                    <div className="tag" style={{ background: getRandomColor() }} key={index}>{item}</div>
+                                {this.props.tagList.map((item) => (
+                                    <div className="tag" key={item.uid}>{item.tag_name}</div>
                                 ))}
                             </section>
                         </div>
@@ -55,34 +76,17 @@ class Home extends PureComponent {
                         <div className="xk-tags" style={{ marginTop: 20 }}>
                             <div className='hot-tas'>推荐文章</div>
                             <section className='tag-content'>
-                                <div className='hot-article'>
-                                    <div className='img-wrapper article-wrapper'>
-                                        <img src="https://t9.baidu.com/it/u=1307125826,3433407105&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1587982384&t=da2294a846663c27e8b3b0bd00cf6405" />
-                                    </div>                                    <div>
-                                        <p className='title'>CSS3中常见的单位及总结</p>
-                                        <p className='createTime'>2020-03-29</p>
+                                {this.props.hotList.map((item, index) => (
+                                    <div className='hot-article' key={item.uid}>
+                                        <div className='img-wrapper article-wrapper'>
+                                            <img src="https://t9.baidu.com/it/u=1307125826,3433407105&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1587982384&t=da2294a846663c27e8b3b0bd00cf6405" />
+                                        </div>                                    <div>
+                                            <p className='title'>{item.title}</p>
+                                            <p className='createTime'>{item.create_time}</p>
+                                        </div>
+                                        <div className="sort">{index + 1}</div>
                                     </div>
-                                    <div className="sort">1</div>
-                                </div>
-                                <div className='hot-article'>
-                                    <div className='img-wrapper article-wrapper'>
-                                        <img src="https://t9.baidu.com/it/u=1307125826,3433407105&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1587982384&t=da2294a846663c27e8b3b0bd00cf6405" />
-                                    </div>                                    <div>
-                                        <p className='title'>CSS3中常见的单位及总结</p>
-                                        <p className='createTime'>2020-03-29</p>
-                                    </div>
-                                    <div className="sort">2</div>
-                                </div>
-                                <div className='hot-article'>
-                                    <div className='img-wrapper article-wrapper'>
-                                        <img src="https://t9.baidu.com/it/u=1307125826,3433407105&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1587982384&t=da2294a846663c27e8b3b0bd00cf6405" />
-                                    </div>
-                                    <div>
-                                        <p className='title'>CSS3中常见的单位及总结</p>
-                                        <p className='createTime'>2020-03-29</p>
-                                    </div>
-                                    <div className="sort">3</div>
-                                </div>
+                                ))}
                                 <div className='sort-content'>
                                     <span>4</span>
                                     <p className='title'>非官方个风格非官方</p>
@@ -120,10 +124,26 @@ class Home extends PureComponent {
     }
 }
 
-const mapStateToProps = (state) => ({
-
+const mapStateToProps = ({ home }) => ({
+    blogList: home.blogList,
+    tagList: home.tagList,
+    hotList: home.hotList
 })
 
-const ExportHome = connect(mapStateToProps, null)(withStyles(styles)(Home))
+const mapDispatchToProps = dispatch => {
+    return {
+        getBlogList: uid => dispatch(actions.getBlogList(uid)),
+        getHotBlog: uid => dispatch(actions.getHotBlog()),
+        getTagList: uid => dispatch(actions.getTagList()),
+    }
+}
+
+const ExportHome = connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Home))
+
+ExportHome.loadData = async store => {
+    await store.dispatch(actions.getBlogList())
+    await store.dispatch(actions.getHotBlog())
+    await store.dispatch(actions.getTagList())
+}
 
 export default ExportHome
