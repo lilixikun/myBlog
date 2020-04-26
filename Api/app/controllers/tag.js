@@ -23,6 +23,11 @@ class TagController {
         return res
     }
 
+    // 查询热门标签
+    static async findHotTags(){
+        //const res =await Tag.findAll
+    }
+
     static async create(obj) {
         // 修改
         let res

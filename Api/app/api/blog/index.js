@@ -5,21 +5,26 @@ const router = new Router({
 
 const BlogVal = require('../../validators/blog')
 const { Auth } = require('../../services/auth')
+const Blog = require('../../models/bolg')
 const blogController = require('../../controllers/blog')
 
 const { Success, ParameterException } = require('../../../core/httpException')
 
-router.get('/findAndCountAll', new Auth().m, async (ctx, next) => {
+router.get('/findAndCountAll', async (ctx, next) => {
 
-    setTimeout(() => {
-
-    }, 5000);
     const { page, pageSize } = ctx.request.query
     const data = await blogController.findAndCountAll(page, pageSize)
 
     throw new Success(data)
 })
 
+
+router.get('/findHotBlog', async () => {
+
+    const data = await Blog.findHotBlog()
+
+    throw new Success(data)
+})
 
 
 router.get('/findByUid/:uid', async (ctx, next) => {

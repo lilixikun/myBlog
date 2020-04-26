@@ -16,6 +16,13 @@ router.get('/findAll', async (ctx) => {
     throw new Success(data)
 })
 
+router.get('/findHotTag', async (ctx) => {
+
+    const data = await Tag.findHotTag()
+
+    throw new Success(data)
+})
+
 
 router.get('/findAndCountAll', async (ctx, next) => {
 

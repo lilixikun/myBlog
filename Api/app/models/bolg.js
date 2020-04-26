@@ -2,13 +2,21 @@
  * @Author: kun.xi 
  * @Date: 2020-03-17 17:22:18 
  * @Last Modified by: xikun
- * @Last Modified time: 2020-04-14 18:07:22
+ * @Last Modified time: 2020-04-26 15:08:05
  */
 const { Model, Sequelize } = require('sequelize')
 const { sequelize } = require('../../core/db')
 
 class Blog extends Model {
 
+    static async findHotBlog() {
+
+        const data = await sequelize.query("select uid,title,create_time from `t_blog` ORDER BY click_count DESC limit 10", { type: sequelize.QueryTypes.SELECT })
+        if (!!data) {
+            return data
+        }
+        return []
+    }
 }
 
 Blog.init(

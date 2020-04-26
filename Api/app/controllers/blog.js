@@ -1,5 +1,6 @@
 const Blog = require('../models/bolg')
 const { Faild } = require('../../core/httpException')
+const Tag = require('../models/tag')
 const { getUID } = require('../lib/utils')
 
 class blogController {
@@ -10,9 +11,10 @@ class blogController {
         limit = Number(limit)
 
         const res = await Blog.findAndCountAll({
+            attributes: ['uid', 'title', 'summary', 'createTime', 'author', 'clickCount'],
             order: [
                 ['sort', 'DESC'],
-                ['create_time', 'DESC']
+                ['createTime', 'DESC']
             ],
             limit,
             offset
@@ -54,6 +56,24 @@ class blogController {
         if (!res) {
             throw new Faild('查询失败')
         }
+
+        res.dataValues.clickCount = res.dataValues.clickCount + 1
+        await Blog.update(res.dataValues, {
+            where: {
+                uid
+            }
+        })
+        // 刷新标签点击数量
+        if (res.tagUid) {
+            // const tagres = await Tag.findByPk(res.tagUid)
+            // tagres.dataValues.clickCount = tagres.dataValues.clickCount + 1
+            // await Tag.update(tagres.dataValues, {
+            //     where: {
+            //         uid: tagres.uid
+            //     }
+            // })
+        }
+        // 刷新分类点击数量
         return res
     }
 

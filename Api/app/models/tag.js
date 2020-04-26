@@ -2,13 +2,18 @@
  * @Author: kun.xi 
  * @Date: 2020-03-24 15:29:06 
  * @Last Modified by: xikun
- * @Last Modified time: 2020-04-16 14:48:54
+ * @Last Modified time: 2020-04-26 14:29:11
  */
 const { Model, Sequelize } = require('sequelize')
 const { sequelize } = require('../../core/db')
 
 class Tag extends Model {
-
+    static async findHotTag() {
+        const data = await sequelize.query("select * from `t_tag` ORDER BY click_count DESC limit 10", { type: sequelize.QueryTypes.SELECT })
+        if (!!data) {
+            return data
+        }
+    }
 }
 
 Tag.init(
