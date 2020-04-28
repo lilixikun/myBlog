@@ -27,7 +27,7 @@ class Header extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
-            activeKey: props.location.pathname || '/home'
+            activeKey: props.location.pathname
         }
     }
 
