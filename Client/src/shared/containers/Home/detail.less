@@ -3,8 +3,20 @@
     flex-direction: row;
     justify-content: space-between;
 
+    * {
+        box-sizing: border-box;
+    }
+
+    .detail-title {
+        color: #181C20;
+        margin-bottom: 20px;
+    }
+
     .detail-content {
         flex: 1;
+        background-color: #fff;
+        padding-top: 40px;
+        padding-left: 60px;
         padding-right: 15px;
     }
 
@@ -28,18 +40,63 @@
 }
 
 .detail-sidebar {
+    margin-left: 20px;
     width: 350px;
+    margin-top: 40px;
 
-    .auth {
+    .author-wrapper {
         width: 350px;
-        height: 200px;
-        background: red;
+        height: 160px;
+        padding: 20px;
         border-radius: 4px;
+        border: 1px solid #f4f4f4;
+        background-color: #fff;
+
+        p {
+            margin: 0;
+        }
+
+        .tip {
+            color: #000000;
+            font-size: 18px;
+            line-height: 25px;
+        }
+
+        .author-content {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            padding-top: 18px;
+            border-top: 1px solid #EEEEEE;
+            align-items: center;
+            cursor: pointer;
+
+            img {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                border: 1px solid #EEEEEE;
+                margin-right: 20px;
+                transition: 1s;
+            }
+
+            img:hover {
+                transform: rotate(360deg) scale(1.2);
+            }
+
+            .description {
+                font-size: 14px;
+                color: #999;
+                line-height: 20px;
+            }
+        }
     }
 
     .navigation {
         width: 350px;
         transition: top 0.2s linear;
+        background-color: #fff;
+        margin-top: 30px;
 
         .toc-fixed {
             border-left: 1px solid #f4f4f4;
@@ -89,37 +146,37 @@ pre:hover {
     //pointer-events: none;
 }
 
-pre::after {
-    content: "copy";
-    position: absolute;
-    // 点击copy 让其冒泡到父元素
-    //pointer-events: auto;
-    top: 6px;
-    right: 6px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    //width: 32px;
-    height: 24px;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 6px;
-    border: none;
-    border-radius: 6px;
-    color: #ccc;
-    background-color: hsla(0, 0%, 90.2%, .2);
-    box-shadow: 0 2px 0 0 rgba(0, 0, 0, .25);
-    opacity: 0;
-    visibility: hidden;
-    user-select: none;
-    transition: opacity .2s ease-in-out, visibility .2s ease-in-out;
-    z-index: 1;
-}
+// pre::after {
+//     content: "copy";
+//     position: absolute;
+//     // 点击copy 让其冒泡到父元素
+//     //pointer-events: auto;
+//     top: 6px;
+//     right: 6px;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     //width: 32px;
+//     height: 24px;
+//     cursor: pointer;
+//     font-size: 14px;
+//     padding: 6px;
+//     border: none;
+//     border-radius: 6px;
+//     color: #ccc;
+//     background-color: hsla(0, 0%, 90.2%, .2);
+//     box-shadow: 0 2px 0 0 rgba(0, 0, 0, .25);
+//     opacity: 0;
+//     visibility: hidden;
+//     user-select: none;
+//     transition: opacity .2s ease-in-out, visibility .2s ease-in-out;
+//     z-index: 1;
+// }
 
-pre:hover::after {
-    opacity: 1;
-    visibility: visible;
-}
+// pre:hover::after {
+//     opacity: 1;
+//     visibility: visible;
+// }
 
 h1,
 h2,
@@ -157,7 +214,7 @@ blockquote {
 
 .markdown-navigation .title-anchor:hover,
 .markdown-navigation .title-anchor.active {
-    background-color: #f4f4f4;
+    background-color: #ebedef;
     text-decoration: inherit;
 }
 

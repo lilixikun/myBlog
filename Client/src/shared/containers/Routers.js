@@ -43,7 +43,8 @@ export default [
                 path: '/detail/:uid',
                 key: 'detail',
                 exact: true,
-                component: Detail
+                component: Detail,
+                loadData: Detail.loadData
             }
         ]
     }

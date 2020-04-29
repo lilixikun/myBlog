@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react'
 import { connect } from "react-redux";
 import withStyles from 'isomorphic-style-loader/withStyles';
 import { getRandomColor } from '../utils'
+import InfiniteScroll from "react-infinite-scroll-component";
 import LazyLoad from 'react-lazyload';
 import * as actions from './store/actions'
 import author from '../assets/author.svg'
@@ -20,7 +21,14 @@ const imags = ['https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=394143
 ]
 class Home extends PureComponent {
 
-
+    constructor(props) {
+        super(props)
+        this.state = {
+            page: 1,
+            hasMore: true,
+            //blogList: props.blogList
+        }
+    }
     componentDidMount() {
         const { tagList, hotList, blogList } = this.props
         if (tagList.length === 0) {
@@ -38,30 +46,60 @@ class Home extends PureComponent {
         this.props.history.push(`/detail/${uid}`)
     }
 
+    fetchMoreData() {
+        // console.log(this.props.blogList.count);
+        if (this.props.blogList.rows.length >= this.props.blogList.count) {
+            this.setState({ hasMore: false });
+            return;
+        }
+        const page = this.state.page + 1
+        this.setState({
+            page,
+        })
+        this.props.getBlogList({
+            page,
+            pageSize: 10
+        })
+    };
+
     render() {
         const { count, rows } = this.props.blogList
-
 
         return (
             <Fragment>
                 <div className="content">
                     <aside className='aside-left'>
-                        {rows.map((item, index) => (
-                            <div className='list-item img-wrapper' key={item.uid} onClick={() => this.goDetail(item.uid)}>
-                                <LazyLoad height={140}>
-                                    <img src={imags[index]} />
-                                </LazyLoad>
-                                <div className='item-wrapper'>
-                                    <p className='main-title'>{item.title}</p>
-                                    <p className='sub-title'>{item.summary}</p>
-                                    <div className='item-footer'>
-                                        <img src={author} /> <span>{item.author}</span>
-                                        <img src={time} /> <span>{item.createTime}</span>
-                                        <img src={look} /> <span>{item.clickCount}</span>
+
+                        <InfiniteScroll
+                            dataLength={rows.length}
+                            next={() => this.fetchMoreData()}
+                            hasMore={this.state.hasMore}
+                            loader={<h4>Loading...</h4>}
+                            endMessage={
+                                <p style={{ textAlign: "center" }}>
+                                    <b>我可是有底线的</b>
+                                </p>
+                            }
+                        >
+                            {rows.map((item, index) => (
+                                <div className='list-item img-wrapper' key={item.uid} onClick={() => this.goDetail(item.uid)}>
+                                    <LazyLoad height={140}>
+                                        <img src={imags[index]} />
+                                    </LazyLoad>
+                                    <div className='item-wrapper'>
+                                        <p className='main-title'>{item.title}</p>
+                                        <p className='sub-title'>{item.summary}</p>
+                                        <div className='item-footer'>
+                                            <img src={author} /> <span>{item.author}</span>
+                                            <img src={time} /> <span>{item.createTime}</span>
+                                            <img src={look} /> <span>{item.clickCount}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </InfiniteScroll>
+
+
                     </aside>
                     <aside className='aside-right'>
                         <div className="xk-tags">
@@ -76,45 +114,27 @@ class Home extends PureComponent {
                         <div className="xk-tags" style={{ marginTop: 20 }}>
                             <div className='hot-tas'>推荐文章</div>
                             <section className='tag-content'>
-                                {this.props.hotList.map((item, index) => (
-                                    <div className='hot-article' key={item.uid}>
-                                        <div className='img-wrapper article-wrapper'>
-                                            <img src="https://t9.baidu.com/it/u=1307125826,3433407105&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1587982384&t=da2294a846663c27e8b3b0bd00cf6405" />
-                                        </div>                                    <div>
-                                            <p className='title'>{item.title}</p>
-                                            <p className='createTime'>{item.create_time}</p>
+                                {this.props.hotList.map((item, index) => {
+                                    if (index <= 2) {
+                                        return <div className='hot-article' key={item.uid}>
+                                            <div className='img-wrapper article-wrapper'>
+                                                <img src="https://t9.baidu.com/it/u=1307125826,3433407105&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1587982384&t=da2294a846663c27e8b3b0bd00cf6405" />
+                                            </div>
+                                            <div style={{ flex: 1 }}>
+                                                <span className='title'>{item.title}</span>
+                                                <p className='createTime'>{item.create_time}</p>
+                                            </div>
+                                            <div className="sort">{index + 1}</div>
                                         </div>
-                                        <div className="sort">{index + 1}</div>
-                                    </div>
-                                ))}
-                                <div className='sort-content'>
-                                    <span>4</span>
-                                    <p className='title'>非官方个风格非官方</p>
-                                </div>
-                                <div className='sort-content'>
-                                    <span>5</span>
-                                    <p className='title'>非官方个风格非官方</p>
-                                </div>
-                                <div className='sort-content'>
-                                    <span>6</span>
-                                    <p className='title'>非官方个风格非官方</p>
-                                </div>
-                                <div className='sort-content'>
-                                    <span>7</span>
-                                    <p className='title'>非官方个风格非官方</p>
-                                </div>
-                                <div className='sort-content'>
-                                    <span>8</span>
-                                    <p className='title'>非官方个风格非官方</p>
-                                </div>
-                                <div className='sort-content'>
-                                    <span>9</span>
-                                    <p className='title'>非官方个风格非官方</p>
-                                </div>
-                                <div className='sort-content'>
-                                    <span>10</span>
-                                    <p className='title'>非官方个风格非官方</p>
-                                </div>
+                                    } else {
+                                        return (
+                                            <div className='sort-content' key={item.uid}>
+                                                <span>{index + 1}</span>
+                                                <p className='title'>{item.title}</p>
+                                            </div>
+                                        )
+                                    }
+                                })}
                             </section>
                         </div>
                     </aside>
@@ -132,7 +152,7 @@ const mapStateToProps = ({ home }) => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        getBlogList: uid => dispatch(actions.getBlogList(uid)),
+        getBlogList: params => dispatch(actions.getBlogList(params)),
         getHotBlog: uid => dispatch(actions.getHotBlog()),
         getTagList: uid => dispatch(actions.getTagList()),
     }

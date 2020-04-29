@@ -5,25 +5,17 @@ import styles from './index.less'
 
 class Me extends PureComponent {
 
-    componentDidMount() {
-        if (this.props.staticContext) {
-            console.log(111111);
-
-            this.props.staticContext.css.push(style._getCss())
-        }
-    }
-
     render() {
 
         return (
-            <div className={style.my}>Me</div>
+            <div className='me'>Me</div>
         )
     }
 }
 
 
 const mapStateToProps = (state) => ({
-    isLogin: state.user.isLogin
+    isLogin: false
 })
 
 

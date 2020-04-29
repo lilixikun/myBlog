@@ -6,7 +6,7 @@ const chanegState = (type, payload) => ({
     payload
 })
 
-export const getBlogList = () => (dispatch, getState, axios) => axios.get('/blog/findAndCountAll').then(res => {
+export const getBlogList = (params = {}) => (dispatch, getState, axios) => axios.get('/blog/findAndCountAll', { params: params }).then(res => {
     dispatch(chanegState(constants.HOME_GETBLOGLIST, res.data.data))
 })
 
