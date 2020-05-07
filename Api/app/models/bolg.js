@@ -2,9 +2,10 @@
  * @Author: kun.xi 
  * @Date: 2020-03-17 17:22:18 
  * @Last Modified by: xikun
- * @Last Modified time: 2020-04-26 15:08:05
+ * @Last Modified time: 2020-05-07 14:37:28
  */
 const { Model, Sequelize } = require('sequelize')
+const Op = Sequelize.Op
 const { sequelize } = require('../../core/db')
 
 class Blog extends Model {
@@ -17,6 +18,48 @@ class Blog extends Model {
         }
         return []
     }
+
+    /**
+     * 归档统计
+     */
+    static async orderByTime() {
+        const data = await sequelize.query(`SELECT  DATE_FORMAT(create_time,"%Y-%m月") AS dates,GROUP_CONCAT(uid) AS ids FROM t_blog
+        GROUP BY DATE_FORMAT(create_time,"%Y-%m月")
+                ORDER BY DATE_FORMAT(create_time,"%Y-%m月") DESC`, { type: sequelize.QueryTypes.SELECT })
+        let newData = []
+        if (!!data) {
+            for (let i = 0; i < data.length; i++) {
+                const item = data[i];
+                const ids = item.ids.split(',')
+                const list = await Blog.findAll({
+                    attributes: ['uid', 'title', 'createTime'],
+                    where: {
+                        uid: {
+                            [Op.in]: ids
+                        }
+                    },
+                    order: [
+                        ['createTime', 'DESC']
+                    ]
+                })
+
+                let newList = []
+                if (list && list.length) {
+                    list.forEach(val => {
+                        newList.push(val.dataValues)
+                    })
+                }
+                item.list = newList
+                newData.push(item)
+            }
+        }
+        if (newData.length) {
+            return newData
+        }
+        return data
+
+    }
+
 }
 
 Blog.init(

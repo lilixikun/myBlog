@@ -26,6 +26,12 @@ router.get('/findHotBlog', async () => {
     throw new Success(data)
 })
 
+router.get('/orderByTime', async () => {
+    
+    const data = await Blog.orderByTime()
+
+    throw new Success(data)
+})
 
 router.get('/findByUid/:uid', async (ctx, next) => {
     const { uid } = ctx.params
