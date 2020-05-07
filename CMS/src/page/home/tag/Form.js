@@ -46,6 +46,9 @@ function Add(props) {
                         <Radio value={false}>禁用</Radio>
                     </Radio.Group>
                 </Form.Item>
+                <Form.Item label="图标名称" name="img">
+                    <Input allowClear placeholder="图标名称" />
+                </Form.Item>
                 <Form.Item label="标签简介" name="content">
                     <Input.TextArea autoSize maxLength={255} allowClear placeholder="最多可输入250字" />
                 </Form.Item>

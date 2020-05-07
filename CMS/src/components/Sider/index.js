@@ -4,7 +4,7 @@ import memoize from 'memoize-one';
 import { Layout, Menu } from 'antd';
 import { ShopOutlined, UserOutlined } from '@ant-design/icons';
 import { menuData } from '../../config'
-import { urlToList, getFlatMenuKeys, getMeunMatchKeys } from '../../page/utils'
+import { urlToList, getFlatMenuKeys } from '../../page/utils'
 
 const { Sider } = Layout;
 
@@ -45,8 +45,8 @@ class Index extends React.PureComponent {
     // 可以赋予普通函数记忆输出结果的功能，它会在每次调用函数之前检查传入的参数是否与之前执行过的参数完全相同，
     // 如果完全相同则直接返回上次计算过的结果，就像常用的缓存一样
     getSelectedMenuKeys = memoize((flatMenuKeys, pathname) => {
-        const selectedKeys = getMeunMatchKeys(flatMenuKeys, urlToList(pathname))
-        return selectedKeys
+       // const selectedKeys = getMeunMatchKeys(flatMenuKeys, urlToList(pathname))
+        return []
     })
 
     onOpenChange = openKeys => {

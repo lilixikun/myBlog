@@ -1,4 +1,4 @@
-import { pathToRegexp } from 'path-to-regexp';
+// import { pathToRegexp } from 'path-to-regexp';
 import { reduce, filter, map } from 'lodash';
 
 export const layout = {
@@ -61,8 +61,8 @@ export const getFlatMenuKeys = menuData => (
  * @param  flatMenuKeys: [/abc, /abc/:id, /abc/:id/info]
  * @param  paths: [/abc, /abc/11, /abc/11/info]
  */
-export const getMeunMatchKeys = (flatMenuKeys, paths) =>
-    reduce(paths, (matchKeys, path) => (
-        matchKeys.concat(filter(flatMenuKeys, item => pathToRegexp(item).test(path)))
-    ), []);
+// export const getMeunMatchKeys = (flatMenuKeys, paths) =>
+//     reduce(paths, (matchKeys, path) => (
+//         matchKeys.concat(filter(flatMenuKeys, item => pathToRegexp(item).test(path)))
+//     ), []);
 

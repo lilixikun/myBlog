@@ -21,7 +21,6 @@
     "marked": "^0.8.2",
     "memoize-one": "^5.1.1",
     "nprogress": "^0.2.0",
-    "path-to-regexp": "^6.1.0",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.5",
     "react-dnd": "^10.0.2",
