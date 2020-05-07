@@ -2,7 +2,7 @@ import React from 'react'
 import Loadable from 'react-loadable'
 import App from './App'
 import Me from './Me'
-import Hello from './Hello'
+import Archives from './Archives'
 import Home from './Home'
 import Detail from './Home/detail'
 
@@ -29,8 +29,9 @@ export default [
                 component: Me,
             },
             {
-                path: '/filing',
-                component: Hello,
+                path: '/archives',
+                component: Archives,
+                loadData: Archives.loadData
             },
             {
                 path: '/home',

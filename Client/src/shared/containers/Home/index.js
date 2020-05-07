@@ -1,7 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from "react-redux";
 import withStyles from 'isomorphic-style-loader/withStyles';
-import { getRandomColor } from '../utils'
 import InfiniteScroll from "react-infinite-scroll-component";
 import LazyLoad from 'react-lazyload';
 import * as actions from './store/actions'
@@ -43,7 +42,8 @@ class Home extends PureComponent {
     }
 
     goDetail(uid) {
-        this.props.history.push(`/detail/${uid}`)
+        const win = window.open(`${window.location.origin}/detail/${uid}`, '_blank');
+        win.focus();
     }
 
     fetchMoreData() {

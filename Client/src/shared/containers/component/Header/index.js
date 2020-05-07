@@ -11,7 +11,7 @@ const tabs = [
     },
     {
         title: '归档',
-        link: '/filing'
+        link: '/archives'
     },
     {
         title: '分类',
@@ -39,24 +39,26 @@ class Header extends PureComponent {
         const { activeKey } = this.state
         return (
             <nav>
-                <div className='na_title'>
-                    <span>X</span>
-                    <span>I</span>
-                    <span>K</span>
-                    <span>U</span>
-                    <span>N</span>
-                    <span>博</span>
-                    <span>客</span>
+                <div>
+                    <div className='na_title'>
+                        <span>X</span>
+                        <span>I</span>
+                        <span>K</span>
+                        <span>U</span>
+                        <span>N</span>
+                        <span>博</span>
+                        <span>客</span>
+                    </div>
+                    {
+                        tabs.map(item => (
+                            <div key={item.link} onClick={() => this.tabClick(item.link)}>
+                                <Link to={item.link} >
+                                    <span className={activeKey === item.link ? 'na_activel_link' + ' ' + 'na_link' : 'na_link'}>{item.title}</span>
+                                </Link>
+                            </div>
+                        ))
+                    }
                 </div>
-                {
-                    tabs.map(item => (
-                        <div key={item.link} onClick={() => this.tabClick(item.link)}>
-                            <Link to={item.link} >
-                                <span className={activeKey === item.link ? 'na_activel_link' + ' ' + 'na_link' : 'na_link'}>{item.title}</span>
-                            </Link>
-                        </div>
-                    ))
-                }
             </nav>
         )
     }

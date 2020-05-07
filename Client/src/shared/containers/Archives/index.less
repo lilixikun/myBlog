@@ -1,0 +1,79 @@
+.timeline {
+    margin-top: 60px;
+    width: 1000px;
+
+    ul,
+    li {
+        /*做时间轴的线*/
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+    }
+
+
+    li:hover {
+        cursor: pointer;
+    }
+
+    .timebox {
+        span {
+            position: relative;
+            line-height: 38px;
+            padding-right: 40px;
+            color: #999;
+            font-size: 12px;
+        }
+
+        &>li i {
+            position: relative;
+            font-style: normal;
+        }
+    }
+
+    .timebox span:after {
+        position: absolute;
+        content: "";
+        width: 1px;
+        height: 40px;
+        background-color: #569fff;
+        right: 19px;
+    }
+
+    .timebox li i:before {
+        content: " ";
+        height: 10px;
+        width: 10px;
+        border: 1px solid #569fff;
+        background-color: #fff;
+        position: absolute;
+        top: 4px;
+        left: -26px;
+        border-radius: 50%;
+        -webkit-transition: all .5s ease;
+        -moz-transition: all .5s ease;
+        -ms-transition: all .5s ease;
+        -o-transition: all .5s ease;
+        transition: all .5s ease;
+    }
+
+    li:hover i:before {
+        background-color: #4B9AF4;
+    }
+
+    .timebox li a {
+        color: #000;
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    li:hover a {
+        color: #4B9AF4;
+    }
+
+}

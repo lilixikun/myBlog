@@ -9,7 +9,6 @@ body {
 }
 
 .layout {
-    max-width: 1440px;
     height: 100vh;
     margin: 0 auto;
     display: flex;
@@ -20,12 +19,16 @@ body {
 
 nav {
     height: 60px;
-    padding-left: 120px;
 }
 
 nav,
 footer {
     background: #000000;
+}
+
+nav>div {
+    max-width: 1440px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     color: #fff;
@@ -35,11 +38,12 @@ footer {
 }
 
 .main {
-    color: #bdbdbd;
+    max-width: 1440px;
+    display: flex;
     flex: auto;
+    margin: 0 auto;
+    color: #bdbdbd;
     position: relative;
-    //padding: 40px 60px;
-    //background-color: #fff;
 }
 
 footer {
@@ -48,6 +52,12 @@ footer {
     justify-content: center;
     padding: 20px 0;
     line-height: 22px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-size: 14px;
+    font-weight: 400;
 }
 
 a {
