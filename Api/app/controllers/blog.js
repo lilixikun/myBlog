@@ -11,13 +11,14 @@ class blogController {
         limit = Number(limit)
 
         const res = await Blog.findAndCountAll({
-            attributes: ['uid', 'title', 'summary', 'createTime', 'author', 'clickCount'],
+            attributes: ['uid', 'title', 'summary', 'createTime', 'author', 'tagUid', 'clickCount', 'status','fileUid'],
             order: [
+                ['click_count', 'DESC'],
                 ['sort', 'DESC'],
                 ['createTime', 'DESC']
             ],
             limit,
-            offset
+            offset: offset * limit
         });
         if (!res) {
             return []
@@ -65,13 +66,19 @@ class blogController {
         })
         // 刷新标签点击数量
         if (res.tagUid) {
-            // const tagres = await Tag.findByPk(res.tagUid)
-            // tagres.dataValues.clickCount = tagres.dataValues.clickCount + 1
-            // await Tag.update(tagres.dataValues, {
-            //     where: {
-            //         uid: tagres.uid
-            //     }
-            // })
+            const tagres = await Tag.findOne({
+                where: {
+                    uid: res.tagUid
+                }
+            })
+            if (tagres && tagres.dataValues) {
+                tagres.dataValues.clickCount = tagres.dataValues.clickCount + 1
+                await Tag.update(tagres.dataValues, {
+                    where: {
+                        uid: tagres.uid
+                    }
+                })
+            }
         }
         // 刷新分类点击数量
         return res

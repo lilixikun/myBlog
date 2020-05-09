@@ -11,11 +11,12 @@ class TagController {
 
         const res = await Tag.findAndCountAll({
             order: [
+                ['click_count', 'DESC'],
                 ['sort', 'DESC'],
                 ['create_time', 'DESC']
             ],
             limit,
-            offset
+            offset: offset * limit
         });
         if (!res) {
             return []
@@ -24,7 +25,7 @@ class TagController {
     }
 
     // 查询热门标签
-    static async findHotTags(){
+    static async findHotTags() {
         //const res =await Tag.findAll
     }
 

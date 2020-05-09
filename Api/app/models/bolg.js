@@ -2,7 +2,7 @@
  * @Author: kun.xi 
  * @Date: 2020-03-17 17:22:18 
  * @Last Modified by: xikun
- * @Last Modified time: 2020-05-07 14:37:28
+ * @Last Modified time: 2020-05-09 17:42:31
  */
 const { Model, Sequelize } = require('sequelize')
 const Op = Sequelize.Op
@@ -92,7 +92,7 @@ Blog.init(
             defaultValue: 0
         },
         fileUid: {
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
         },
         status: {
             type: Sequelize.BOOLEAN,

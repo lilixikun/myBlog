@@ -6,7 +6,7 @@ class blogSortController {
 
     static async findAndCountAll(offset = 1, limit = 10) {
 
-        offset = Number(offset)-1
+        offset = Number(offset) - 1
         limit = Number(limit)
 
         const res = await BlogSort.findAndCountAll({
@@ -15,7 +15,7 @@ class blogSortController {
                 ['create_time', 'DESC']
             ],
             limit,
-            offset
+            offset: offset * limit
         });
         if (!res) {
             return []

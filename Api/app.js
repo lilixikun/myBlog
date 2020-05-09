@@ -11,7 +11,6 @@ const { InitManager } = require('./core/init')
 const catchError = require('./middlewares/exception')
 // 静态文件
 app.use(static(path.join(__dirname, './static')))
-console.log(__dirname);
 
 app.use(catchError)
 // 处理跨域
