@@ -22,7 +22,8 @@ function Add(props) {
     const { createBlog } = props
 
     useEffect(() => {
-        if (props.match.params.uid) {
+        const { uid } = props.match.params
+        if (!!uid && uid !== 'add') {
             findByUid(props.match.params.uid).then(res => {
                 if (res && res.code === 200) {
                     setRecord(res.data)
@@ -53,6 +54,7 @@ function Add(props) {
                     isPublish: true,
                     isOriginal: true,
                     level: 0,
+                    author: '凹凸曼',
                     collectCount: 0,
                     ...record
                 }}
@@ -69,7 +71,13 @@ function Add(props) {
                     </Col>
                     <Col span={8}>
                         <Form.Item label="标签分类" name="tagUid">
-                            <Select allowClear>
+                            <Select
+                                allowClear
+                                showSearch
+                                filterOption={(input, option) =>
+                                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }
+                            >
                                 {
                                     tagList.map(item => (<Option value={item.uid} key={item.uid}>{item.tagName}</Option>))
                                 }

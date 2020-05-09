@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import { Link } from "react-router-dom"
 import { Form, Input, Button, Popconfirm, Badge, Divider, Select } from "antd"
 import { connect } from "react-redux";
 import { changeVisible, removeBlog, getBlogList, changeRecord } from '../../../store/blog/actions'
@@ -8,6 +9,10 @@ import { buttonItemLayout } from "../../utils"
 const { Option } = Select
 
 function List(props) {
+    const [form] = Form.useForm();
+    const { dataSource, tagList } = props
+
+    let { removeBlogByUid, findAll, setRecord } = props
 
     const columns = [
         {
@@ -29,9 +34,10 @@ function List(props) {
             sorter: (a, b) => a.collectCount - b.collectCount
         },
         {
-            title: '博客分类',
-            dataIndex: 'blogSortUid',
-            key: 'blogSortUid'
+            title: '标签分类',
+            dataIndex: 'tagUid',
+            key: 'tagUid',
+            render: (tagUid) => <Link to='/sort/tag'>{tagList.filter(item => item.uid === tagUid)[0].tagName}</Link>
         },
         {
             title: '状态',
@@ -66,11 +72,6 @@ function List(props) {
         },
     ];
 
-    const [form] = Form.useForm();
-    const { dataSource, blogSortList } = props
-
-    let { removeBlogByUid, findAll, setRecord, setDisabled } = props
-
     useEffect(() => {
         if (dataSource.length === 0) {
             findAll();
@@ -89,21 +90,31 @@ function List(props) {
 
     const onDelByUid = uid => removeBlogByUid(uid)
 
+    const onSizeChange = (page, pageSize) => findAll({ page, pageSize })
+
     return (
         <div>
             <BaseTable
                 columns={columns}
                 dataSource={dataSource}
+                onSizeChange={onSizeChange}
                 onAdd={() => goForm({}, `/blog/form/add`)}
             >
                 <Form form={form} layout="inline" onFinish={onFinish}>
                     <Form.Item label="博客标题" name="title">
                         <Input placeholder="请输入博客标题" allowClear />
                     </Form.Item>
-                    <Form.Item label="博客分类" name="blogSortUid">
-                        <Select style={{ width: 170 }} allowClear>
+                    <Form.Item label="标签分类" name="tagUid">
+                        <Select
+                            style={{ width: 170 }}
+                            allowClear
+                            showSearch
+                            filterOption={(input, option) =>
+                                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                            }
+                        >
                             {
-                                blogSortList.map(item => (<Option value={item.uid} key={item.uid}>{item.sortName}</Option>))
+                                tagList.map(item => (<Option value={item.uid} key={item.uid}>{item.tagName}</Option>))
                             }
                         </Select>
                     </Form.Item>
@@ -122,17 +133,17 @@ function List(props) {
     )
 }
 
-const mapStateToProps = ({ blog, blogSort }) => ({
+const mapStateToProps = ({ blog, tag }) => ({
     visible: blog.visible,
     dataSource: blog.dataSource,
-    blogSortList: blogSort.sortList
+    tagList: tag.tagList,
 })
 
 const mapDispatchToProps = (dispatch) => {
     return {
         setDisabled: disabled => dispatch(changeVisible(disabled)),
         removeBlogByUid: uid => dispatch(removeBlog(uid)),
-        findAll: () => dispatch(getBlogList()),
+        findAll: (data) => dispatch(getBlogList(data)),
         setRecord: record => dispatch(changeRecord(record))
     }
 }

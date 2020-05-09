@@ -23,6 +23,12 @@ function List(props) {
             sorter: (a, b) => a.clickCount - b.clickCount
         },
         {
+            title: '图标',
+            dataIndex: 'img',
+            key: 'img',
+            render: text => <img src={`http://localhost:7001/file_type_${text}.svg`} style={{ width: 56, height: 56 }} />
+        },
+        {
             title: '状态',
             key: 'status',
             dataIndex: 'status',
@@ -53,7 +59,7 @@ function List(props) {
 
     useEffect(() => {
         findDataSource()
-    },[])
+    }, [])
 
     const onUpdateTag = record => {
         setVisible({ visible: true })

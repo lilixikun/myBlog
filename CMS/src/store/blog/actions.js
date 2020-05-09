@@ -4,7 +4,7 @@ import { getBlogs, createBlog, delBlog } from "../../request/api"
 export const getBlogList = data => {
 
     return dispatch => {
-        getBlogs().then(res => {
+        getBlogs(data).then(res => {
             let dataSource = res && res.data;
             dispatch(changeBlogSorts({ dataSource }))
         })

@@ -2,7 +2,7 @@
  * @Author: kun.xi 
  * @Date: 2020-04-14 10:40:32 
  * @Last Modified by: xikun
- * @Last Modified time: 2020-04-17 14:58:50
+ * @Last Modified time: 2020-05-09 17:07:33
  */
 import React from 'react'
 import SimpleMDE from 'simplemde';
@@ -63,8 +63,6 @@ class Simplemde extends React.PureComponent {
         simplemde.codemirror.on("change", () => {
             this.props.onChange(simplemde.value())
         });
-        console.log(this.props.value);
-
     }
 
     componentWillUnmount() {
