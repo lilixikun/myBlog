@@ -62,6 +62,7 @@ class Index extends PureComponent {
 
     render() {
         const { detail } = this.props
+
         return (
             <>
                 {!detail.uid ? <DiamonLoading size="large" /> : <div>
@@ -72,6 +73,10 @@ class Index extends PureComponent {
                                 <img src={author} /> <span>{detail.author}</span>
                                 <img src={time} /> <span>{detail.createTime}</span>
                                 <img src={look} /> <span>{detail.clickCount}</span>
+                                <span>全文字数  {detail.content.length}</span>
+                            </div>
+                            <div style={{ textAlign: 'center' }}>
+                                <img src={detail.fileUid} />
                             </div>
                             <div dangerouslySetInnerHTML={{ __html: detail.content && marked(detail.content) }}></div>
                         </div>
@@ -80,7 +85,7 @@ class Index extends PureComponent {
                             <div className='author-wrapper'>
                                 <p className='tip'>关于作者</p>
                                 <div className='author-content'>
-                                    <img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3941434829,1642547318&fm=26&gp=0.jpg" />
+                                    <img src="https://himg.bdimg.com/sys/portrait/item/pp.1.2bb13375.LdU9iYS3Vf2-0sAKoXUHAg?_t=1589019665354" />
                                     <div>
                                         <p className='tip'>席坤</p>
                                         <p className='description'>前端开发工程师</p>

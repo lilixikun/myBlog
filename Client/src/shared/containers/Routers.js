@@ -3,6 +3,7 @@ import Loadable from 'react-loadable'
 import App from './App'
 import Me from './Me'
 import Archives from './Archives'
+import Classify from './Classify'
 import Home from './Home'
 import Detail from './Home/detail'
 
@@ -40,6 +41,14 @@ export default [
                 component: Home,
                 loadData: Home.loadData
             },
+            {
+                path: '/classify',
+                key: 'classify',
+                exact: true,
+                component: Classify,
+                loadData: Classify.loadData
+            },
+            
             {
                 path: '/detail/:uid',
                 key: 'detail',

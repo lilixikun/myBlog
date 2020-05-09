@@ -15,7 +15,7 @@ const tabs = [
     },
     {
         title: '分类',
-        link: '/home2'
+        link: '/classify'
     },
     {
         title: '关于我',

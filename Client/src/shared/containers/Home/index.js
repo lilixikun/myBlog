@@ -24,20 +24,20 @@ class Home extends PureComponent {
         super(props)
         this.state = {
             page: 1,
-            hasMore: true,
-            //blogList: props.blogList
+            hasMore: true
         }
     }
     componentDidMount() {
         const { tagList, hotList, blogList } = this.props
+        const { getTagList, getHotBlog, getBlogList } = this.props
         if (tagList.length === 0) {
-            this.props.getTagList()
+            getTagList()
         }
         if (hotList.length === 0) {
-            this.props.getHotBlog()
+            getHotBlog()
         }
         if (blogList.rows.length === 0) {
-            this.props.getBlogList()
+            getBlogList()
         }
     }
 
@@ -72,7 +72,7 @@ class Home extends PureComponent {
 
                         <InfiniteScroll
                             dataLength={rows.length}
-                            next={() => this.fetchMoreData()}
+                            //next={() => this.fetchMoreData()}
                             hasMore={this.state.hasMore}
                             loader={<h4>Loading...</h4>}
                             endMessage={
@@ -84,7 +84,7 @@ class Home extends PureComponent {
                             {rows.map((item, index) => (
                                 <div className='list-item img-wrapper' key={item.uid} onClick={() => this.goDetail(item.uid)}>
                                     <LazyLoad height={140}>
-                                        <img src={imags[index]} />
+                                        <img src={item.fileUid} />
                                     </LazyLoad>
                                     <div className='item-wrapper'>
                                         <p className='main-title'>{item.title}</p>
@@ -116,9 +116,9 @@ class Home extends PureComponent {
                             <section className='tag-content'>
                                 {this.props.hotList.map((item, index) => {
                                     if (index <= 2) {
-                                        return <div className='hot-article' key={item.uid}>
+                                        return <div className='hot-article' key={item.uid} onClick={() => this.goDetail(item.uid)}>
                                             <div className='img-wrapper article-wrapper'>
-                                                <img src="https://t9.baidu.com/it/u=1307125826,3433407105&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1587982384&t=da2294a846663c27e8b3b0bd00cf6405" />
+                                                <img src={item.fileUid} />
                                             </div>
                                             <div style={{ flex: 1 }}>
                                                 <span className='title'>{item.title}</span>
@@ -128,7 +128,7 @@ class Home extends PureComponent {
                                         </div>
                                     } else {
                                         return (
-                                            <div className='sort-content' key={item.uid}>
+                                            <div className='sort-content' key={item.uid} onClick={() => this.goDetail(item.uid)}>
                                                 <span>{index + 1}</span>
                                                 <p className='title'>{item.title}</p>
                                             </div>

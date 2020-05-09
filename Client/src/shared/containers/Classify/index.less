@@ -1,0 +1,36 @@
+.classify-wrapper {
+    width: 800px;
+    // background-color: #000;
+}
+
+.masonry {
+    -moz-column-count: 4;
+    /* Firefox */
+    -webkit-column-count: 4;
+    /* Safari 和 Chrome */
+    column-count: 4;
+    -moz-column-gap: 2em;
+    -webkit-column-gap: 2em;
+    column-gap: 2em;
+    width: 80%;
+    margin: 2em auto;
+
+    .item {
+        padding: 2em;
+        margin-bottom: 2em;
+        -webkit-column-break-inside: avoid;
+        break-inside: avoid;
+        text-align: center;
+        font-size: 12px;
+        color: #000;
+        cursor: pointer;
+
+        img {
+            transition: 1s;
+        }
+
+        img:hover {
+            transform: rotate(360deg) scale(1.2);
+        }
+    }
+}

@@ -4,6 +4,7 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
+                enforce: 'pre',
                 use: {
                     loader: 'babel-loader',
                     options: {

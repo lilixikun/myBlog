@@ -7,8 +7,9 @@ import styles from './index.less'
 class TimeLine extends PureComponent {
 
     componentDidMount() {
-        if (this.props.dataList === 0) {
-            this.props.getTimeLineList()
+        const { dataList, getTimeLineList } = this.props
+        if (dataList.length === 0) {
+            getTimeLineList()
         }
     }
 
@@ -22,7 +23,6 @@ class TimeLine extends PureComponent {
 
         return (
             <div className='timeline'>
-                <img src='http://localhost:7001/file_type_vue.svg' style={{ width: 57 }} />
                 {dataList.map(item => (
                     <div key={item.ids}>
                         <h2>{item.dates}</h2>

@@ -9,7 +9,7 @@ import styles from './App.less'
 const App = (props) => {
     const { route } = props
     return (
-        <>
+        <Fragment>
             <div className='layout'>
                 <Header {...props} />
                 <div className='main'>
@@ -18,7 +18,7 @@ const App = (props) => {
                 </div>
                 <Footer />
             </div>
-        </>
+        </Fragment>
     )
 }
 
