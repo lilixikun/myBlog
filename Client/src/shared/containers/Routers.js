@@ -3,6 +3,7 @@ import Loadable from 'react-loadable'
 import App from './App'
 import Me from './Me'
 import Archives from './Archives'
+import Tag from './Tag'
 import Classify from './Classify'
 import Home from './Home'
 import Detail from './Home/detail'
@@ -48,7 +49,14 @@ export default [
                 component: Classify,
                 loadData: Classify.loadData
             },
-            
+            {
+                path: '/tag',
+                key: 'tag',
+                exact: true,
+                component: Tag,
+                loadData: Tag.loadData
+            },
+
             {
                 path: '/detail/:uid',
                 key: 'detail',

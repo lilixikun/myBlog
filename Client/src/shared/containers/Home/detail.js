@@ -7,9 +7,9 @@ import highlight from 'highlight.js';
 import MarkdownNavbar from 'markdown-navbar';
 import * as actions from './store/actions'
 
-import author from '../assets/author.svg'
-import look from '../assets/look.svg'
-import time from '../assets/time.svg'
+import author from '../assets/author.png'
+import look from '../assets/look.png'
+import time from '../assets/time.png'
 import styles from './detail.less'
 
 

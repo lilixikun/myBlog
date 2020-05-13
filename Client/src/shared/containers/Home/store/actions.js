@@ -1,13 +1,20 @@
 import * as constants from './constants'
-import instance from '../../../../client/request'
 
 const chanegState = (type, payload) => ({
     type,
     payload
 })
 
-export const getBlogList = (params = {}) => (dispatch, getState, axios) => axios.get('/blog/findAndCountAll', { params: params }).then(res => {
+export const getBlogList = (params = {}) => (dispatch, getState, axios) => axios.get('/blog/findAndCountAll', { params }).then(res => {
     dispatch(chanegState(constants.HOME_GETBLOGLIST, res.data.data))
+})
+
+export const getBlogListByTagId = (params = {}) => (dispatch, getState, axios) => axios.get('/blog/findByTag', { params }).then(res => {
+    dispatch(chanegState(constants.HOME_GETBLOGLIST, res.data.data))
+})
+
+export const getTagDetail = (uid) => (dispatch, getState, axios) => axios.get(`/tag/findByUid/${uid}`).then(res => {
+    dispatch(chanegState(constants.HOME_BLOG_DETAIL, res.data.data))
 })
 
 export const getTagList = () => (dispatch, getState, axios) => axios.get('/tag/findHotTag').then(res => {

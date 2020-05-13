@@ -28,12 +28,18 @@ export default (state = initState, actions) => {
                 hotList: actions.payload
             }
         case HOME_GETBLOGLIST:
-            // let blogList = state.blogList
-            // blogList.rows = blogList.rows.concat(actions.payload.rows)
-            // blogList.count = actions.payload.count
+            let rows = state.blogList.rows
+            let newRows = rows.concat(actions.payload.rows)
+            let count = actions.payload.count
+
+            let blogList = {
+                rows: newRows,
+                count
+            }
+
             return {
                 ...state,
-                blogList: actions.payload
+                blogList: blogList
             }
         default:
             return state

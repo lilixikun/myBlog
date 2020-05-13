@@ -2,7 +2,7 @@
  * @Author: kun.xi 
  * @Date: 2020-03-17 17:22:18 
  * @Last Modified by: xikun
- * @Last Modified time: 2020-05-09 17:42:31
+ * @Last Modified time: 2020-05-13 18:05:10
  */
 const { Model, Sequelize } = require('sequelize')
 const Op = Sequelize.Op
@@ -12,7 +12,16 @@ class Blog extends Model {
 
     static async findHotBlog() {
 
-        const data = await sequelize.query("select uid,title,create_time from `t_blog` ORDER BY click_count DESC limit 10", { type: sequelize.QueryTypes.SELECT })
+        const data = await Blog.findAll({
+            attributes: ['uid', 'title', 'createTime', 'fileUid'],
+            order: [
+                ['click_count', 'DESC'],
+                ['sort', 'DESC'],
+                ['createTime', 'DESC']
+            ],
+            limit: 10,
+        });
+
         if (!!data) {
             return data
         }

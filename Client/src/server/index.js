@@ -19,7 +19,7 @@ app.get('*', (req, res) => {
         if (item.route.loadData) {
             const promise = new Promise((resolve) => {
                 item.route
-                    .loadData(store, item.match.params)
+                    .loadData(store, item.match.params, req.query)
                     .then(resolve)
                     .catch(resolve);
             });

@@ -1,0 +1,40 @@
+.list-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    cursor: pointer;
+    align-items: center;
+    margin-bottom: 50px;
+
+    img {
+        width: 220px;
+        height: 140px;
+        margin-right: 20px;
+        border-radius: 2px;
+    }
+
+    .item-wrapper {
+        height: 140px;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .item-footer {
+            display: flex;
+            align-items: center;
+            color: #999;
+            font-size: 12px;
+
+            img {
+                width: 12px;
+                height: 12px;
+                margin-right: 5px;
+            }
+
+            span {
+                margin-right: 20px;
+            }
+        }
+    }
+}
