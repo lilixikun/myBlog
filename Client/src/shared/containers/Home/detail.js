@@ -65,7 +65,7 @@ class Index extends PureComponent {
 
         return (
             <>
-                {!detail.uid ? <DiamonLoading size="large" /> : <div>
+                {!detail.uid ? <DiamonLoading size="large" /> : <div style={{ width: '100%' }}>
                     <div className="detail-wrapper">
                         <div className='detail-content'>
                             <h1 className="detail-title">{detail.title}</h1>

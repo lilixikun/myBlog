@@ -6,14 +6,13 @@ const baseConfig = require('./webpack.base')
 const serverConfig = {
     target: 'node',
     entry: path.resolve('./src/server/index.js'),
-    mode: 'development',
+    mode: 'production',
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'server.bundle.js'
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.css$/,
                 use: [
                     'isomorphic-style-loader',
@@ -28,18 +27,18 @@ const serverConfig = {
             },
             {
                 test: /\.less$/,
-                use: [
-                    {
-                        loader: "isomorphic-style-loader"
-                    }, {
-                        loader: "css-loader"
-                    }, {
-                        loader: "less-loader", options: {
-                            paths: [
-                                path.resolve(__dirname, "node_modules")
-                            ]
-                        }
-                    }]
+                use: [{
+                    loader: "isomorphic-style-loader"
+                }, {
+                    loader: "css-loader"
+                }, {
+                    loader: "less-loader",
+                    options: {
+                        paths: [
+                            path.resolve(__dirname, "node_modules")
+                        ]
+                    }
+                }]
             }
         ]
     },

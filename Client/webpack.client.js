@@ -4,15 +4,14 @@ const baseConfig = require('./webpack.base')
 
 const clienConfig = {
     entry: './src/client/index.js',
-    mode: 'development',
+    mode: 'production',
     output: {
         path: path.resolve(__dirname, 'public'),
         filename: 'index.js'
     },
 
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.css$/,
                 use: ['isomorphic-style-loader', {
                     loader: 'css-loader',
@@ -30,7 +29,8 @@ const clienConfig = {
                 }, {
                     loader: "css-loader"
                 }, {
-                    loader: "less-loader", options: {
+                    loader: "less-loader",
+                    options: {
                         paths: [
                             path.resolve(__dirname, "node_modules")
                         ]
