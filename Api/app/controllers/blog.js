@@ -11,10 +11,10 @@ class blogController {
         limit = Number(limit)
 
         const res = await Blog.findAndCountAll({
-            attributes: ['uid', 'title', 'summary', 'createTime', 'author', 'tagUid', 'clickCount', 'status','fileUid'],
+            attributes: ['uid', 'title', 'summary', 'createTime', 'author', 'tagUid', 'clickCount', 'status', 'fileUid'],
             order: [
-                ['click_count', 'DESC'],
-                ['sort', 'DESC'],
+                // ['click_count', 'DESC'],
+                // ['sort', 'DESC'],
                 ['createTime', 'DESC']
             ],
             limit,
@@ -25,6 +25,28 @@ class blogController {
         }
         return res
     }
+
+
+    static async findByTag(offset = 1, limit = 10, tagUid) {
+        offset = Number(offset) - 1
+        limit = Number(limit)
+
+        const res = await Blog.findAndCountAll({
+            attributes: ['uid', 'title', 'summary', 'createTime', 'author', 'tagUid', 'clickCount', 'status', 'fileUid'],
+            where: {
+                tagUid
+            },
+            order: [
+                ['click_count', 'DESC'],
+                ['sort', 'DESC'],
+                ['createTime', 'DESC']
+            ],
+            limit,
+            offset: offset * limit
+        });
+        return res
+    }
+
 
     static async create(obj) {
         // 修改

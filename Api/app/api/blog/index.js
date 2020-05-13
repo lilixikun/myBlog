@@ -18,6 +18,15 @@ router.get('/findAndCountAll', async (ctx, next) => {
     throw new Success(data)
 })
 
+router.get('/findByTag', async (ctx, next) => {
+
+    const { page, pageSize, tagUid } = ctx.request.query
+
+    const data = await blogController.findByTag(page, pageSize, tagUid)
+
+    throw new Success(data)
+})
+
 
 router.get('/findHotBlog', async () => {
 
@@ -27,7 +36,7 @@ router.get('/findHotBlog', async () => {
 })
 
 router.get('/orderByTime', async () => {
-    
+
     const data = await Blog.orderByTime()
 
     throw new Success(data)
