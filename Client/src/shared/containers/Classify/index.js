@@ -1,5 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 import withStyles from 'isomorphic-style-loader/withStyles'
 import * as actions from './store/actions'
 import styles from './index.less'
@@ -98,10 +99,15 @@ class Classify extends PureComponent {
 
         return (
             <div className="classify-wrapper">
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>XIKUN博客-标签分类</title>
+                    <meta name="description" content='XIKUN博客-个人IT技术发表平台,标签分类' />
+                </Helmet>
                 <div id="box">
                     {
                         dataList.map(item => (
-                            <img src={`http://localhost:7001/file_type_${item.img}.svg`} key={item.uid} onClick={() => this.goTag(item.uid)} />
+                            <img src={`http://47.98.161.153:8070/file_type_${item.img}.svg`} key={item.uid} onClick={() => this.goTag(item.uid)} />
                         ))
                     }
                 </div>

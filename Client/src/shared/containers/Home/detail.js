@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import withStyles from 'isomorphic-style-loader/withStyles';
 import DiamonLoading from 'react-loadingg/lib/CircleLoading';
+import { Helmet } from "react-helmet";
 import { connect } from 'react-redux'
 import marked from 'marked';
 import highlight from 'highlight.js';
@@ -38,7 +39,7 @@ class Index extends PureComponent {
     }
 
     componentDidMount() {
-        window.addEventListener('scroll', (e) => {
+        window.addEventListener('scroll', () => {
             var scroll_top = document.body.scrollTop || document.documentElement.scrollTop;
             if (this.refHerf.current) {
 
@@ -66,6 +67,11 @@ class Index extends PureComponent {
         return (
             <>
                 {!detail.uid ? <DiamonLoading size="large" /> : <div style={{ width: '100%' }}>
+                    <Helmet>
+                        <meta charSet="utf-8" />
+                        <title>XIKUN博客-{detail.title}</title>
+                        <meta name="description" content={`XIKUN博客-个人IT技术发表平台,${detail.title}`} />
+                    </Helmet>
                     <div className="detail-wrapper">
                         <div className='detail-content'>
                             <h1 className="detail-title">{detail.title}</h1>

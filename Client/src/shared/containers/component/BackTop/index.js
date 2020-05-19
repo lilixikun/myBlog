@@ -26,6 +26,10 @@ class BackTop extends React.PureComponent {
         })
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('scroll')
+    }
+
     goTo() {
         let scrollToTop = window.setInterval(function () {
             let pos = window.pageYOffset;

@@ -23,7 +23,7 @@ class Card extends PureComponent {
             <Fragment>
                 {rows.map((item, index) => (
                     <div className='list-item img-wrapper' key={item.uid} onClick={() => this.goDetail(item.uid)}>
-                        <LazyLoad height={140}>
+                        <LazyLoad height={140} styles={{ width: 220 }}>
                             <img src={item.fileUid} />
                         </LazyLoad>
                         <div className='item-wrapper'>
