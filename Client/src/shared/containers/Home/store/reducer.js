@@ -1,4 +1,4 @@
-import { HOME_GETTAG, HOME_GETBLOGLIST, HOME_HOT_LIST, HOME_BLOG_DETAIL } from './constants'
+import { HOME_GETTAG, HOME_GETBLOGLIST, HOME_HOT_LIST, HOME_BLOG_DETAIL, HOME_COUNT } from './constants'
 
 const initState = {
     hotList: [],
@@ -7,11 +7,19 @@ const initState = {
         count: 2,
         rows: []
     },
-    detail: {}
+    detail: {},
+    count: 0
 }
 
 export default (state = initState, actions) => {
     switch (actions.type) {
+
+        case HOME_COUNT:
+            return {
+                ...state,
+                count: actions.payload.count
+            }
+
         case HOME_GETTAG:
             return {
                 ...state,

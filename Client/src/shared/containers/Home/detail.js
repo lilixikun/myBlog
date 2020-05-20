@@ -62,7 +62,7 @@ class Index extends PureComponent {
     }
 
     render() {
-        const { detail } = this.props
+        const { detail, count } = this.props
 
         return (
             <>
@@ -77,7 +77,7 @@ class Index extends PureComponent {
                             <h1 className="detail-title">{detail.title}</h1>
                             <div className='item-footer'>
                                 <img src={author} /> <span>{detail.author}</span>
-                                <img src={time} /> <span>{detail.createTime}</span>
+                                <img src={time} /> <span>{detail.createTime.substring(0, 10)}</span>
                                 <img src={look} /> <span>{detail.clickCount}</span>
                                 <span>全文字数  {detail.content.length}</span>
                             </div>
@@ -95,7 +95,7 @@ class Index extends PureComponent {
                                     <div>
                                         <p className='tip'>席坤</p>
                                         <p className='description'>前端开发工程师</p>
-                                        <p className='description'>文章 10 | 阅读 5000</p>
+                                        <p className='description'>文章 {count} | 阅读 5000</p>
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +114,8 @@ class Index extends PureComponent {
 }
 
 const mapStateToProps = ({ home }) => ({
-    detail: home.detail
+    detail: home.detail,
+    count: home.count
 })
 
 const ExportDetail = connect(mapStateToProps, null)(withStyles(styles)(Index))
@@ -122,6 +123,7 @@ const ExportDetail = connect(mapStateToProps, null)(withStyles(styles)(Index))
 ExportDetail.loadData = async (store, params) => {
     if (params.uid) {
         await store.dispatch(actions.getBlogDetail(params.uid))
+        await store.dispatch(actions.getCount())
     }
 }
 export default ExportDetail
