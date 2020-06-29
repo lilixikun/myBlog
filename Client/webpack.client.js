@@ -12,31 +12,31 @@ const clienConfig = {
 
     module: {
         rules: [{
-                test: /\.css$/,
-                use: ['isomorphic-style-loader', {
-                    loader: 'css-loader',
-                    options: {
-                        importLoaders: 1,
-                        modules: true
-                        //localIdentName: '[path][name]__[local]--[hash:base64:5]'
-                    }
-                }]
-            },
-            {
-                test: /\.less$/,
-                use: [{
-                    loader: "isomorphic-style-loader"
-                }, {
-                    loader: "css-loader"
-                }, {
-                    loader: "less-loader",
-                    options: {
-                        paths: [
-                            path.resolve(__dirname, "node_modules")
-                        ]
-                    }
-                }]
-            }
+            test: /\.css$/,
+            use: ['isomorphic-style-loader', {
+                loader: 'css-loader',
+                options: {
+                    importLoaders: 1,
+                    modules: true
+                    //localIdentName: '[path][name]__[local]--[hash:base64:5]'
+                }
+            }]
+        },
+        {
+            test: /\.less$/,
+            use: [{
+                loader: "isomorphic-style-loader"
+            }, {
+                loader: "css-loader"
+            }, {
+                loader: "less-loader",
+                options: {
+                    paths: [
+                        path.resolve(__dirname, "node_modules")
+                    ]
+                }
+            }]
+        }
         ]
     }
 }
