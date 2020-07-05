@@ -16,7 +16,7 @@ class TagList extends PureComponent {
         return (
             <div className='tag-wrapper'>
                 <div className='tag-view'>
-                    <img src={`http://localhost:7001/file_type_${detail.img}.svg`} />
+                    <img src={`http://localhost:8085/file_type_${detail.img}.svg`} />
                     <p>{detail.tagName} {count} 篇文章 </p>
                 </div>
                 <div className='tag-content'>

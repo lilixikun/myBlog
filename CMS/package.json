@@ -58,5 +58,5 @@
     ]
   },
   "devDependencies": {},
-  "proxy": "http://localhost:7001/api"
+  "proxy": "http://localhost:8085/api"
 }

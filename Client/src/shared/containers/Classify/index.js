@@ -101,7 +101,7 @@ class Classify extends PureComponent {
                 <div id="box">
                     {
                         dataList.map(item => (
-                            <img src={`http://localhost:7001/file_type_${item.img}.svg`} key={item.uid} onClick={() => this.goTag(item.uid)} />
+                            <img src={`http://localhost:8085/file_type_${item.img}.svg`} key={item.uid} onClick={() => this.goTag(item.uid)} />
                         ))
                     }
                 </div>

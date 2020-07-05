@@ -8,7 +8,7 @@ import reder from './utils'
 const app = express()
 app.use(express.static('public'))
 
-app.use('/api', createProxyMiddleware({ target: 'http://localhost:7001', changeOrigin: true }));
+app.use('/api', createProxyMiddleware({ target: 'http://localhost:8085', changeOrigin: true }));
 
 
 app.get('*', (req, res) => {

@@ -7,7 +7,7 @@ import redux from '../store'
 import { logOut } from '../store/user/actions'
 // 环境的切换
 if (process.env.NODE_ENV === 'development') {
-    axios.defaults.baseURL = 'http://localhost:7001/api';
+    axios.defaults.baseURL = 'http://localhost:8085/api';
 } else if (process.env.NODE_ENV === 'debug') {
     axios.defaults.baseURL = '';
 } else if (process.env.NODE_ENV === 'production') {

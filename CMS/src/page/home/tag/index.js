@@ -26,7 +26,7 @@ function List(props) {
             title: '图标',
             dataIndex: 'img',
             key: 'img',
-            render: text => <img src={`http://localhost:7001/file_type_${text}.svg`} style={{ width: 56, height: 56 }} />
+            render: text => <img src={`http://localhost:8085/file_type_${text}.svg`} style={{ width: 56, height: 56 }} />
         },
         {
             title: '状态',
