@@ -4,8 +4,10 @@ import { matchRoutes } from 'react-router-config';
 import routes from '../shared/containers/Routers'
 import { getServerStore } from '../shared/store'
 import reder from './utils'
-
+import compression from 'compression'
 const app = express()
+
+app.use(compression());
 app.use(express.static('public'))
 
 app.use('/api', createProxyMiddleware({ target: 'http://localhost:8085', changeOrigin: true }));

@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react'
 import { connect } from "react-redux";
 import withStyles from 'isomorphic-style-loader/withStyles';
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Helmet } from "react-helmet";
 
 import Card from '../component/Card'
 
@@ -56,6 +57,11 @@ class Home extends PureComponent {
 
         return (
             <Fragment>
+                <Helmet>
+                    <meta charSet="utf-8" />
+                    <title>XIKUN博客-个人IT技术发表平台</title>
+                    <meta name="description" content="XIKUN博客为个人技术发表平台博客,里面涉及到前段,后端,python等多个方向。通过总结,提高自己,也让更多开发者从中受益,一同和IT开发者用代码改变未来" />
+                </Helmet>
                 <div className="content">
                     <aside className='aside-left'>
                         <InfiniteScroll

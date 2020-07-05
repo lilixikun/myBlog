@@ -3,6 +3,7 @@ import { StaticRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { renderRoutes } from 'react-router-config'
 import { renderToString } from 'react-dom/server'
+import { Helmet } from 'react-helmet'
 import { minify } from 'html-minifier';
 import StyleContext from 'isomorphic-style-loader/StyleContext'
 
@@ -28,12 +29,15 @@ export default (store, req, res) => {
 
     )
 
+    const helmet = Helmet.renderStatic()
+
     const html = `<!DOCTYPE html>
         <html lang="en">
         <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document111</title>
+        ${helmet.title.toString()}
+        ${helmet.meta.toString()}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
         <link rel="stylesheet" href="/index.css">
         <style>${[...css].join('')}</style>

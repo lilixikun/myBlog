@@ -2,7 +2,7 @@
  * @Author: kun.xi 
  * @Date: 2020-03-17 17:22:18 
  * @Last Modified by: xikun
- * @Last Modified time: 2020-05-13 18:05:10
+ * @Last Modified time: 2020-05-20 09:56:16
  */
 const { Model, Sequelize } = require('sequelize')
 const Op = Sequelize.Op
@@ -69,6 +69,14 @@ class Blog extends Model {
 
     }
 
+
+    // 查询文章总数
+    static async findCount() {
+        const count = await sequelize.query('SELECT COUNT(1) as count FROM t_blog', { type: sequelize.QueryTypes.SELECT })
+        if (count&&count.length) {
+            return count[0]
+        }
+    }
 }
 
 Blog.init(

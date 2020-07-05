@@ -1,8 +1,8 @@
 /*
  * @Author: kun.xi 
  * @Date: 2020-03-03 15:42:15 
- * @Last Modified by: xi.kun
- * @Last Modified time: 2020-05-12 14:53:42
+ * @Last Modified by: xikun
+ * @Last Modified time: 2020-05-19 11:56:30
  */
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
         host: '47.98.161.153',
         port: 3306,
         user: 'root',
-        password: 'admin'
+        password: 'llxk930617'
     },
     security: {
         secretKey: 'xikun',

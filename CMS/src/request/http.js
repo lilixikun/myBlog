@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'development') {
 } else if (process.env.NODE_ENV === 'debug') {
     axios.defaults.baseURL = '';
 } else if (process.env.NODE_ENV === 'production') {
-    axios.defaults.baseURL = 'http://api.123dailu.com/';
+    axios.defaults.baseURL = 'http://47.98.161.153:8085/api';
 }
 
 // 创建axios实例

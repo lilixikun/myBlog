@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import withStyles from 'isomorphic-style-loader/withStyles';
 import DiamonLoading from 'react-loadingg/lib/CircleLoading';
+import { Helmet } from "react-helmet";
 import { connect } from 'react-redux'
 import marked from 'marked';
 import highlight from 'highlight.js';
@@ -38,7 +39,7 @@ class Index extends PureComponent {
     }
 
     componentDidMount() {
-        window.addEventListener('scroll', (e) => {
+        window.addEventListener('scroll', () => {
             var scroll_top = document.body.scrollTop || document.documentElement.scrollTop;
             if (this.refHerf.current) {
 
@@ -61,17 +62,22 @@ class Index extends PureComponent {
     }
 
     render() {
-        const { detail } = this.props
+        const { detail, count } = this.props
 
         return (
             <>
                 {!detail.uid ? <DiamonLoading size="large" /> : <div style={{ width: '100%' }}>
+                    <Helmet>
+                        <meta charSet="utf-8" />
+                        <title>XIKUN博客-{detail.title}</title>
+                        <meta name="description" content={`XIKUN博客-个人IT技术发表平台,${detail.title}`} />
+                    </Helmet>
                     <div className="detail-wrapper">
                         <div className='detail-content'>
                             <h1 className="detail-title">{detail.title}</h1>
                             <div className='item-footer'>
                                 <img src={author} /> <span>{detail.author}</span>
-                                <img src={time} /> <span>{detail.createTime}</span>
+                                <img src={time} /> <span>{detail.createTime.substring(0, 10)}</span>
                                 <img src={look} /> <span>{detail.clickCount}</span>
                                 <span>全文字数  {detail.content.length}</span>
                             </div>
@@ -89,7 +95,7 @@ class Index extends PureComponent {
                                     <div>
                                         <p className='tip'>席坤</p>
                                         <p className='description'>前端开发工程师</p>
-                                        <p className='description'>文章 10 | 阅读 5000</p>
+                                        <p className='description'>文章 {count} | 阅读 5000</p>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +114,8 @@ class Index extends PureComponent {
 }
 
 const mapStateToProps = ({ home }) => ({
-    detail: home.detail
+    detail: home.detail,
+    count: home.count
 })
 
 const ExportDetail = connect(mapStateToProps, null)(withStyles(styles)(Index))
@@ -116,6 +123,7 @@ const ExportDetail = connect(mapStateToProps, null)(withStyles(styles)(Index))
 ExportDetail.loadData = async (store, params) => {
     if (params.uid) {
         await store.dispatch(actions.getBlogDetail(params.uid))
+        await store.dispatch(actions.getCount())
     }
 }
 export default ExportDetail

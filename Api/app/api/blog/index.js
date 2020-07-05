@@ -10,6 +10,13 @@ const blogController = require('../../controllers/blog')
 
 const { Success, ParameterException } = require('../../../core/httpException')
 
+router.get('/findCount', async (ctx, next) => {
+
+    const count = await Blog.findCount()
+
+    throw new Success(count)
+})
+
 router.get('/findAndCountAll', async (ctx, next) => {
 
     const { page, pageSize } = ctx.request.query
