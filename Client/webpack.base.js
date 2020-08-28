@@ -52,13 +52,14 @@ module.exports = {
         hints: false
     },
     plugins: [
-        new BundleAnalyzerPlugin(
-            {
-                analyzerPort: 8889, // 指定端口号
-                openAnalyzer: false,
-            }
-        ),
+        // new BundleAnalyzerPlugin(
+        //     {
+        //         analyzerPort: 8889, // 指定端口号
+        //         openAnalyzer: false,
+        //     }
+        // ),
         new PurgecssPlugin({
+            // 删除未使用的css
             paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
         })
     ]
